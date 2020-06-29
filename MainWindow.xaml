@@ -3,10 +3,102 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Callista_Cafe"
+        xmlns:local="clr-namespace:Callista_Cafe" xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Callista Cafe" Height="450" Width="800">
+        Title="Callista Cafe" Height="800" Width="450"
+        AllowsTransparency="True"
+        Background="Transparent"
+        WindowStyle="None"
+        ResizeMode="NoResize">
     <Grid>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            
+            
+            <Border CornerRadius="20" Grid.RowSpan="2">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#112233" Offset="0.35"/>
+                        <GradientStop Color="#6f2232" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+
+            <StackPanel VerticalAlignment="Center">
+                <Image Source="assets/Logo Sqr.png" Width="300"/>
+            </StackPanel>
+
+
+            <StackPanel Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Margin="0,20,0,0">
+                    <TextBox FontFamily="Helvetica"
+                         FontWeight="Light"
+                         Text="Username"
+                         FontSize="30"
+                         Width="300"
+                         HorizontalAlignment="Center"
+                         Foreground="White"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         HorizontalContentAlignment="Left"
+                         Opacity=".5"
+                         Height="35"
+                         Margin="70,0,0,0"
+                         />
+                    <iconpacks:PackIconMaterial Kind="Account"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Foreground="White" RenderTransformOrigin="2.684,0.331"/>
+                </StackPanel>
+
+
+                <Border Width="320"
+                    Height="2"
+                    Background="White"
+                    Opacity=".5"
+                    Margin="0,0,0,0"/>
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,0">
+                    <PasswordBox FontFamily="Helvetica"
+                         FontWeight="Light"
+                         Password="Password"
+                         FontSize="30"
+                         Width="300"
+                         HorizontalAlignment="Center"
+                         Foreground="White"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         HorizontalContentAlignment="Left"
+                         Opacity=".5"
+                         Height="35"
+                         Margin="70,0,0,0"
+                         />
+                    <iconpacks:PackIconMaterial Kind="FormTextboxPassword"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Center"
+                                            Foreground="White" RenderTransformOrigin="2.684,0.331"/>
+                </StackPanel>
+
+
+                <Border Width="320"
+                    Height="2"
+                    Background="White"
+                    Opacity=".5"
+                    Margin="0,0,0,0"/>
+
+
+                <StackPanel Orientation="Horizontal" Margin="0,60,0,0">
+                    <Button Width="150" Height="40" Content="LOGIN" Margin="50,0,0,0"/>
+                    <Button Width="150" Height="40" Content="CLOSE" Margin="50,0,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
