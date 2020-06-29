@@ -9,7 +9,8 @@
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        MouseDown="Window_MouseDown">
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
