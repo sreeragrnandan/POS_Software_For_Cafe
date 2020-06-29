@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe" xmlns:iconpacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
-        Title="Callista Cafe" Height="800" Width="450"
+        Title="Callista Cafe" Height="720" Width="450"
         AllowsTransparency="True"
         Background="Transparent"
         WindowStyle="None"
