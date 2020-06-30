@@ -8,6 +8,7 @@
         Title="Callista Cafe" Height="720" Width="450"
         AllowsTransparency="True"
         Background="Transparent"
+        WindowStartupLocation="CenterScreen"
         WindowStyle="None"
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown">
