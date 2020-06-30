@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
         Title="Admin Dashbord | Callista Cafe"
-        Height="720" Width="1280">
+        Height="720" Width="1280" 
+        WindowState="Maximized">
     <Grid>
         
     </Grid>
