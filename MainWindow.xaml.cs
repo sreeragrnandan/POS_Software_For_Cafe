@@ -35,5 +35,12 @@ namespace Callista_Cafe
         {
             Application.Current.Shutdown();
         }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord adminDashbordWindow = new AdminDashbord();
+            adminDashbordWindow.Show();
+            this.Close();
+        }
     }
 }
