@@ -10,7 +10,11 @@
         MinWidth="1280"
         WindowState="Maximized"
         WindowStyle="None"
-        Background="#072233">
+        Background="#072233"
+        MouseDoubleClick="minimize_Window"
+        MouseDown="Window_MouseDown">
+    
+    
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
