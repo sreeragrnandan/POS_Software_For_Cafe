@@ -23,5 +23,10 @@ namespace Callista_Cafe
         {
             InitializeComponent();
         }
+
+        private void close_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

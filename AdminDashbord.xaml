@@ -5,10 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
-        Title="Admin Dashbord | Callista Cafe"
-        Height="720" Width="1280" 
-        WindowState="Maximized">
+        Title="Admin Dashboard | Callista Cafe"
+        MinHeight="720"
+        MinWidth="1280"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow">
     <Grid>
-        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="250" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="1" CornerRadius="0 75 0 0 ">
+                <Border.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="#801717" Offset="0.35"/>
+                        <GradientStop Color="#072233" Offset=".8"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <StackPanel VerticalAlignment="Center" Margin="0,20,0,0">
+                    <Image Source="assets/Logo Sqr.png" Width="150"/>
+                </StackPanel>
+                <StackPanel Margin="0,50,0,0">
+                    <Button Width="200" Content="HOME" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                </StackPanel>
+                <StackPanel Margin="0,15,0,0">
+                    <Button Width="200" Click="close_Button_Click" Content="CLOSE" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                </StackPanel>
+            </StackPanel>
+            
+        </Grid>
     </Grid>
 </Window>
