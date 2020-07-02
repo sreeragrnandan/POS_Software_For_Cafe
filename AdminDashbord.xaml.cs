@@ -28,5 +28,12 @@ namespace Callista_Cafe
         {
             Application.Current.Shutdown();
         }
+
+        private void logout_Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow loginWindow = new MainWindow();
+            loginWindow.Show();
+            this.Close();
+        }
     }
 }
