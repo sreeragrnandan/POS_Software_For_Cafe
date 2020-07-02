@@ -28,18 +28,5 @@ namespace Callista_Cafe
         {
             Application.Current.Shutdown();
         }
-
-        private void minimize_Window(object sender, MouseButtonEventArgs e)
-        {
-            if (this.WindowState == WindowState.Normal)
-                this.WindowState = WindowState.Maximized;
-            else
-                this.WindowState = WindowState.Normal;
-        }
-        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed && this.WindowState == WindowState.Normal)
-                DragMove();
-        }
     }
 }

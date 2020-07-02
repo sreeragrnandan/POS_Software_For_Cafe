@@ -9,10 +9,8 @@
         MinHeight="720"
         MinWidth="1280"
         WindowState="Maximized"
-        WindowStyle="None"
-        Background="#072233"
-        MouseDoubleClick="minimize_Window"
-        MouseDown="Window_MouseDown">
+        WindowStyle="ThreeDBorderWindow"
+        Background="#072233">
     
     
     <Window.Resources>
