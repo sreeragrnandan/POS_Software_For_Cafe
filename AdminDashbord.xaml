@@ -95,7 +95,8 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <Label Name="dateandtime" FontSize="15" Foreground="White" HorizontalAlignment="Right"></Label>
+                <Label Name="dateandtime" FontSize="14" Foreground="White" HorizontalAlignment="Right"></Label>
+                <Label Name="lblUsername" FontSize="18" Foreground="White" HorizontalContentAlignment="Left"></Label>
             </StackPanel>
             
         </Grid>
