@@ -23,6 +23,13 @@ namespace Callista_Cafe
         public AdminDashbord()
         {
             InitializeComponent();
+            if(!Classes.UserInfo.Login)
+            {
+                MainWindow logWindow = new MainWindow();
+                logWindow.Show();
+                this.Close();
+            }
+
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
