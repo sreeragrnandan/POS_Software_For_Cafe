@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
-        Title="BillingDashboard"
+        Title="Billing Dashboard | Callista Cafe"
         MinHeight="720"
-        MinWidth="1280">
+        MinWidth="1280"
+        WindowState="Maximized"
+        >
     <Grid>
         
     </Grid>
