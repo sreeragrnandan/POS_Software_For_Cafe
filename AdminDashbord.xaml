@@ -73,7 +73,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Content="BILLING" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button Width="200" Click="billingBtnClick" Content="BILLING" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">

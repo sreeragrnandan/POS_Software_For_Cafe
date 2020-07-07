@@ -53,5 +53,12 @@ namespace Callista_Cafe
             loginWindow.Show();
             this.Close();
         }
+
+        private void billingBtnClick(object sender, RoutedEventArgs e)
+        {
+            BillingDashboard billingWindow = new BillingDashboard();
+            billingWindow.Show();
+            this.Close();
+        }
     }
 }
