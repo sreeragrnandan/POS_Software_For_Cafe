@@ -73,7 +73,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Content="BILLING" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button Width="200" Click="billingBtnClick" Content="BILLING" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
@@ -95,7 +95,8 @@
             </StackPanel>
 
             <StackPanel Grid.Column="1" Orientation="Vertical">
-                <Label Name="dateandtime" FontSize="15" Foreground="White" HorizontalAlignment="Right"></Label>
+                <Label Name="dateandtime" FontSize="14" Foreground="White" HorizontalAlignment="Right"></Label>
+                <Label Name="lblUsername" FontSize="18" Foreground="White" HorizontalContentAlignment="Left"></Label>
             </StackPanel>
             
         </Grid>
