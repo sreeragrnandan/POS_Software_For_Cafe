@@ -1,7 +1,9 @@
 ﻿using Callista_Cafe.Classes;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -134,6 +136,20 @@ namespace Callista_Cafe
 
                 
             }
+        }
+        static string myConString = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
+        private void C_SEARCH_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //get the value from text box
+
+            string key = C_SEARCH.Text;
+            
+            SqlConnection conn = new SqlConnection(myConString);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM customer WHERE c_name LIKE '%"+ key +"%' OR c_location LIKE '%"+ key +"%'", conn);
+            DataTable dt = new DataTable();
+            sda.Fill(dt);
+            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+
         }
     }
 }
