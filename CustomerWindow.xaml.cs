@@ -89,11 +89,18 @@ namespace Callista_Cafe
 
         private void C_DG_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // For Data grid edit
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;
             if (row_selected != null)
             {
-                //MessageBox.Show(row_selected[1]);
+                C_NAME.Text = row_selected["C_NAME"].ToString();
+                C_ID.Text = row_selected["C_ID"].ToString();
+                C_EMAIL.Text = row_selected["C_EMAIL"].ToString();
+                C_MOBNO.Text = row_selected["C_MOBNO"].ToString();
+                C_LOC.Text = row_selected["C_LOCATION"].ToString();
+
+                
             }
         }
     }
