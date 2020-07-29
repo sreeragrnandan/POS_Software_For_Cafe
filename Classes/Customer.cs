@@ -4,8 +4,10 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.Remoting.Activation;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Callista_Cafe.Classes
 {
@@ -134,7 +136,7 @@ namespace Callista_Cafe.Classes
 
             try
             {
-                string com = "DELETE FROM contact WHERE c_id=@cid";
+                string com = "DELETE FROM customer WHERE c_id=@cid";
                 SqlCommand cmd = new SqlCommand(com, conn);
                 cmd.Parameters.AddWithValue("@cid", c.cus_id);
 

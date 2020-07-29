@@ -61,12 +61,44 @@ namespace Callista_Cafe
 
         private void MODIFY_Click(object sender, RoutedEventArgs e)
         {
+            c.cus_name = C_NAME.Text;
+            c.cus_id = int.Parse(C_ID.Text);
+            c.cus_mobno = C_MOBNO.Text;
+            c.cus_location = C_LOC.Text;
+            c.cus_email = C_EMAIL.Text;
+
+            bool success = c.update(c);
+            if (success == true)
+            {
+                DataTable dt = c.select();
+                C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                MessageBox.Show("Customer details are updated");
+                clear();
+
+            }
+            else
+            {
+                MessageBox.Show("Failed To update Try again");
+            }
 
         }
 
         private void DELETE_Click(object sender, RoutedEventArgs e)
         {
-
+            c.cus_id = int.Parse(C_ID.Text);
+            //sageBox.Show(c.cus_id.ToString);
+            bool success = c.delete(c);
+            if (success == true)
+            {
+                DataTable dt = c.select();
+                C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                MessageBox.Show("The Data Deleted successfully");
+                clear();
+            }
+            else
+            {
+                MessageBox.Show("Failed the Deleting, Try again");
+            }
         }
 
         private void CLEAR_Click(object sender, RoutedEventArgs e)
