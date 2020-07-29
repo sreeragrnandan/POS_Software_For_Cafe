@@ -1,0 +1,100 @@
+﻿using Callista_Cafe.Classes;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace Callista_Cafe
+{
+    /// <summary>
+    /// Interaction logic for CustomerWindow.xaml
+    /// </summary>
+    public partial class CustomerWindow : Window
+    {
+        public CustomerWindow()
+        {
+            InitializeComponent();
+        }
+        Customer c = new Customer();
+
+
+        void OnLoad(object sender, RoutedEventArgs e)
+        {
+            DataTable dt = c.select();
+            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+        }
+
+        private void ADD_Click(object sender, RoutedEventArgs e)
+        {
+
+            c.cus_name = C_NAME.Text;
+            c.cus_location = C_LOC.Text;
+            c.cus_mobno = C_MOBNO.Text;
+            c.cus_email = C_EMAIL.Text;
+
+
+            bool success = c.insert(c);
+
+            if (success == true)
+            {
+                MessageBox.Show("New Customer Insrted");
+                clear();
+            }
+            else
+            {
+                MessageBox.Show("Failed");
+            }
+
+            DataTable dt = c.select();
+            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+        }
+
+        private void MODIFY_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DELETE_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CLEAR_Click(object sender, RoutedEventArgs e)
+        {
+            clear();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        public void clear()
+        {
+            C_NAME.Text = "";
+            C_LOC.Text = "";
+            C_MOBNO.Text = "";
+            C_EMAIL.Text = "";
+        }
+
+        private void C_DG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            if (row_selected != null)
+            {
+                //MessageBox.Show(row_selected[1]);
+            }
+        }
+    }
+}

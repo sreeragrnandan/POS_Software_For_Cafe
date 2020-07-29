@@ -89,9 +89,16 @@ namespace Callista_Cafe
                 {
                     if (Classes.UserInfo.User_Type == 0)
                     {
-                        AdminDashbord adminWindow = new AdminDashbord();
-                        adminWindow.Show();
+                        //AdminDashbord adminWindow = new AdminDashbord();
+                        //adminWindow.Show();
+                        //this.Close();
+                        CustomerWindow customerWindow = new CustomerWindow();
+                        customerWindow.Show();
                         this.Close();
+
+                        
+
+                        
                     }
                     else if(Classes.UserInfo.User_Type == 1)
                     {
