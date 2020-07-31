@@ -88,6 +88,7 @@
     <Compile Include="BillingDashboard.xaml.cs">
       <DependentUpon>BillingDashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\DatabaseFunctions.cs" />
     <Compile Include="Classes\UserInfo.cs" />
     <Compile Include="InventoryDashboard.xaml.cs">
       <DependentUpon>InventoryDashboard.xaml</DependentUpon>
