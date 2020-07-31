@@ -139,5 +139,28 @@ namespace Callista_Cafe
             string ID = (InventoryItems.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
             idTextBlock.Text = ID;
         }
+
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("INSERT INTO inventory (ingredient,price,quantity,e_date,unit,min_quantity,supplier_id) VALUES(@name,@price,@qty,@edate,@unit,@minqty,@supplierid)", con);
+                cmd.Parameters.AddWithValue("@name", nameTxtBox.Text);
+                cmd.Parameters.AddWithValue("@price", priceTxtBox.Text);
+                cmd.Parameters.AddWithValue("@qty", qtyTxtBox.Text);
+                cmd.Parameters.AddWithValue("@edate", expDate.DisplayDate);
+                cmd.Parameters.AddWithValue("@unit", unitComboBox.Text);
+                cmd.Parameters.AddWithValue("@minqty", minQtyTxtBox.Text);
+                cmd.Parameters.AddWithValue("@supplierid", supplierComboBox.SelectedValue);
+                cmd.ExecuteNonQuery();
+                FillDataGrid();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "Info");
+            }
+        }
     }
 }
