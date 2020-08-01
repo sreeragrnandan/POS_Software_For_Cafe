@@ -12,14 +12,14 @@ namespace Callista_Cafe.Classes
 {
     class InventoryItem
     {
-        /*public int id { get; set; }
+        public int id { get; set; }
         public string ingredient { get; set; }
-        public float price { get; set; }
-        public float quantity { get; set; }
-        public DateTime e_date { get; set; }
+        public string price { get; set; }
+        public string quantity { get; set; }
+        public string e_date { get; set; }
         public string unit { get; set; }
-        public float min_quantity { get; set; }
-        public string supplier_name { get; set; }*/
+        public string min_quantity { get; set; }
+        public string supplier_name { get; set; }
 
         private SqlConnection con;
         private SqlCommand cmd;
@@ -45,6 +45,120 @@ namespace Callista_Cafe.Classes
             }
 
             return dt;
+        }
+
+        public bool insert(InventoryItem itm, bool date)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                if (date)
+                {
+                    cmd = new SqlCommand(
+                        "INSERT INTO inventory (ingredient,price,quantity,e_date,unit,min_quantity,supplier_id) VALUES(@name,@price,@qty,@edate,@unit,@minqty,@supplierid)",
+                        con);
+                    cmd.Parameters.AddWithValue("@name", itm.ingredient);
+                    cmd.Parameters.AddWithValue("@price", itm.price);
+                    cmd.Parameters.AddWithValue("@qty", itm.quantity);
+                    cmd.Parameters.AddWithValue("@edate", itm.e_date);
+                    cmd.Parameters.AddWithValue("@unit", itm.unit);
+                    cmd.Parameters.AddWithValue("@minqty", itm.min_quantity);
+                    cmd.Parameters.AddWithValue("@supplierid", itm.supplier_name);
+                }
+                else
+                {
+                    cmd = new SqlCommand(
+                        "INSERT INTO inventory (ingredient,price,quantity,unit,min_quantity,supplier_id) VALUES(@name,@price,@qty,@unit,@minqty,@supplierid)",
+                        con);
+                    cmd.Parameters.AddWithValue("@name", itm.ingredient);
+                    cmd.Parameters.AddWithValue("@price", itm.price);
+                    cmd.Parameters.AddWithValue("@qty", itm.quantity);
+                    cmd.Parameters.AddWithValue("@unit", itm.unit);
+                    cmd.Parameters.AddWithValue("@minqty", itm.min_quantity);
+                    cmd.Parameters.AddWithValue("@supplierid", itm.supplier_name);
+                }
+
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+
+        public bool update(InventoryItem itm, bool date)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                if (date)
+                {
+                    //UPDATE inventory SET ingredient=@name,price=@price,quantity=@qty,e_date=@edate,unit=@unit,min_quantity=@minqty,supplier_id=@supplierid WHERE id=@id
+                    cmd = new SqlCommand(
+                        "UPDATE inventory SET ingredient=@name, price=@price, quantity=@qty, e_date=@edate, unit=@unit, min_quantity=@minqty, supplier_id=@supplierid WHERE id=@id",
+                        con);
+                    cmd.Parameters.AddWithValue("@id", itm.id);
+                    cmd.Parameters.AddWithValue("@name", itm.ingredient);
+                    cmd.Parameters.AddWithValue("@price", itm.price);
+                    cmd.Parameters.AddWithValue("@qty", itm.quantity);
+                    cmd.Parameters.AddWithValue("@edate", Convert.ToDateTime(itm.e_date));
+                    cmd.Parameters.AddWithValue("@unit", itm.unit);
+                    cmd.Parameters.AddWithValue("@minqty", itm.min_quantity);
+                    cmd.Parameters.AddWithValue("@supplierid", itm.supplier_name);
+                }
+                else
+                {
+                    cmd = new SqlCommand(
+                        "UPDATE inventory SET ingredient=@name, price=@price, e_date=NULL, quantity=@qty, unit=@unit, min_quantity=@minqty, supplier_id=@supplierid WHERE id=@id",
+                        con);
+                    cmd.Parameters.AddWithValue("@id", itm.id);
+                    cmd.Parameters.AddWithValue("@name", itm.ingredient);
+                    cmd.Parameters.AddWithValue("@price", itm.price);
+                    cmd.Parameters.AddWithValue("@qty", itm.quantity);
+                    cmd.Parameters.AddWithValue("@unit", itm.unit);
+                    cmd.Parameters.AddWithValue("@minqty", itm.min_quantity);
+                    cmd.Parameters.AddWithValue("@supplierid", itm.supplier_name);
+                }
+
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
         }
     }
 }
