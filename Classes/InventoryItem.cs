@@ -160,5 +160,37 @@ namespace Callista_Cafe.Classes
             }
             return result;
         }
+
+        public bool delete(InventoryItem delItm)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                cmd = new SqlCommand(
+                    "DELETE FROM inventory WHERE id=@id",
+                    con);
+                cmd.Parameters.AddWithValue("@id", delItm.id);
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
     }
 }
