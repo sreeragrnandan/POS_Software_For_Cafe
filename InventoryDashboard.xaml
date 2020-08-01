@@ -94,7 +94,7 @@
                     
                 </StackPanel>
                 <StackPanel>
-                    <DataGrid x:Name="InventoryItems" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="20 20 20 0" MouseDoubleClick="InventoryItems_MouseDoubleClick" SelectionChanged="InventoryItems_SelectionChanged" >
+                    <DataGrid x:Name="InventoryItems" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="20 20 20 0" Loaded="InventoryItems_Loaded"  >
 
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -108,13 +108,13 @@
                         
                         <DataGrid.Columns >
                             <DataGridTextColumn Header=" ID" Binding="{Binding id}"/>
-                            <DataGridTextColumn Header=" NAME" Binding="{Binding name}"/>
+                            <DataGridTextColumn Header=" NAME" Binding="{Binding ingredient}"/>
                             <DataGridTextColumn Header=" PRICE"  Binding="{Binding price}"/>
                             <DataGridTextColumn Header=" Qty" Binding="{Binding quantity}"/>
-                            <DataGridTextColumn Header=" EXP DATE" Binding="{Binding eDate}"/>
+                            <DataGridTextColumn Header=" EXP DATE" Binding="{Binding e_date}"/>
                             <DataGridTextColumn Header=" UNIT" Binding="{Binding unit}"/>
-                            <DataGridTextColumn Header=" MIN Qty" Binding="{Binding minQuantity}"/>
-                            <DataGridTextColumn Header=" SUPPLIER" Binding="{Binding supplier}"/>
+                            <DataGridTextColumn Header=" MIN Qty" Binding="{Binding min_quantity}"/>
+                            <DataGridTextColumn Header=" SUPPLIER" Binding="{Binding supplier_name}"/>
                         </DataGrid.Columns>
                         
                     </DataGrid>

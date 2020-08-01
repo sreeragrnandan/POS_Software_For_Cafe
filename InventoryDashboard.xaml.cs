@@ -31,8 +31,8 @@ namespace Callista_Cafe
         {
             InitializeComponent();
             FillSupplier();
-            FillDataGrid();
         }
+        InventoryItem itm = new InventoryItem();
 
         public void FillSupplier()
         {
@@ -56,90 +56,6 @@ namespace Callista_Cafe
             }
         }
 
-        public class InventoryItem
-        {
-            public int id { get; set; }
-            public string name { get; set; }
-            public float price { get; set; }
-            public float quantity { get; set; }
-            public DateTime eDate { get; set; }
-            public string unit { get; set; }
-            public float minQuantity { get; set; }
-            public string supplier { get; set; }
-        }
-
-        public void FillDataGrid()
-        {
-            DatabaseFunctions dbFunctions = new DatabaseFunctions();
-            try
-            {
-                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                con.Open();
-                cmd = new SqlCommand("Select * from inventory", con);
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    InventoryItem item = new InventoryItem();
-                    item.id = int.Parse(reader["id"].ToString());
-                    item.name = reader["ingredient"].ToString();
-                    if (reader["price"].ToString().Equals(""))
-                    {
-                        item.price = 0.0f;
-                    }
-                    else
-                    {
-                        item.price = float.Parse(reader["price"].ToString());
-                    }
-                    item.quantity = float.Parse(reader["quantity"].ToString());
-                    if (reader["e_date"].ToString().Equals(""))
-                    {
-                        
-                    }
-                    else
-                    {
-                        item.eDate = DateTime.Parse(reader["e_date"].ToString());
-                    }
-                    
-                    item.unit = reader["unit"].ToString();
-                    if (reader["min_quantity"].ToString().Equals(""))
-                    {
-
-                    }
-                    else
-                    {
-                        item.minQuantity = float.Parse(reader["min_quantity"].ToString());
-                    }
-                    
-                    if (reader["supplier_id"].ToString().Equals(""))
-                    {
-                        item.supplier = null;
-                    }
-                    else
-                    {
-                        item.supplier = dbFunctions.getSupplierName(int.Parse(reader["supplier_id"].ToString()));
-                    }
-
-                    InventoryItems.Items.Add(item);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString(), "Info");
-            }
-        }
-
-        private void InventoryItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void InventoryItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            object item = InventoryItems.SelectedItem; //probably you find this object
-            string ID = (InventoryItems.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
-            idTextBlock.Text = ID;
-        }
-
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -155,12 +71,17 @@ namespace Callista_Cafe
                 cmd.Parameters.AddWithValue("@minqty", minQtyTxtBox.Text);
                 cmd.Parameters.AddWithValue("@supplierid", supplierComboBox.SelectedValue);
                 cmd.ExecuteNonQuery();
-                FillDataGrid();
             }
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString(), "Info");
             }
+        }
+
+        private void InventoryItems_Loaded(object sender, RoutedEventArgs e)
+        {
+            DataTable dt = itm.select();
+            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
         }
     }
 }
