@@ -12,10 +12,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-//
+//Added Namespaces
 using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
+using Callista_Cafe.Classes;
 
 namespace Callista_Cafe
 {
@@ -24,17 +25,42 @@ namespace Callista_Cafe
     /// </summary>
     public partial class SupplierWindow : Window
     {
-        SqlConnection con;
-        SqlCommand cmd;
-        String Connstring = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
-        SqlDataReader reader;
+        private SqlConnection con;
+        private SqlCommand cmd;
+        private readonly String Connstring = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
+        Supplier supplier_object = new Supplier();
+
+
         public SupplierWindow()
         {
             InitializeComponent();
         }
 
-        private void SubmitSupplierClick(object sender, RoutedEventArgs e)
+        private void AddSupplierBtnClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                if (!Txtsuppliername.Text.ToString().Equals(""))
+                {
+                    
+                }
+                else
+                {
+                    MessageBox.Show("Please Enter a Supplier Name to Proceed","Invalid Entry");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+
+            }
+
+
+
+
+
+
+
             cmd = new SqlCommand("Insert into dbo.suppliers values(@sup_id,@sup_name,@sup_mob_no)",con);
             cmd.Parameters.AddWithValue("@sup_id", Txtsupplierid.Text);
             cmd.Parameters.AddWithValue("@sup_name", Txtsuppliername.Text);
@@ -60,34 +86,46 @@ namespace Callista_Cafe
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(Connstring);
             try
             {
-                con = new SqlConnection(Connstring);
-                con.Open();
-                //cmd = new SqlCommand("Insert into dbo.suppliers values(@Sup_id,@Sup_name,@Sup_mob_no)", con);
-                //cmd.Parameters.AddWithValue("Sup_id", 8);
-                //cmd.Parameters.AddWithValue("Sup_name", "sup8");
-                //cmd.Parameters.AddWithValue("Sup_mob_no", "364645");
-                //int value = cmd.ExecuteNonQuery();
-                //MessageBox.Show(value.ToString());
+                DataTable dt = new DataTable();
+                dt = supplier_object.select_query();
+                Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+                //dt.Dispose();
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-            } 
-            finally {
-                //reader.Close();
-                //reader.Dispose();
-                //cmd.Dispose();
-                //con.Close();
+            }
+            finally
+            {
+                
             }
         }
 
-        private void SupplierWindow_OnUnloaded(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Success");
-            con.Close();
-        }
     }
 }
+
+
+
+
+
+
+//Insert
+
+//cmd = new SqlCommand("Insert into dbo.suppliers values(@sup_id,@sup_name,@sup_mob_no)", con);
+//cmd.Parameters.AddWithValue("@sup_id", Txtsupplierid.Text);
+//cmd.Parameters.AddWithValue("@sup_name", Txtsuppliername.Text);
+//cmd.Parameters.AddWithValue("@sup_mob_no", Txtsuppliermobile.Text);
+//try
+//{
+//var res = cmd.ExecuteNonQuery();
+//    if (res == 1)
+//{
+//    MessageBox.Show("Successful");
+//}
+//else
+//{
+//    MessageBox.Show(res.ToString());
+//}

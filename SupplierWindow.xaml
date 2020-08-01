@@ -10,16 +10,21 @@
         MinWidth="1280"
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
-        Loaded="Window_Loaded" Unloaded="SupplierWindow_OnUnloaded"
+        Loaded="Window_Loaded"
 >
     <!--Background="#072233"-->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="483" MaxWidth="683"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
             <TextBlock Text="Enter Supplier Details"/>
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Id:"/>
                 <TextBox x:Name="Txtsupplierid" MinWidth="200"/>
             </StackPanel>
-        <StackPanel Orientation="Horizontal" >
+            <StackPanel Orientation="Horizontal" >
                 <Label Content="Name:"/>
                 <TextBox x:Name="Txtsuppliername" MinWidth="200"/>
             </StackPanel>
@@ -27,6 +32,16 @@
                 <Label Content="Mobile:"/>
                 <TextBox x:Name="Txtsuppliermobile" MinWidth="200"/>
             </StackPanel>
-            <Button x:Name="SubmitSupplier" Background="LawnGreen" Content='Submit' MinHeight="25" MaxWidth="100" Click="SubmitSupplierClick"/>
+            <Button x:Name="AddSupplierBtn" Background="LawnGreen" Content='Add' MinHeight="25" MaxWidth="100" Click="AddSupplierBtnClick"/>
         </StackPanel>
+        <Grid Grid.Column="1">
+            <DataGrid x:Name="Suppliers" IsReadOnly="True" AlternatingRowBackground="#FF828185" AutoGenerateColumns="False" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding supplier_id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Name" Binding="{Binding supplier_name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Mobile" Binding="{Binding supplier_mobile}"></DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
 </Window>
