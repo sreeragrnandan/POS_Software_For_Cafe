@@ -126,10 +126,7 @@ namespace Callista_Cafe
                 }
                 DataTable dt = itm.select();
                 InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
-                goto SUCCESS;
-                THEEND:
-                MessageBox.Show("TRY AGAIN", "Info");
-                SUCCESS:{}
+                THEEND:{}
             }
             catch (Exception exception)
             {
@@ -309,6 +306,38 @@ namespace Callista_Cafe
             DataTable dt = itm.select();
             InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
         DELETEEND:{}
+        }
+
+        private void searchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string S_key = searchTxtBox.Text;
+            try
+            {
+                if (S_key == "")
+                {
+                    DataTable dt = itm.select();
+                    InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+                }
+                else
+                {
+                    DataTable dt = new DataTable();
+                    con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                    con.Open();
+                    SqlDataAdapter sda = new SqlDataAdapter(
+                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, supplier_name from inventory as inv, suppliers as sup where sup.supplier_id=inv.supplier_id AND ingredient LIKE '%"+S_key+"%';", con);
+                    sda.Fill(dt);
+                    InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
+            }
+
         }
     }
     
