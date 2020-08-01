@@ -21,6 +21,7 @@
             <Setter Property="Background" Value="Teal" />
             <Setter Property="MinHeight" Value="30" />
             <Setter Property="FontSize" Value="22" />
+            <Setter Property="Cursor" Value="Hand"/>
 
             <Setter Property="Template">
                 <Setter.Value>
@@ -56,15 +57,15 @@
                     <SolidColorBrush Color="DarkSlateGray" Opacity=".5"/>
                 </Border.Background>
             </Border>
-            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10 0 0 0" >
+            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10 0 0 0" HorizontalAlignment="Left">
                 <StackPanel Margin="10 0 0 10">
-                    <TextBlock Text="Inventory Dashboard" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48" Foreground="BlanchedAlmond" FontFamily="Californian FB" Margin="0,30,0,0"></TextBlock>
+                    <TextBlock Text="Inventory Dashboard" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48" Foreground="BlanchedAlmond" FontFamily="Californian FB" Margin="0,30,0,0"/>
                 </StackPanel>
                 
                 
                 <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
                     <Label Content="ID :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBlock x:Name="idTextBlock" Text="ID" FontSize="18" Foreground="White" MinWidth="300" Background="Gray" TextAlignment="Center" VerticalAlignment="Center" Height="30" />
+                    <TextBlock x:Name="idTextBlock" Text="" FontSize="18" Foreground="White" MinWidth="300" Background="#555555" TextAlignment="Center" VerticalAlignment="Center" Height="30" />
                 </StackPanel>
                 
                 
@@ -121,10 +122,16 @@
                     <Button x:Name="ResetBtn" Content="RESET" Margin="0 0 50 0" MinWidth="150" Click="ResetBtn_Click" />
                     <Button x:Name="DeleteBtn" Content="DELETE" IsEnabled="False" Margin="50 0 0 0" MinWidth="150" Click="DeleteBtn_Click"/>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 40 0 0">
+                    <Label Content="Add Qty :" FontSize="20" Foreground="White" Height="35" Margin="10 0 10 0" MinWidth="70"/>
+                    <TextBox x:Name="addQtyTxtBox" Text="0" FontSize="23" VerticalContentAlignment="Center" Foreground="White" Width="200" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="35"  BorderThickness="2"/>
+                    <Button x:Name="addQtyBtn" Width="150" MinHeight="35" IsEnabled="False" Margin="20 0 0 0" Content="Add Quantity" Click="addQtyBtn_Click" />
+                </StackPanel>
                 
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 40 0">
+                    <Button Width="200" Margin="0 0 50 0"  FontSize="20" Height="30" Content="HOME" Background="Transparent" FontWeight="Bold" />
                     <Label Content="Search :" FontSize="25" Foreground="White" />
                     <TextBox x:Name="searchTxtBox" MinWidth="200" Height="30" BorderBrush="#ddeeff" Background="#07424A" Foreground="White" FontSize="20" TextAlignment="Center" BorderThickness="2" TextChanged="searchTxtBox_TextChanged">
                         <TextBox.Resources>
