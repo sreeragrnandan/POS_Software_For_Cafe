@@ -118,6 +118,7 @@ namespace Callista_Cafe
                 if (result)
                 {
                     MessageBox.Show("New Item Added.", "Info");
+                    ResetFun();
                 }
                 else
                 {
@@ -163,12 +164,25 @@ namespace Callista_Cafe
 
                 addBtn.IsEnabled = false;
                 updateBtn.IsEnabled = true;
+                DeleteBtn.IsEnabled = true;
             }
+
         }
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
             bool date = true;
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Update", MessageBoxButton.YesNo);
+            switch (messageBoxResult)
+            {
+                case MessageBoxResult.Yes:
+                    goto CONTINUE;
+                    break;
+                case MessageBoxResult.No:
+                    goto UPDATEEND;
+                    break;
+            }
+            CONTINUE:
             try
             {
                 addItem.id = int.Parse(idTextBlock.Text);
@@ -228,11 +242,12 @@ namespace Callista_Cafe
                 bool result = addItem.update(addItem, date);
                 if (result)
                 {
-                    MessageBox.Show("New Item Added.", "Info");
+                    MessageBox.Show("Item Updated Successfully.", "Info");
+                    ResetFun();
                 }
                 else
                 {
-                    MessageBox.Show("Failed to add item.", "Info");
+                    MessageBox.Show("Failed to Updated.", "Info");
                 }
                 DataTable dt = itm.select();
                 InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
@@ -244,6 +259,56 @@ namespace Callista_Cafe
                 MessageBox.Show(exception.ToString(), "info");
             }
 
+            UPDATEEND:{}
+        }
+
+        private void ResetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ResetFun();
+        }
+
+        public void ResetFun()
+        {
+            idTextBlock.Text = "";
+            nameTxtBox.Text = "";
+            priceTxtBox.Text = "";
+            qtyTxtBox.Text = "";
+            expDate.Text = "";
+            unitComboBox.Text = "";
+            minQtyTxtBox.Text = "";
+            supplierComboBox.Text = "";
+            updateBtn.IsEnabled = false;
+            addBtn.IsEnabled = true;
+            DeleteBtn.IsEnabled = false;
+        }
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            InventoryItem delItm = new InventoryItem();
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "DELETE", MessageBoxButton.YesNo);
+            switch (messageBoxResult)
+            {
+                case MessageBoxResult.Yes:
+                    goto DELETECONTINUE;
+                    break;
+                case MessageBoxResult.No:
+                    goto DELETEEND;
+                    break;
+            }
+            DELETECONTINUE:
+            delItm.id = int.Parse(idTextBlock.Text);
+            bool delResult = itm.delete(delItm);
+            if (delResult)
+            {
+                MessageBox.Show("Deleted Successfully","Info");
+                ResetFun();
+            }
+            else
+            {
+                MessageBox.Show("Failed to Delete", "Info");
+            }
+            DataTable dt = itm.select();
+            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+        DELETEEND:{}
         }
     }
     
