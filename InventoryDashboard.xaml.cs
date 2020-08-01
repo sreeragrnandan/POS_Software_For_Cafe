@@ -162,6 +162,7 @@ namespace Callista_Cafe
                 addBtn.IsEnabled = false;
                 updateBtn.IsEnabled = true;
                 DeleteBtn.IsEnabled = true;
+                addQtyBtn.IsEnabled = true;
             }
 
         }
@@ -274,9 +275,11 @@ namespace Callista_Cafe
             unitComboBox.Text = "";
             minQtyTxtBox.Text = "";
             supplierComboBox.Text = "";
+            addQtyTxtBox.Text = "0";
             updateBtn.IsEnabled = false;
             addBtn.IsEnabled = true;
             DeleteBtn.IsEnabled = false;
+            addQtyBtn.IsEnabled = false;
         }
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -338,6 +341,40 @@ namespace Callista_Cafe
                 con.Close();
             }
 
+        }
+
+        private void addQtyBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (idTextBlock.Text.Equals(null) || int.Parse(addQtyTxtBox.Text) <= 0) 
+            {
+                MessageBox.Show("Try Again", "Error");
+            }
+            else
+            {
+                InventoryItem addqty = new InventoryItem();
+                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Add Quantity", MessageBoxButton.YesNo);
+                switch (messageBoxResult)
+                {
+                    case MessageBoxResult.Yes:
+                        addqty.id = int.Parse(idTextBlock.Text);
+                        addqty.quantity = addQtyTxtBox.Text;
+                        bool addqtyresult = addqty.addQty(addqty);
+                        if (addqtyresult)
+                        {
+                            MessageBox.Show("Quantity added successfully.", "Info");
+                            DataTable dt = itm.select();
+                            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                            ResetFun();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to add quantity. Try Again","Info");
+                        }
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
         }
     }
     
