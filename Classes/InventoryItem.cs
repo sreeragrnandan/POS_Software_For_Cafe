@@ -192,5 +192,53 @@ namespace Callista_Cafe.Classes
             }
             return result;
         }
+
+        public bool addQty(InventoryItem addQtyItem)
+        {
+            bool result = false;
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("Select quantity from inventory where id=@Id", con);
+                cmd.Parameters.AddWithValue("@Id", addQtyItem.id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    float qty = float.Parse(reader["quantity"].ToString());
+                    con.Close();
+                    con.Open();
+                    qty = qty + float.Parse(addQtyItem.quantity);
+                    cmd = new SqlCommand(
+                        "UPDATE inventory SET quantity=@qty WHERE id=@id",
+                        con);
+                    cmd.Parameters.AddWithValue("@id", addQtyItem.id);
+                    cmd.Parameters.AddWithValue("@qty", qty);
+                    int rows = cmd.ExecuteNonQuery();
+
+                    if (rows > 0)
+                    {
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. Try Again.", "Error");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
     }
 }
