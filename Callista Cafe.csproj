@@ -70,7 +70,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="CustomerWindow.xaml">
+    <Page Include="InventoryDashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -88,10 +88,11 @@
     <Compile Include="BillingDashboard.xaml.cs">
       <DependentUpon>BillingDashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Customer.cs" />
+    <Compile Include="Classes\DatabaseFunctions.cs" />
+    <Compile Include="Classes\InventoryItem.cs" />
     <Compile Include="Classes\UserInfo.cs" />
-    <Compile Include="CustomerWindow.xaml.cs">
-      <DependentUpon>CustomerWindow.xaml</DependentUpon>
+    <Compile Include="InventoryDashboard.xaml.cs">
+      <DependentUpon>InventoryDashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
