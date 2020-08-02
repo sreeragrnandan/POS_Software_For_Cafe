@@ -6,34 +6,33 @@
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
         Title="Customer | Callista Cafe"
-        MinHeight="720"
+        MinHeight="719.5"
         MinWidth="1280"
         WindowState="Maximized">
     <Grid x:Name="C_G" Background="#FFE7D8D8" Margin="0,0,-0.4,-0.4"
           Loaded="OnLoad">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Label x:Name="Toplabel" Content="Customer Data" Grid.Column="1" HorizontalAlignment="Center" Margin="238,40,233.6,0" VerticalAlignment="Top" Width="290" FontSize="36" Height="58" Background="#FFE7D8D8" Foreground="#FFEB2E2E" FontWeight="Bold"/>
-        <Label x:Name="Customer_id" Grid.ColumnSpan="2" Content="Customer ID" HorizontalAlignment="Left" Margin="40,161,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <Label x:Name="Email" Grid.ColumnSpan="2" Content="E-mail" HorizontalAlignment="Left" Margin="40,383,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <Label x:Name="Location" Grid.ColumnSpan="2" Content="Location" HorizontalAlignment="Left" Margin="40,270,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <Label x:Name="Name" Grid.ColumnSpan="2" Content="Name" HorizontalAlignment="Left" Margin="40,214,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <Label x:Name="Mobile_no" Grid.ColumnSpan="2" Content="Mobile Number" HorizontalAlignment="Left" Margin="40,330,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold"/>
-        <TextBox x:Name="C_ID" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="152,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True"/>
-        <TextBox x:Name="C_NAME" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="152,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_LOC" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="152,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_MOBNO" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="152,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_EMAIL" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="152,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" RenderTransformOrigin="0.495,0.339"/>
-        <Button x:Name="ADD" Grid.ColumnSpan="2" Content="Add" HorizontalAlignment="Left" Margin="40,455,0,0" VerticalAlignment="Top" Width="75" Click="ADD_Click" FontWeight="Bold" Background="#FF50ED1F" Foreground="White"/>
-        <DataGrid x:Name="C_DG" HorizontalAlignment="Left" Height="245" Margin="363,161,0,0" VerticalAlignment="Top" Width="376" Background="#FFC8BFBF" HeadersVisibility="All" Grid.Column="1" CanUserAddRows="False" SelectionChanged="C_DG_SelectionChanged"/>
-        <Label Content="Search" HorizontalAlignment="Left" Margin="363,130,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-        <TextBox x:Name="C_SEARCH" HorizontalAlignment="Left" Height="23" Margin="427,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" Grid.Column="1" TextChanged="C_SEARCH_TextChanged"/>
-        <Button x:Name="C_MODIFY" Content="Modify" HorizontalAlignment="Left" Margin="177,455,0,0" VerticalAlignment="Top" Width="75" Click="MODIFY_Click" FontWeight="Bold" Background="#FF1F4EED" Foreground="White" Grid.Column="1"/>
-        <Button x:Name="C_DELETE" Content="Delete" HorizontalAlignment="Left" Margin="303,455,0,0" VerticalAlignment="Top" Width="76" Click="DELETE_Click" FontWeight="Bold" Background="#FFFF0037" Foreground="White" Grid.Column="1" RenderTransformOrigin="-0.054,0.766"/>
-        <Button x:Name="C_CLEAR" Content="Clear" HorizontalAlignment="Left" Margin="427,455,0,0" VerticalAlignment="Top" Width="75" Click="CLEAR_Click" FontWeight="Bold" Background="#FFEAD733" Foreground="White" Grid.Column="1"/>
-        <Button x:Name="exit" Content="Exit" HorizontalAlignment="Left" Margin="647,455,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" FontWeight="Bold" Foreground="White" Grid.Column="1" FontSize="14">
+        <Label x:Name="Toplabel" Content="Customer Data" HorizontalAlignment="Center" Margin="32,51,439.6,0" VerticalAlignment="Top" Width="290" FontSize="36" Height="58" Background="#FFE7D8D8" Foreground="#FFEB2E2E" FontWeight="Bold"/>
+        <Label x:Name="Customer_id" Content="Customer ID" HorizontalAlignment="Left" Margin="32.2,161,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
+        <Label x:Name="Email" Content="E-mail" HorizontalAlignment="Left" Margin="32.2,383,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
+        <Label x:Name="Location" Content="Location" HorizontalAlignment="Left" Margin="32.2,270,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
+        <Label x:Name="Name" Content="Name" HorizontalAlignment="Left" Margin="32.2,214,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
+        <Label x:Name="Mobile_no" Content="Mobile Number" HorizontalAlignment="Left" Margin="32.2,330,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
+        <TextBox x:Name="C_ID" HorizontalAlignment="Left" Height="23" Margin="144.2,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True"/>
+        <TextBox x:Name="C_NAME" HorizontalAlignment="Left" Height="23" Margin="144.2,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
+        <TextBox x:Name="C_LOC" HorizontalAlignment="Left" Height="23" Margin="144.2,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
+        <TextBox x:Name="C_MOBNO" HorizontalAlignment="Left" Height="23" Margin="144.2,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
+        <TextBox x:Name="C_EMAIL" HorizontalAlignment="Left" Height="23" Margin="144.2,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" RenderTransformOrigin="0.495,0.339"/>
+        <Button x:Name="ADD" Content="Add" HorizontalAlignment="Left" Margin="32,455,0,0" VerticalAlignment="Top" Width="75" Click="ADD_Click" FontWeight="Bold" Background="#FF50ED1F" Foreground="White" Height="19"/>
+        <DataGrid x:Name="C_DG" HorizontalAlignment="Left" Height="245" Margin="364.2,161,-23.4,0" VerticalAlignment="Top" Width="376" Background="#FFC8BFBF" HeadersVisibility="All" CanUserAddRows="False" SelectionChanged="C_DG_SelectionChanged" IsReadOnly="True"/>
+        <Label Content="Search" HorizontalAlignment="Left" Margin="364.2,130,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
+        <TextBox x:Name="C_SEARCH" HorizontalAlignment="Left" Height="23" Margin="428.2,130,-23.4,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" TextChanged="C_SEARCH_TextChanged"/>
+        <Button x:Name="C_MODIFY" Content="Modify" HorizontalAlignment="Left" Margin="161,455,0,0" VerticalAlignment="Top" Width="75" Click="MODIFY_Click" FontWeight="Bold" Background="#FF1F4EED" Foreground="White" Height="19"/>
+        <Button x:Name="C_DELETE" Content="Delete" HorizontalAlignment="Left" Margin="290,455,0,0" VerticalAlignment="Top" Width="76" Click="DELETE_Click" FontWeight="Bold" Background="#FFFF0037" Foreground="White" RenderTransformOrigin="-0.054,0.766" Height="19"/>
+        <Button x:Name="C_CLEAR" Content="Clear" HorizontalAlignment="Left" Margin="420,455,0,0" VerticalAlignment="Top" Width="75" Click="CLEAR_Click" FontWeight="Bold" Background="#FFEAD733" Foreground="White" Height="19"/>
+        <Button x:Name="exit" Content="Exit" HorizontalAlignment="Left" Margin="667,454,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" FontWeight="Bold" Foreground="White" FontSize="14" Height="22">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -41,6 +40,7 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
+        <Button x:Name="C_REFRESH" Content="Refresh" HorizontalAlignment="Left" Margin="546,455,0,0" VerticalAlignment="Top" Width="75" Click="Refresh_click" FontWeight="Bold" Background="#FF33EAE7" Foreground="White" Height="19"/>
 
     </Grid>
 </Window>

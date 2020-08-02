@@ -56,13 +56,14 @@ namespace Callista_Cafe.Classes
 
             try
             {
-                string com = "INSERT INTO customer(c_name,c_location,c_mobno,c_email) VALUES (@cname,@clocation,@cmobno,@cemail)";
+                string com = "INSERT INTO customer(c_name,c_location,c_mobno,c_email) VALUES (@name,@location,@mobno,@email)";//
                 SqlCommand cmd = new SqlCommand(com, conn);
-                cmd.Parameters.AddWithValue("@cname",c.cus_name);
-                cmd.Parameters.AddWithValue("@clocation", c.cus_location);
-                cmd.Parameters.AddWithValue("@cmobno", c.cus_mobno);
-                cmd.Parameters.AddWithValue("@cemail", c.cus_email);
-
+                //
+                cmd.Parameters.AddWithValue("@name",c.cus_name);
+                cmd.Parameters.AddWithValue("@location", c.cus_location);
+                cmd.Parameters.AddWithValue("@mobno", c.cus_mobno);
+                cmd.Parameters.AddWithValue("@email", c.cus_email);
+                //
 
                 conn.Open();
                 int rows = cmd.ExecuteNonQuery();
@@ -97,13 +98,13 @@ namespace Callista_Cafe.Classes
 
             try
             {
-                string com = "UPDATE customer SET c_name=@cname, c_location=@clocation,c_mobno=@cmobno,c_email=@cemail WHERE c_id=@cid";
+                string com = "UPDATE customer SET c_name=@name, c_location=@location,c_mobno=@mobno,c_email=@email WHERE c_id=@id";//
                 SqlCommand cmd = new SqlCommand(com, conn);
-                cmd.Parameters.AddWithValue("@cname", c.cus_name);
-                cmd.Parameters.AddWithValue("@clocation", c.cus_location);
-                cmd.Parameters.AddWithValue("@cmobno", c.cus_mobno);
-                cmd.Parameters.AddWithValue("@cemail", c.cus_email);
-                cmd.Parameters.AddWithValue("@cid", c.cus_id);
+                cmd.Parameters.AddWithValue("@name", c.cus_name);//
+                cmd.Parameters.AddWithValue("@location", c.cus_location);//
+                cmd.Parameters.AddWithValue("@mobno", c.cus_mobno);//
+                cmd.Parameters.AddWithValue("@email", c.cus_email);//
+                cmd.Parameters.AddWithValue("@id", c.cus_id);//
 
                 conn.Open();
                 int rows = cmd.ExecuteNonQuery();
