@@ -106,12 +106,20 @@ namespace Callista_Cafe
 
                 if (supplierComboBox.Text.ToString().Equals(""))
                 {
-                    MessageBox.Show("Please select a Supplier..!", "Error");
-                    goto THEEND;
+                    addItem.supplier_name = null;
                 }
                 else
                 {
-                    addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    try
+                    {
+                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    }
+                    catch (Exception exce)
+                    {
+                        MessageBox.Show("Please select a supplier form the list.", "Error");
+                        goto THEEND;
+                    }
+
                 }
 
                 bool result = addItem.insert(addItem,date);
@@ -229,12 +237,20 @@ namespace Callista_Cafe
 
                 if (supplierComboBox.Text.ToString().Equals(""))
                 {
-                    MessageBox.Show("Please select a Supplier..!", "Error");
-                    goto THEEND;
+                    addItem.supplier_name = null;
                 }
                 else
                 {
-                    addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    try
+                    {
+                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    }
+                    catch(Exception exce)
+                    {
+                        MessageBox.Show("Please select a supplier form the list.", "Error");
+                        goto THEEND;
+                    }
+                    
                 }
 
                 bool result = addItem.update(addItem, date);
@@ -327,7 +343,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, supplier_name from inventory as inv, suppliers as sup where sup.supplier_id=inv.supplier_id AND ingredient LIKE '%"+S_key+"%';", con);
+                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
                     sda.Fill(dt);
                     InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                 }
