@@ -15,11 +15,11 @@ namespace Callista_Cafe.Classes
     {
         //getter and setter (Data Carriers)
         public int cus_id { get; set; }
-        
+
         public string cus_name { get; set; }
 
         public string cus_location { get; set; }
-    
+
         public string cus_mobno { get; set; }
 
         public string cus_email { get; set; }
@@ -31,16 +31,16 @@ namespace Callista_Cafe.Classes
         {
             SqlConnection conn = new SqlConnection(myConString);
             DataTable dt = new DataTable();
-            try 
+            try
             {
                 string com = "SELECT * FROM customer";
-                SqlCommand cmd = new SqlCommand(com,conn);
+                SqlCommand cmd = new SqlCommand(com, conn);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 conn.Open();
                 adapter.Fill(dt);
 
             }
-            catch (Exception ex){ }
+            catch (Exception ex) { }
 
             finally
             {
@@ -59,7 +59,7 @@ namespace Callista_Cafe.Classes
                 string com = "INSERT INTO customer(c_name,c_location,c_mobno,c_email) VALUES (@name,@location,@mobno,@email)";//
                 SqlCommand cmd = new SqlCommand(com, conn);
                 //
-                cmd.Parameters.AddWithValue("@name",c.cus_name);
+                cmd.Parameters.AddWithValue("@name", c.cus_name);
                 cmd.Parameters.AddWithValue("@location", c.cus_location);
                 cmd.Parameters.AddWithValue("@mobno", c.cus_mobno);
                 cmd.Parameters.AddWithValue("@email", c.cus_email);
@@ -79,7 +79,7 @@ namespace Callista_Cafe.Classes
 
 
             }
-            
+
             catch (Exception ex) { }
 
             finally

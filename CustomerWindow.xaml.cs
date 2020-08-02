@@ -54,26 +54,27 @@ namespace Callista_Cafe
             {
 
                 success = c.insert(c);
-            
-            if (success == true)
-            {
-                MessageBox.Show("New Customer details Inserted");
-                clear();
-            }
-            else
-            {
-                MessageBox.Show("Insertion Failed. Try again");
-            }
 
-            DataTable dt = c.select();
-            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-        }
+                if (success == true)
+                {
+                    MessageBox.Show("New Customer details Inserted");
+                    clear();
+                }
+                else
+                {
+                    MessageBox.Show("Insertion Failed. Try again");
+                }
+
+                DataTable dt = c.select();
+                C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+            }
         }
 
         private void MODIFY_Click(object sender, RoutedEventArgs e)//Modify
         {
             MessageBoxResult result = MessageBox.Show("Do you want to modify the data ?", "Confirmation", MessageBoxButton.YesNo);
-            if(result == MessageBoxResult.Yes) {
+            if (result == MessageBoxResult.Yes)
+            {
 
                 if (C_ID.Text == "")
                 {
@@ -101,7 +102,7 @@ namespace Callista_Cafe
                         MessageBox.Show("Failed To update Try again");
                     }
                 }
-        }
+            }
 
         }
 
@@ -118,32 +119,33 @@ namespace Callista_Cafe
                 {
                     MessageBox.Show("Please select a field to delete");
                 }
-                else {
-                c.cus_id = int.Parse(C_ID.Text);
-                c.cus_name = C_NAME.Text;
-                if (c.cus_name == "")
-                {
-                    success = false;
-                }
-                //sageBox.Show(c.cus_id.ToString);
                 else
                 {
-                    success = c.delete(c);
-                }
-                if (success == true)
-                {
-                    DataTable dt = c.select();
-                    C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                    MessageBox.Show("The Data Deleted");
-                    clear();
-                }
-                else
-                {
-                    MessageBox.Show("Select an item to delete");
+                    c.cus_id = int.Parse(C_ID.Text);
+                    c.cus_name = C_NAME.Text;
+                    if (c.cus_name == "")
+                    {
+                        success = false;
+                    }
+                    //sageBox.Show(c.cus_id.ToString);
+                    else
+                    {
+                        success = c.delete(c);
+                    }
+                    if (success == true)
+                    {
+                        DataTable dt = c.select();
+                        C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                        MessageBox.Show("The Data Deleted");
+                        clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Select an item to delete");
+                    }
                 }
             }
-            }
-           
+
 
         }
 
@@ -179,7 +181,7 @@ namespace Callista_Cafe
                 C_MOBNO.Text = row_selected["C_MOBNO"].ToString();
                 C_LOC.Text = row_selected["C_LOCATION"].ToString();
 
-                
+
             }
         }
         static string myConString = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
@@ -188,9 +190,9 @@ namespace Callista_Cafe
             //get the value from text box
 
             string key = C_SEARCH.Text;
-            
+
             SqlConnection conn = new SqlConnection(myConString);
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM customer WHERE c_name LIKE '%"+ key +"%' OR c_location LIKE '%"+ key +"%'", conn);
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM customer WHERE c_name LIKE '%" + key + "%' OR c_location LIKE '%" + key + "%'", conn);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
