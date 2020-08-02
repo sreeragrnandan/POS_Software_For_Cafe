@@ -82,7 +82,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Enter Supplier Details"/>
+            <TextBlock Text="Suppliers"/>
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Id:"/>
                 <TextBox x:Name="Txtsupplierid" MinWidth="200" IsEnabled="False"/>
