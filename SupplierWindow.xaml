@@ -97,8 +97,8 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button x:Name="AddSupplierBtn" Content='ADD' MinHeight="25" MaxWidth="100" Click="AddSupplierBtnClick"/>
-                <Button x:Name="DeleteSupplierBtn" Content='DELETE' MinHeight="25" MaxWidth="100" Click="DeleteSupplierBtnClick"/>
-                <Button x:Name="UpdateSupplierBtn" Content='UPDATE' MinHeight="25" MaxWidth="100" Click="UpdateSupplierBtnClick"/>
+                <Button x:Name="DeleteSupplierBtn" Content='DELETE' IsEnabled="False" MinHeight="25" MaxWidth="100" Click="DeleteSupplierBtnClick"/>
+                <Button x:Name="UpdateSupplierBtn" Content='UPDATE' MinHeight="25" IsEnabled="False" MaxWidth="100" Click="UpdateSupplierBtnClick"/>
                 <Button x:Name="ResetSupplierBtn" Content='RESET' MinHeight="25" MaxWidth="100" Click="ResetSupplierBtnClick"/>
             </StackPanel>
         </StackPanel>

@@ -113,9 +113,8 @@ namespace Callista_Cafe
                             bool update_result = supplier_object.update_query(supplier_object);
                             if (update_result)
                             {
-                                DataTable dt = new DataTable();
-                                dt = supplier_object.select_query();
-                                Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                                DataTable dt = supplier_object.select_query();
+                                Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                                 MessageBox.Show("Supplier Updated", "Success");
                                 reset_txtbox();
                             }
@@ -168,12 +167,20 @@ namespace Callista_Cafe
                 Txtsupplierid.Text = selected_row[0].ToString();
                 Txtsuppliername.Text = selected_row[1].ToString();
                 Txtsuppliermobile.Text = selected_row[2].ToString();
+
+                AddSupplierBtn.IsEnabled = false;
+                UpdateSupplierBtn.IsEnabled = true;
+                DeleteSupplierBtn.IsEnabled = true;
             }
         }
 
         public void reset_txtbox()
         {
             Txtsuppliername.Text = ""; Txtsuppliermobile.Text = ""; Txtsupplierid.Text = "";
+
+            UpdateSupplierBtn.IsEnabled = false;
+            AddSupplierBtn.IsEnabled = true;
+            DeleteSupplierBtn.IsEnabled = false;
         }
     }
 }
