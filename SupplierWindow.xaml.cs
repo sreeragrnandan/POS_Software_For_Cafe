@@ -177,26 +177,3 @@ namespace Callista_Cafe
         }
     }
 }
-
-
-
-
-
-
-//Insert
-
-//cmd = new SqlCommand("Insert into dbo.suppliers values(@sup_id,@sup_name,@sup_mob_no)", con);
-//cmd.Parameters.AddWithValue("@sup_id", Txtsupplierid.Text);
-//cmd.Parameters.AddWithValue("@sup_name", Txtsuppliername.Text);
-//cmd.Parameters.AddWithValue("@sup_mob_no", Txtsuppliermobile.Text);
-//try
-//{
-//var res = cmd.ExecuteNonQuery();
-//    if (res == 1)
-//{
-//    MessageBox.Show("Successful");
-//}
-//else
-//{
-//    MessageBox.Show(res.ToString());
-//}
