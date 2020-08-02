@@ -11,8 +11,8 @@
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
         Background="#072233">
-    
-    
+
+
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
@@ -98,7 +98,7 @@
                 <Label Name="dateandtime" FontSize="14" Foreground="White" HorizontalAlignment="Right"></Label>
                 <Label Name="lblUsername" FontSize="18" Foreground="White" HorizontalContentAlignment="Left"></Label>
             </StackPanel>
-            
+
         </Grid>
     </Grid>
 </Window>
