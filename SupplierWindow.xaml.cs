@@ -25,8 +25,6 @@ namespace Callista_Cafe
     /// </summary>
     public partial class SupplierWindow : Window
     {
-        private SqlConnection con;
-        private SqlCommand cmd;
         private readonly String Connstring = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
         Supplier supplier_object = new Supplier();
 
@@ -56,12 +54,12 @@ namespace Callista_Cafe
                     }
                     else
                     {
-                        MessageBox.Show("Error Creating New User", "Error");
+                        MessageBox.Show("Error Creating New Supplier", "Error");
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please Enter a Supplier Name to Proceed","Invalid Entry");
+                    MessageBox.Show("Please Enter a Valid Name to Proceed","Invalid Entry");
                 }
             }
             catch (Exception ex)
@@ -80,17 +78,16 @@ namespace Callista_Cafe
                     bool result = supplier_object.delete_query(dltsupplier_object);
                     if (result)
                     {
-                        MessageBox.Show("Succesfully Deleted", "Deleted");
+                        MessageBox.Show("Successfully Deleted Supplier", "Success");
                     }
                     else
                     {
-                        MessageBox.Show("Failed to Delete Item", "Failed");
+                        MessageBox.Show("Failed to Delete Supplier", "Failed");
                     }
                     DataTable dt = supplier_object.select_query();
                     Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                     break;
                 case MessageBoxResult.No:
-                    MessageBox.Show("Not DOne");
                     break;
             }
             reset_txtbox();
@@ -98,7 +95,7 @@ namespace Callista_Cafe
 
         private void UpdateSupplierBtnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult msgbox = MessageBox.Show("Are You Sure?", "update", MessageBoxButton.YesNo);
+            MessageBoxResult msgbox = MessageBox.Show("Are You Sure?", "Update", MessageBoxButton.YesNo);
             switch (msgbox)
             {
                 case MessageBoxResult.Yes:
@@ -115,7 +112,7 @@ namespace Callista_Cafe
                             {
                                 DataTable dt = supplier_object.select_query();
                                 Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
-                                MessageBox.Show("Supplier Updated", "Success");
+                                MessageBox.Show("Supplier Details Updated Successfully", "Success");
                                 reset_txtbox();
                             }
                             else
