@@ -43,9 +43,30 @@ namespace Callista_Cafe.Classes
             return dt;
         }
 
-        public bool insert_query()
+        public bool insert_query(Supplier sup)
         {
             bool result = false;
+
+            try
+            {
+                con = new SqlConnection(ConString);
+                cmd = new SqlCommand("Insert into suppliers(supplier_name,supplier_mobile) values(@sup_name,@sup_mobile)",con);
+                cmd.Parameters.AddWithValue("@sup_name", sup.supplier_name);
+                cmd.Parameters.AddWithValue("@sup_mobile", sup.supplier_mobile);
+
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
             return result;
         }
 

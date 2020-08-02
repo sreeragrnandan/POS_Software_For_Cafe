@@ -22,7 +22,7 @@
             <TextBlock Text="Enter Supplier Details"/>
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Id:"/>
-                <TextBox x:Name="Txtsupplierid" MinWidth="200"/>
+                <TextBox x:Name="Txtsupplierid" MinWidth="200" IsEnabled="False"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Name:"/>

@@ -42,7 +42,21 @@ namespace Callista_Cafe
             {
                 if (!Txtsuppliername.Text.ToString().Equals(""))
                 {
-                    
+                    supplier_object.supplier_name = Txtsuppliername.Text.ToString();
+                    supplier_object.supplier_mobile = Txtsuppliermobile.Text.ToString();
+
+                    bool insert_result = supplier_object.insert_query(supplier_object);
+                    if (insert_result)
+                    {
+                        DataTable dt = new DataTable();
+                        dt = supplier_object.select_query();
+                        Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                        MessageBox.Show("New Supplier Added", "Success");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error Creating New User", "Error");
+                    }
                 }
                 else
                 {
@@ -52,35 +66,6 @@ namespace Callista_Cafe
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
-
-            }
-
-
-
-
-
-
-
-            cmd = new SqlCommand("Insert into dbo.suppliers values(@sup_id,@sup_name,@sup_mob_no)",con);
-            cmd.Parameters.AddWithValue("@sup_id", Txtsupplierid.Text);
-            cmd.Parameters.AddWithValue("@sup_name", Txtsuppliername.Text);
-            cmd.Parameters.AddWithValue("@sup_mob_no", Txtsuppliermobile.Text);
-            try
-            {
-                var res = cmd.ExecuteNonQuery();
-                if (res == 1)
-                {
-                    MessageBox.Show("Successful");
-                }
-                else
-                {
-                    MessageBox.Show(res.ToString());
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-
             }
         }
 
