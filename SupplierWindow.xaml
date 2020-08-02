@@ -11,8 +11,7 @@
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
         Loaded="Window_Loaded"
-        Background="#072233"
->
+        Background="#072233">
     
     <Grid>
         <Grid.ColumnDefinitions>
