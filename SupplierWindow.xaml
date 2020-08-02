@@ -11,8 +11,9 @@
         WindowState="Maximized"
         WindowStyle="ThreeDBorderWindow"
         Loaded="Window_Loaded"
+        Background="#072233"
 >
-    <!--Background="#072233"-->
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="483" MaxWidth="683"></ColumnDefinition>
@@ -32,10 +33,15 @@
                 <Label Content="Mobile:"/>
                 <TextBox x:Name="Txtsuppliermobile" MinWidth="200"/>
             </StackPanel>
-            <Button x:Name="AddSupplierBtn" Background="LawnGreen" Content='Add' MinHeight="25" MaxWidth="100" Click="AddSupplierBtnClick"/>
+            <StackPanel Orientation="Horizontal">
+                <Button x:Name="AddSupplierBtn" Background="LawnGreen" Content='Add' MinHeight="25" MaxWidth="100" Click="AddSupplierBtnClick"/>
+                <Button x:Name="DeleteSupplierBtn" Background="Red" Content='Delete' MinHeight="25" MaxWidth="100" Click="DeleteSupplierBtnClick"/>
+                <Button x:Name="UpdateSupplierBtn" Background="DodgerBlue" Content='Update' MinHeight="25" MaxWidth="100" Click="UpdateSupplierBtnClick"/>
+                <Button x:Name="ResetSupplierBtn" Background="AntiqueWhite" Content='Reset' MinHeight="25" MaxWidth="100" Click="ResetSupplierBtnClick"/>
+            </StackPanel>
         </StackPanel>
         <Grid Grid.Column="1">
-            <DataGrid x:Name="Suppliers" IsReadOnly="True" AlternatingRowBackground="#FF828185" AutoGenerateColumns="False" >
+            <DataGrid x:Name="Suppliers" IsReadOnly="True" SelectionChanged="Suppliers_OnSelectionChanged" AlternatingRowBackground="#FF828185" AutoGenerateColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding supplier_id}"></DataGridTextColumn>
                     <DataGridTextColumn Header="Name" Binding="{Binding supplier_name}"></DataGridTextColumn>
