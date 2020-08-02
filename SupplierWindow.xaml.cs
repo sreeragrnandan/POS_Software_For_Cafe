@@ -142,13 +142,13 @@ namespace Callista_Cafe
         {
             reset_txtbox();
         }
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void DataGrid_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
                 DataTable dt = new DataTable();
                 dt = supplier_object.select_query();
-                Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+                Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
                 //dt.Dispose();
 
             }
