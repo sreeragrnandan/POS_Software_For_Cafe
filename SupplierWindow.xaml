@@ -102,8 +102,8 @@
                 <Button x:Name="ResetSupplierBtn" Content='RESET' MinHeight="25" MaxWidth="100" Click="ResetSupplierBtnClick"/>
             </StackPanel>
         </StackPanel>
-        <Grid Grid.Column="1">
-            <DataGrid x:Name="Suppliers" Margin="20 10 20 0" IsReadOnly="True" Loaded="DataGrid_Loaded" SelectionChanged="Suppliers_OnSelectionChanged" AutoGenerateColumns="False" >
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <DataGrid x:Name="Suppliers" Margin="20 10 70 0" IsReadOnly="True" Loaded="DataGrid_Loaded" SelectionChanged="Suppliers_OnSelectionChanged" AutoGenerateColumns="False" >
                 <DataGrid.Resources>
                     <Style TargetType="{x:Type DataGridColumnHeader}">
                         <Setter Property="Background" Value="White"/>
@@ -114,11 +114,11 @@
                     </Style>
                 </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding supplier_id}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Name" Binding="{Binding supplier_name}"></DataGridTextColumn>
-                    <DataGridTextColumn Header="Mobile" Binding="{Binding supplier_mobile}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="ID" Width="*"  Binding="{Binding supplier_id}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Name" Width="*" Binding="{Binding supplier_name}"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Mobile" Width="*" Binding="{Binding supplier_mobile}"></DataGridTextColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Window>
