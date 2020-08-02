@@ -29,24 +29,35 @@ namespace Callista_Cafe
         public InventoryDashboard()
         {
             InitializeComponent();
-            FillSupplier();
+            FillComboBox();
         }
         InventoryItem itm = new InventoryItem();
         InventoryItem addItem = new InventoryItem();
 
-        public void FillSupplier()
+        public void FillComboBox()
         {
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                 con.Open();
                 cmd = new SqlCommand("Select * from suppliers", con);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                adapter.Fill(dt);
-                supplierComboBox.ItemsSource = dt.DefaultView;
+                SqlDataAdapter Supplieradapter = new SqlDataAdapter(cmd);
+                DataTable SupplierDt = new DataTable();
+                Supplieradapter.Fill(SupplierDt);
+                supplierComboBox.ItemsSource = SupplierDt.DefaultView;
                 supplierComboBox.DisplayMemberPath = "supplier_name";
                 supplierComboBox.SelectedValuePath = "supplier_id";
+                cmd.Dispose();
+                con.Close();
+
+                con.Open();
+                cmd = new SqlCommand("select distinct unit from inventory;", con);
+                SqlDataAdapter Unitadapter = new SqlDataAdapter(cmd);
+                DataTable Unitdt = new DataTable();
+                Unitadapter.Fill(Unitdt);
+                unitComboBox.ItemsSource = Unitdt.DefaultView;
+                unitComboBox.DisplayMemberPath = "unit";
+                unitComboBox.SelectedValuePath = "unit";
                 cmd.Dispose();
                 con.Close();
             }
@@ -106,12 +117,20 @@ namespace Callista_Cafe
 
                 if (supplierComboBox.Text.ToString().Equals(""))
                 {
-                    MessageBox.Show("Please select a Supplier..!", "Error");
-                    goto THEEND;
+                    addItem.supplier_name = null;
                 }
                 else
                 {
-                    addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    try
+                    {
+                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Please select a supplier form the list.", "Error");
+                        goto THEEND;
+                    }
+
                 }
 
                 bool result = addItem.insert(addItem,date);
@@ -126,6 +145,7 @@ namespace Callista_Cafe
                 }
                 DataTable dt = itm.select();
                 InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+                FillComboBox();
                 THEEND:{}
             }
             catch (Exception exception)
@@ -175,10 +195,8 @@ namespace Callista_Cafe
             {
                 case MessageBoxResult.Yes:
                     goto CONTINUE;
-                    break;
                 case MessageBoxResult.No:
                     goto UPDATEEND;
-                    break;
             }
             CONTINUE:
             try
@@ -229,12 +247,20 @@ namespace Callista_Cafe
 
                 if (supplierComboBox.Text.ToString().Equals(""))
                 {
-                    MessageBox.Show("Please select a Supplier..!", "Error");
-                    goto THEEND;
+                    addItem.supplier_name = null;
                 }
                 else
                 {
-                    addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    try
+                    {
+                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                    }
+                    catch(Exception exce)
+                    {
+                        MessageBox.Show("Please select a supplier form the list.", "Error");
+                        goto THEEND;
+                    }
+                    
                 }
 
                 bool result = addItem.update(addItem, date);
@@ -249,7 +275,7 @@ namespace Callista_Cafe
                 }
                 DataTable dt = itm.select();
                 InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                
+                FillComboBox();
                 THEEND:{}
             }
             catch (Exception exception)
@@ -289,10 +315,8 @@ namespace Callista_Cafe
             {
                 case MessageBoxResult.Yes:
                     goto DELETECONTINUE;
-                    break;
                 case MessageBoxResult.No:
                     goto DELETEEND;
-                    break;
             }
             DELETECONTINUE:
             delItm.id = int.Parse(idTextBlock.Text);
@@ -308,6 +332,7 @@ namespace Callista_Cafe
             }
             DataTable dt = itm.select();
             InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+            FillComboBox();
         DELETEEND:{}
         }
 
@@ -327,7 +352,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, supplier_name from inventory as inv, suppliers as sup where sup.supplier_id=inv.supplier_id AND ingredient LIKE '%"+S_key+"%';", con);
+                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
                     sda.Fill(dt);
                     InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                 }
