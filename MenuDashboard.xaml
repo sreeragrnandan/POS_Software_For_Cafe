@@ -5,8 +5,121 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
-        Title="MenuDashboard" Height="450" Width="800">
+        Title="Menu Dashboard | Callista Cafe"
+        MinHeight="720"
+        Width="1280"
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        Background="#072233">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="Opacity" Value=".7"/>
+
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="450" MaxWidth="700"/>
+            <ColumnDefinition MinWidth="830"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.ColumnSpan="1" CornerRadius="0 150 10 0">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#801717" Offset="0.35"/>
+                    <GradientStop Color="#072233" Offset=".75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+            <StackPanel VerticalAlignment="Center" Margin="0,30,20,0">
+                <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="35"  Foreground="White" FontFamily="Times New Roman" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
+                <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                <TextBox x:Name="ItemIDTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                <Label x:Name="ItemName"  Content=" Name :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                <Label x:Name="ItemCategory"  Content=" Category :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                <ComboBox x:Name="unitComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                <Label x:Name="ItemPrice"  Content=" Price :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <StackPanel>
+                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 20 10 0" Loaded="MenuItems_Loaded">
+
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                            <Setter Property="BorderBrush" Value="gray"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header=" ID" Binding="{Binding item_id}" />
+                        <DataGridTextColumn Header=" NAME" Binding="{Binding item_name}"/>
+                        <DataGridTextColumn Header=" CATEGORY"  Binding="{Binding item_category}"/>
+                        <DataGridTextColumn Header=" PRICE" Binding="{Binding item_price}"/>
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+
     </Grid>
+
 </Window>
