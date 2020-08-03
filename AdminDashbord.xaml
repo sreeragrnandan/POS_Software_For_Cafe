@@ -69,27 +69,27 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,50,0,0">
-                    <Button Width="200" Content="HOME" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button x:Name="BillBtn" Width="200" Content="BILLING" MinHeight="30" Click="billingBtnClick" FontSize="15" FontWeight="DemiBold" />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Click="billingBtnClick" Content="BILLING" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button x:Name="MenuBtn" Width="200"  Content="Menu" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="MenuBtn_Click" />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Content="Inventory Dashboard" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="ButtonBase_OnClick"/>
+                    <Button x:Name="InventoryBtn" Width="200" Content="Inventory" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="ButtonBase_OnClick"/>
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Content="" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button x:Name="CustBtn" Width="200" Content="Customers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="CustBtn_Click" />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Click="logout_Button_Click" Content="LOGOUT" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button x:Name="SupplierBtm" Width="200" Content="Suppliers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="SupplierBtm_Click"  />
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Click="close_Button_Click" Content="CLOSE" MinHeight="30" FontSize="15" FontWeight="DemiBold" Foreground="Red" />
+                    <Button x:Name="LogOutBtn" Width="200" Click="logout_Button_Click" Content="LOGOUT" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
                 </StackPanel>
 
             </StackPanel>
