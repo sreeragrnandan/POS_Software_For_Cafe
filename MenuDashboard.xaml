@@ -125,7 +125,7 @@
                 <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" FontFamily="Times New Roman" />
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
                 <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
