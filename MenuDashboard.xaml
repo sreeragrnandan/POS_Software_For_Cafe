@@ -15,9 +15,9 @@
         <Style TargetType="{x:Type Button}">
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Helvetica"/>
-            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
             <Setter Property="Opacity" Value=".7"/>
-
+            <Setter Property="FontSize" Value="18" />
 
             <Setter Property="Background" Value="Transparent"/>
 
@@ -39,6 +39,11 @@
                     <Setter Property="Background" Value="White" />
                     <Setter Property="Opacity" Value="1"/>
                     <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -51,6 +56,53 @@
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Transparent"/>
+        </Style>
+        <Style x:Key="MainBtn" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"
+                                        BorderThickness="2"
+                                        BorderBrush="WhiteSmoke">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
 
@@ -68,14 +120,16 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+        <StackPanel Grid.Column="0">
             <StackPanel VerticalAlignment="Center" Margin="0,30,20,0">
-                <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="35"  Foreground="White" FontFamily="Times New Roman" />
+                <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" FontFamily="Times New Roman" />
             </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center">
+            
             <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
                 <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <TextBox x:Name="ItemIDTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                 <Label x:Name="ItemName"  Content=" Name :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
@@ -83,17 +137,29 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                 <Label x:Name="ItemCategory"  Content=" Category :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <ComboBox x:Name="unitComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
+                <ComboBox x:Name="ItemCategoryComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                 <Label x:Name="ItemPrice"  Content=" Price :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
                 <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 25 25 20">
+                <Button x:Name="addBtn" Content="ADD" MinWidth="180" Height="30" Margin="0 0 20 0" Click="addBtn_Click"/>
+                <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="updateBtn_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                <Button x:Name="resetBtn" Content="RESET" MinWidth="180" Height="30" Margin="0 0 20 0" Click="resetBtn_Click" />
+                <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" MinWidth="180" Height="30" Margin="20 0 0 0"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Margin="25 0 25 20">
+                <Button Style="{StaticResource MainBtn}" x:Name="addRequirementBtn" IsEnabled="False" Content="ADD REQUIREMENT" MinWidth="400" MaxWidth="560" Height="30" Margin="0 0 0 5" />
+                <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME"  Height="30" MinWidth="400" MaxWidth="560" Margin="0 5 0 0" />
+            </StackPanel>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Vertical">
             <StackPanel>
-                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 20 10 0" Loaded="MenuItems_Loaded">
+                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 20 10 0" Loaded="MenuItems_Loaded" SelectionChanged="MenuItems_SelectionChanged">
 
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
