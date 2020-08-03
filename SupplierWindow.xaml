@@ -82,7 +82,7 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Button Content="Home" Width="70" HorizontalAlignment="Left"></Button>
+            <Button x:Name="HomeBtn" Content="Home" Width="70" HorizontalAlignment="Left" Click="HomeBtn_Click"/>
             <TextBlock Text="Suppliers"/>
             <StackPanel Orientation="Horizontal" >
                 <Label Content="Id:"/>
