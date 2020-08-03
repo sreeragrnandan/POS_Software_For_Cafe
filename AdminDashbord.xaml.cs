@@ -67,5 +67,26 @@ namespace Callista_Cafe
             inv.Show();
             this.Close();
         }
+
+        private void MenuBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MenuDashboard MenuWindow = new MenuDashboard();
+            MenuWindow.Show();
+            this.Close();
+        }
+
+        private void CustBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow CustWindow = new CustomerWindow();
+            CustWindow.Show();
+            this.Close();
+        }
+
+        private void SupplierBtm_Click(object sender, RoutedEventArgs e)
+        {
+            SupplierWindow supWindow = new SupplierWindow();
+            supWindow.Show();
+            this.Close();
+        }
     }
 }
