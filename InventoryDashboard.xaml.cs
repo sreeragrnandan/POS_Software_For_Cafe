@@ -401,6 +401,13 @@ namespace Callista_Cafe
                 }
             }
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord adm = new AdminDashbord();
+            adm.Show();
+            this.Close();
+        }
     }
     
 }

@@ -127,7 +127,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 40 0">
-                    <Button Width="200" Margin="0 0 50 0"  FontSize="20" Height="30" Content="HOME" Background="Transparent" FontWeight="Bold" />
+                    <Button Width="200" Margin="0 0 50 0"  FontSize="20" Height="30" Click="ButtonBase_OnClick" Content="HOME" Background="Transparent" FontWeight="Bold" />
                     <Label Content="Search :" FontSize="25" Foreground="White" />
                     <TextBox x:Name="searchTxtBox" MinWidth="200" Height="30" BorderBrush="#ddeeff" Background="#07424A" Foreground="White" FontSize="20" TextAlignment="Center" BorderThickness="2" TextChanged="searchTxtBox_TextChanged">
                         <TextBox.Resources>
