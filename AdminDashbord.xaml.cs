@@ -60,5 +60,12 @@ namespace Callista_Cafe
             billingWindow.Show();
             this.Close();
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            InventoryDashboard inv = new InventoryDashboard();
+            inv.Show();
+            this.Close();
+        }
     }
 }
