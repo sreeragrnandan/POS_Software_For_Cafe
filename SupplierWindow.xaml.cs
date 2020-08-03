@@ -179,5 +179,12 @@ namespace Callista_Cafe
             AddSupplierBtn.IsEnabled = true;
             DeleteSupplierBtn.IsEnabled = false;
         }
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord AdminWindow = new AdminDashbord();
+            AdminWindow.Show();
+            this.Close();
+        }
     }
 }
