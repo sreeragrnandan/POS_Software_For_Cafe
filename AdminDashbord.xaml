@@ -77,7 +77,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
-                    <Button Width="200" Content="" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+                    <Button Width="200" Content="Inventory Dashboard" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="ButtonBase_OnClick"/>
                 </StackPanel>
 
                 <StackPanel Margin="0,15,0,0">
