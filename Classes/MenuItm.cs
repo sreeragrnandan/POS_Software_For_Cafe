@@ -12,6 +12,11 @@ namespace Callista_Cafe.Classes
 {
     class MenuItm
     {
+        public int item_id { get; set; }
+        public string item_name { get; set; }
+        public string item_category { get; set; }
+        public float item_price { get; set; }
+
         private SqlConnection con;
         private SqlCommand cmd;
         public DataTable select()
@@ -37,5 +42,38 @@ namespace Callista_Cafe.Classes
 
             return itemDataTable;
         }
+
+        public bool insert(MenuItm itm)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                cmd = new SqlCommand(
+                    "INSERT INTO menu_items (item_name, item_price, item_category) VALUES(@name,@price,@category)",
+                    con);
+                cmd.Parameters.AddWithValue("@name", itm.item_name);
+                cmd.Parameters.AddWithValue("@price", itm.item_price);
+                cmd.Parameters.AddWithValue("@category", itm.item_category);
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            return result;
+        }
+
+
     }
 }
