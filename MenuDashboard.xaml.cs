@@ -42,7 +42,25 @@ namespace Callista_Cafe
             bool flag = true;
             if (id)
             {
-                binddataMenuItm.item_id = int.Parse(ItemIDTxtBox.Text.ToString());
+                if (ItemIDTxtBox.Text.ToString().Equals(""))
+                {
+                    MessageBox.Show("Item_ID ERROR. Failed to Update..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+                else
+                {
+                    try
+                    {
+                        binddataMenuItm.item_id = int.Parse(ItemIDTxtBox.Text.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Item_ID ERROR. Failed to Update..!", "Error");
+                        flag = false;
+                        goto FUNEND;
+                    }
+                }
             }
             else
             {
@@ -64,6 +82,8 @@ namespace Callista_Cafe
                 catch (Exception e)
                 {
                     MessageBox.Show("Please Enter a valid Name.!", "Error");
+                    flag = false;
+                    goto FUNEND;
                 }
             }
             if (ItemPriceTxtBox.Text.ToString().Equals(""))
@@ -81,6 +101,8 @@ namespace Callista_Cafe
                 catch (Exception e)
                 {
                     MessageBox.Show("Please Enter a valid price.!", "Error");
+                    flag = false;
+                    goto FUNEND;
                 }
             }
             if (ItemCategoryComboBox.Text.ToString().Equals(""))
@@ -98,6 +120,8 @@ namespace Callista_Cafe
                 catch (Exception e)
                 {
                     MessageBox.Show("Please Enter a valid price.!", "Error");
+                    flag = false;
+                    goto FUNEND;
                 }
             }
             FUNEND:{}
@@ -165,11 +189,11 @@ namespace Callista_Cafe
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool bindingResult = BindDataToObject(false);
+            bool bindingResult = BindDataToObject(true);
             bool result;
             if (bindingResult)
             {
-                result = MenuItem.insert(binddataMenuItm);
+                result = MenuItem.update(binddataMenuItm);
                 if (result)
                 {
                     MessageBox.Show("Item Successfully Updated !", "Success");
@@ -180,10 +204,6 @@ namespace Callista_Cafe
                 {
                     MessageBox.Show("Failed to Update. Try Again !", "Error");
                 }
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong. Please try Again !");
             }
         }
     }
