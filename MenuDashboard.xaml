@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
         Title="Menu Dashboard | Callista Cafe"
-        MinHeight="720"
+        Height="720"
         Width="1280"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
@@ -163,9 +163,14 @@
             </StackPanel>
         </StackPanel>
 
+
         <StackPanel Grid.Column="1" Orientation="Vertical">
-            <StackPanel>
-                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 20 10 0" Loaded="MenuItems_Loaded" SelectionChanged="MenuItems_SelectionChanged">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 45 10 0">
+                <Label Content="Search: " FontSize="22" Margin="0 0 0 0"/>
+                <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" TextChanged="SearchBox_TextChanged" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Center">
+                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 5 10 0" Loaded="MenuItems_Loaded" SelectionChanged="MenuItems_SelectionChanged">
 
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
