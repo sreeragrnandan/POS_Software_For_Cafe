@@ -25,7 +25,7 @@ namespace Callista_Cafe.Classes
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                cmd = new SqlCommand("SELECT item_id,item_name,item_category,item_price FROM menu_items;", con);
+                cmd = new SqlCommand("SELECT item_id, item_name, item_category, item_price FROM menu_items;", con);
                 SqlDataAdapter itemDataAdapter = new SqlDataAdapter(cmd);
                 con.Open();
                 itemDataAdapter.Fill(itemDataTable);
