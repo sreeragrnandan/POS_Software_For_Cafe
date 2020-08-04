@@ -285,7 +285,6 @@ namespace Callista_Cafe
             else
             {
                 MenuItemRequirement itmreq = new MenuItemRequirement(int.Parse(ItemIDTxtBox.Text.ToString()));
-                MessageBox.Show(int.Parse(ItemIDTxtBox.Text.ToString()).ToString());
                 itmreq.ShowDialog();
                 reset();
             }
