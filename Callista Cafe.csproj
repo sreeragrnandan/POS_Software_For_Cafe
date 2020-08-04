@@ -67,6 +67,9 @@
     <Compile Include="MenuDashboard.xaml.cs">
       <DependentUpon>MenuDashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuItemRequirement.xaml.cs">
+      <DependentUpon>MenuItemRequirement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupplierWindow.xaml.cs">
       <DependentUpon>SupplierWindow.xaml</DependentUpon>
     </Compile>
@@ -115,6 +118,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MenuDashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuItemRequirement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
