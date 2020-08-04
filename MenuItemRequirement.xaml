@@ -13,7 +13,8 @@
         ResizeMode="NoResize"
         MouseDown="Window_MouseDown"
         BorderBrush="DarkGray"
-        BorderThickness="2">
+        BorderThickness="2"
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
@@ -52,7 +53,7 @@
             </Style.Triggers>
         </Style>
         <Style TargetType="{x:Type Label}">
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Helvetica"/>
         </Style>
@@ -61,6 +62,8 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10" />
@@ -124,10 +127,10 @@
             <ColumnDefinition Width="500"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" BorderBrush="White" BorderThickness="2"></Border>
-        <StackPanel Grid.Column="0" Width="500">
+        <StackPanel Grid.Column="0" Width="500" Orientation="Vertical">
             <StackPanel Orientation="Vertical" Margin="10,20,10,0">
                 <Label x:Name="TitleLabel" Content="INGREDIENTS REQUIRED" HorizontalContentAlignment="Center" FontSize="30"  Foreground="White" FontFamily="Times New Roman" />
-                <DataGrid x:Name="RequiredItemDataGrid" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300">
+                <DataGrid x:Name="RequiredItemDataGrid"  AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Loaded="RequiredItemDataGrid_Loaded" SelectionChanged="RequiredItemDataGrid_SelectionChanged">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="White"/>
@@ -142,13 +145,62 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns >
-                        <DataGridTextColumn Header=" INGREDIENT" Binding="{Binding item_id}" Width="160" />
-                        <DataGridTextColumn Header=" QUANTITY" Binding="{Binding item_name}" Width="160"/>
-                        <DataGridTextColumn Header=" UNIT" Binding="{Binding item_name}" Width="160"/>
+                        <DataGridTextColumn Header=" INGREDIENT" Binding="{Binding ingredient}" Width="155" />
+                        <DataGridTextColumn Header=" QUANTITY" Binding="{Binding quantity}" Width="155"/>
+                        <DataGridTextColumn Header=" UNIT" Binding="{Binding unit}" Width="*"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="20 0 20 5">
+                <Label Content="ITEM :" Width="150" Margin="0 5 0 0"/>
+                <TextBox x:Name="ItemTextBox" Width="250" IsEnabled="False" Height="35" Text="" Margin="0 0 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5 20 5">
+                <Label Content="INGREDIENT :" Width="150" Margin="0 5 0 0"/>
+                <TextBox x:Name="IngredientTextBox" Width="250" IsEnabled="False" Height="35" Text="" Margin="0 0 0 0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="20 5 20 0">
+                <Label Content="QUANTITY :" Width="150" Margin="0 5 0 0"/>
+                <TextBox x:Name="QtyTextBox" Width="250" IsEnabled="True" Height="35" Text="" Margin="0 0 0 0"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Orientation="Vertical" Width="500" >
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 10 0">
+                <Label Content="Search : " FontSize="20" Margin="0 0 0 0"></Label>
+                <TextBox x:Name="Search" Width="150" Height="27" TextChanged="Search_TextChanged" />
+            </StackPanel>
+            <StackPanel Margin="10 10 10 0" Width="480">
+                <DataGrid x:Name="InventoryItemDataGrid" IsReadOnly="True" MinHeight="300" MaxWidth="500" AutoGenerateColumns="False" Width="480" Loaded="InventoryItemDataGrid_Loaded" SelectionChanged="InventoryItemDataGrid_SelectionChanged" >
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                            <Setter Property="BorderBrush" Value="gray"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="BorderBrush" Value="#991111"/>
+                            <Setter Property="Background" Value="GhostWhite"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                        </Style>
+                    </DataGrid.Resources>
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header=" INGREDIENT" Binding="{Binding ingredient}" Width="300" />
+                        <DataGridTextColumn Header=" UNIT" Binding="{Binding unit}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
         </StackPanel>
-
+        <StackPanel Grid.Column="1" VerticalAlignment="Bottom" Margin="50 0 50 30" >
+            <Button Style="{StaticResource MainBtn}" x:Name="Close" Content="Close" Width="300" Click="Close_Click" />
+        </StackPanel>
     </Grid>
 </Window>
