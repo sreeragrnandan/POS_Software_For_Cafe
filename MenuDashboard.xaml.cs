@@ -26,6 +26,7 @@ namespace Callista_Cafe
         public MenuDashboard()
         {
             InitializeComponent();
+            FillComboBox();
         }
         MenuItm MenuItem = new MenuItm();
         MenuItm binddataMenuItm = new MenuItm();
@@ -169,6 +170,7 @@ namespace Callista_Cafe
             deleteBtn.IsEnabled = false;
             addBtn.IsEnabled = true;
             addRequirementBtn.IsEnabled = false;
+            FillComboBox();
         }
 
         private void MenuItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -286,6 +288,29 @@ namespace Callista_Cafe
                 MessageBox.Show(int.Parse(ItemIDTxtBox.Text.ToString()).ToString());
                 itmreq.ShowDialog();
                 reset();
+            }
+        }
+
+        public void FillComboBox()
+        {
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+
+                con.Open();
+                cmd = new SqlCommand("SELECT DISTINCT item_category FROM menu_items;", con);
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+                ItemCategoryComboBox.ItemsSource = dt.DefaultView;
+                ItemCategoryComboBox.DisplayMemberPath = "item_category";
+                ItemCategoryComboBox.SelectedValuePath = "item_category";
+                cmd.Dispose();
+                con.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Info");
             }
         }
     }
