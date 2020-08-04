@@ -29,5 +29,11 @@ namespace Callista_Cafe
         {
             this.menuItemId = Menu_Item_ID;
         }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+                DragMove();
+        }
     }
 }
