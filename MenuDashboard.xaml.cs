@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +29,11 @@ namespace Callista_Cafe
         }
         MenuItm MenuItem = new MenuItm();
         MenuItm binddataMenuItm = new MenuItm();
+
+        private SqlConnection con;
+        private SqlCommand cmd;
+
+
         private void MenuItems_Loaded(object sender, RoutedEventArgs e)
         {
             loadGrid();
@@ -204,6 +211,36 @@ namespace Callista_Cafe
                 {
                     MessageBox.Show("Failed to Update. Try Again !", "Error");
                 }
+            }
+        }
+
+        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string S_key = searchTxtBox.Text;
+            try
+            {
+                if (S_key == "")
+                {
+                    loadGrid();
+                }
+                else
+                {
+                    DataTable dt = new DataTable();
+                    con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                    con.Open();
+                    SqlDataAdapter sda = new SqlDataAdapter(
+                        "SELECT item_id, item_name, item_category, item_price FROM menu_items WHERE item_name LIKE '%"+S_key+"%' OR item_category LIKE'%"+S_key+"%';", con);
+                    sda.Fill(dt);
+                    MenuItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
             }
         }
     }
