@@ -13,14 +13,16 @@ namespace Callista_Cafe.Classes
     class ItemIngredientRequirement
     {
         private SqlConnection con;
+        private SqlConnection conn;
         private SqlCommand cmd;
+        private SqlCommand cmdd;
 
 
         public int menuItemId { get; set; }
         public int ingredientId { get; set; }
         public float ingredientQuantity { get; set; }
 
-        public DataTable select(int menuItemId)
+        public DataTable ReqDataTable(int menuItemId)
         {
             DataTable ReqDataTable = new DataTable();
             try
@@ -43,6 +45,30 @@ namespace Callista_Cafe.Classes
             }
 
             return ReqDataTable;
+        }
+
+        public DataTable InventoryDataTable()
+        {
+            DataTable invDataTable = new DataTable();
+            try
+            {
+                conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                cmdd = new SqlCommand("SELECT ingredient, unit FROM inventory;", conn);
+                SqlDataAdapter InvAdapter = new SqlDataAdapter(cmdd);
+                conn.Open();
+                InvAdapter.Fill(invDataTable);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return invDataTable;
         }
     }
 }
