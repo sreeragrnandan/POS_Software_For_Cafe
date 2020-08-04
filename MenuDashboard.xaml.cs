@@ -197,7 +197,7 @@ namespace Callista_Cafe
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
             bool bindingResult = BindDataToObject(true);
-            bool result;
+            bool result = false;
             if (bindingResult)
             {
                 result = MenuItem.update(binddataMenuItm);
@@ -241,6 +241,51 @@ namespace Callista_Cafe
             finally
             {
                 con.Close();
+            }
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool id = ItemIDTxtBox.Text.ToString().Equals("");
+            bool result = false;
+            if (id)
+            {
+                MessageBox.Show("Please select a valid item.", "Error");
+            }
+            else
+            {
+                MenuItm delitm = new MenuItm();
+                delitm.item_id = int.Parse(ItemIDTxtBox.Text.ToString());
+                result = MenuItem.delete(delitm);
+                if (result)
+                {
+                    MessageBox.Show("Item Successfully Deleted !", "Success");
+                    reset();
+                    loadGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to Delete. Try Again !", "Error");
+                }
+            }
+
+        }
+
+        private void addRequirementBtn_Click(object sender, RoutedEventArgs e)
+        {
+            
+            bool id = ItemIDTxtBox.Text.ToString().Equals("");
+            if (id)
+            {
+                MessageBox.Show("Try Again..!", "Error");
+                reset();
+            }
+            else
+            {
+                MenuItemRequirement itmreq = new MenuItemRequirement(int.Parse(ItemIDTxtBox.Text.ToString()));
+                MessageBox.Show(int.Parse(ItemIDTxtBox.Text.ToString()).ToString());
+                itmreq.ShowDialog();
+                reset();
             }
         }
     }
