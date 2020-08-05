@@ -130,7 +130,7 @@
         <StackPanel Grid.Column="0" Width="500" Orientation="Vertical">
             <StackPanel Orientation="Vertical" Margin="10,20,10,0">
                 <Label x:Name="TitleLabel" Content="INGREDIENTS REQUIRED" HorizontalContentAlignment="Center" FontSize="30"  Foreground="White" FontFamily="Times New Roman" />
-                <DataGrid x:Name="RequiredItemDataGrid"  AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Loaded="RequiredItemDataGrid_Loaded" SelectionChanged="RequiredItemDataGrid_SelectionChanged" Margin="0 2 0 0">
+                <DataGrid x:Name="RequiredItemDataGrid" Width="480"  AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Loaded="RequiredItemDataGrid_Loaded" SelectionChanged="RequiredItemDataGrid_SelectionChanged" Margin="0 2 0 0">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="White"/>
