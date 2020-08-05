@@ -82,7 +82,7 @@ namespace Callista_Cafe.Classes
                     con);
                 cmd.Parameters.AddWithValue("@menu_id", itm.menuItemId);
                 cmd.Parameters.AddWithValue("@ing_id", itm.ingredientId);
-                cmd.Parameters.AddWithValue("@quantity", itm.ingredientQuantity);
+                cmd.Parameters.AddWithValue("@quantity", itm.ingredientQuantity.ToString());
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
 
@@ -117,7 +117,41 @@ namespace Callista_Cafe.Classes
                     con);
                 cmd.Parameters.AddWithValue("@menu_id", itm.menuItemId);
                 cmd.Parameters.AddWithValue("@ing_id", itm.ingredientId);
-                cmd.Parameters.AddWithValue("@quantity", itm.ingredientQuantity);
+                cmd.Parameters.AddWithValue("@quantity", itm.ingredientQuantity.ToString());
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
+
+        public bool delete(ItemIngredientRequirement itm)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                cmd = new SqlCommand(
+                    "DELETE FROM ingredient_list WHERE menu_item_id = @menu_id AND ingredient_id=@ing_id",
+                    con);
+                cmd.Parameters.AddWithValue("@menu_id", itm.menuItemId);
+                cmd.Parameters.AddWithValue("@ing_id", itm.ingredientId);
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
 
