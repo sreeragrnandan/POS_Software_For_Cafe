@@ -97,7 +97,14 @@ namespace Callista_Cafe.Classes
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                if (e.ToString().Contains("Violation of PRIMARY KEY constraint"))
+                {
+                    MessageBox.Show("Already Exist !", "Error");
+                }
+                else
+                {
+                    MessageBox.Show(e.ToString(), "Error");
+                }
             }
             finally
             {
