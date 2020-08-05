@@ -70,5 +70,40 @@ namespace Callista_Cafe.Classes
 
             return invDataTable;
         }
+
+        public bool insert(ItemIngredientRequirement itm)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                cmd = new SqlCommand(
+                    "INSERT INTO ingredient_list (menu_item_id, ingredient_id, quantity) VALUES(@menu_id,@ing_id,@quantity)",
+                    con);
+                cmd.Parameters.AddWithValue("@menu_id", itm.menuItemId);
+                cmd.Parameters.AddWithValue("@ing_id", itm.ingredientId);
+                cmd.Parameters.AddWithValue("@quantity", itm.ingredientQuantity);
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
+
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return result;
+        }
     }
 }
