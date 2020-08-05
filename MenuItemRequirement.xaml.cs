@@ -184,7 +184,7 @@ namespace Callista_Cafe
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Please Enter a valid price !", "Error");
+                        MessageBox.Show("Please Enter a valid Quantity !", "Error");
                         result = false;
                         goto FUNEND;
                     }
