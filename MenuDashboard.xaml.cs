@@ -31,6 +31,8 @@ namespace Callista_Cafe
         MenuItm MenuItem = new MenuItm();
         MenuItm binddataMenuItm = new MenuItm();
 
+        DatabaseFunctions DbFun = new DatabaseFunctions();
+
         private SqlConnection con;
         private SqlCommand cmd;
 
@@ -77,7 +79,7 @@ namespace Callista_Cafe
 
             if (ItemNameTxtBox.Text.ToString().Equals(""))
             {
-                MessageBox.Show("Please Enter the Name.", "Info");
+                MessageBox.Show("Please Enter the Name.", "Error");
                 flag = false;
                 goto FUNEND;
             }
@@ -127,7 +129,7 @@ namespace Callista_Cafe
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Please Enter a valid price.!", "Error");
+                    MessageBox.Show("Please Enter a valid Category.!", "Error");
                     flag = false;
                     goto FUNEND;
                 }
@@ -147,16 +149,7 @@ namespace Callista_Cafe
                 {
                     MessageBox.Show("New Item Inserted..!", "Success");
                     reset();
-                    loadGrid();
                 }
-                else
-                {
-                    MessageBox.Show("Failed to insert. Try Again !", "Error");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Something went wrong. Please try Again !");
             }
         }
 
@@ -171,6 +164,7 @@ namespace Callista_Cafe
             addBtn.IsEnabled = true;
             addRequirementBtn.IsEnabled = false;
             FillComboBox();
+            loadGrid();
         }
 
         private void MenuItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -202,16 +196,16 @@ namespace Callista_Cafe
             bool result = false;
             if (bindingResult)
             {
-                result = MenuItem.update(binddataMenuItm);
-                if (result)
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
                 {
-                    MessageBox.Show("Item Successfully Updated !", "Success");
-                    reset();
-                    loadGrid();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to Update. Try Again !", "Error");
+                    result = MenuItem.update(binddataMenuItm);
+                    if (result)
+                    {
+                        MessageBox.Show("Item Successfully Updated !", "Success");
+                        reset();
+                        loadGrid();
+                    }
                 }
             }
         }
@@ -256,18 +250,22 @@ namespace Callista_Cafe
             }
             else
             {
-                MenuItm delitm = new MenuItm();
-                delitm.item_id = int.Parse(ItemIDTxtBox.Text.ToString());
-                result = MenuItem.delete(delitm);
-                if (result)
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
                 {
-                    MessageBox.Show("Item Successfully Deleted !", "Success");
-                    reset();
-                    loadGrid();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to Delete. Try Again !", "Error");
+                    MenuItm delitm = new MenuItm();
+                    delitm.item_id = int.Parse(ItemIDTxtBox.Text.ToString());
+                    result = MenuItem.delete(delitm);
+                    if (result)
+                    {
+                        MessageBox.Show("Item Successfully Deleted !", "Success");
+                        reset();
+                        loadGrid();
+                    }
+                    else
+                    {
+                        loadGrid();
+                    }
                 }
             }
 

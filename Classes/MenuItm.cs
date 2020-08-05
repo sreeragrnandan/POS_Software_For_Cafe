@@ -44,6 +44,7 @@ namespace Callista_Cafe.Classes
             return itemDataTable;
         }
 
+        
         public bool insert(MenuItm itm)
         {
             bool result = false;
@@ -54,7 +55,7 @@ namespace Callista_Cafe.Classes
                     "INSERT INTO menu_items (item_name, item_price, item_category) VALUES(@name,@price,@category)",
                     con);
                 cmd.Parameters.AddWithValue("@name", itm.item_name);
-                cmd.Parameters.AddWithValue("@price", itm.item_price);
+                cmd.Parameters.AddWithValue("@price", itm.item_price.ToString());
                 cmd.Parameters.AddWithValue("@category", itm.item_category);
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
@@ -65,12 +66,19 @@ namespace Callista_Cafe.Classes
                 }
                 else
                 {
-                    result = false;
+                    MessageBox.Show("Failed to insert. Try Again !", "Error");
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                if (e.ToString().Contains("Violation of UNIQUE KEY"))
+                {
+                    MessageBox.Show("Item name already exist !", "Error");
+                }
+                else
+                {
+                    MessageBox.Show(e.ToString(), "Error");
+                }
             }
             finally
             {
@@ -90,7 +98,7 @@ namespace Callista_Cafe.Classes
                     con);
                 cmd.Parameters.AddWithValue("@id", itm.item_id);
                 cmd.Parameters.AddWithValue("@name", itm.item_name);
-                cmd.Parameters.AddWithValue("@price", itm.item_price);
+                cmd.Parameters.AddWithValue("@price", itm.item_price.ToString());
                 cmd.Parameters.AddWithValue("@category", itm.item_category);
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
@@ -101,12 +109,19 @@ namespace Callista_Cafe.Classes
                 }
                 else
                 {
-                    result = false;
+                    MessageBox.Show("Failed to Update. Try Again !", "Error");
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                if (e.ToString().Contains("Violation of UNIQUE KEY"))
+                {
+                    MessageBox.Show("Item name already exist !", "Error");
+                }
+                else
+                {
+                    MessageBox.Show(e.ToString(), "Error");
+                }
             }
             finally
             {
@@ -139,7 +154,7 @@ namespace Callista_Cafe.Classes
                         con);
                     cmd.Parameters.AddWithValue("@id", itm.item_id);
                     cmd.Parameters.AddWithValue("@name", itm.item_name);
-                    cmd.Parameters.AddWithValue("@price", itm.item_price);
+                    cmd.Parameters.AddWithValue("@price", itm.item_price.ToString());
                     cmd.Parameters.AddWithValue("@cate", itm.item_category);
                     cmd.Parameters.AddWithValue("@desc", itm.item_dec);
                     int rows = cmd.ExecuteNonQuery();
@@ -151,16 +166,45 @@ namespace Callista_Cafe.Classes
                     {
                         update_result = false;
                     }
-                    con.Close();
                 }
+            }
+            catch (Exception exc)
+            {
+                con.Close();
+                try
+                {
 
+                    cmd = new SqlCommand(
+                        "DELETE FROM deleted_menu_items WHERE del_item_id=@id",
+                        con);
+                    cmd.Parameters.AddWithValue("@id", itm.item_id);
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exce)
+                {
+                    MessageBox.Show(exce.ToString(), "Error");
+                }
+                finally
+                {
+                    MessageBox.Show("Failed to Delete. Try Again !", "Error");
+                }
+            }
+            finally
+            {
+                con.Close();
+            }
+
+
+            try
+            {
+                con.Open();
                 if (update_result)
                 {
                     cmd = new SqlCommand(
                         "DELETE FROM menu_items WHERE item_id=@id",
                         con);
                     cmd.Parameters.AddWithValue("@id", itm.item_id);
-                    con.Open();
                     int rows = cmd.ExecuteNonQuery();
                     if (rows > 0)
                     {
@@ -169,16 +213,18 @@ namespace Callista_Cafe.Classes
                     else
                     {
                         del_result = false;
+                        MessageBox.Show("Failed to Delete. Try Again !", "Error");
                     }
-                    con.Close();
                 }
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Error");
+                MessageBox.Show("Failed to Delete. Try Again !", "Error");
             }
             finally
-            { }
+            {
+                con.Close();
+            }
             return del_result;
         }
 

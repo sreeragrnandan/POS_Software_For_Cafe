@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
         Title="Menu Dashboard | Callista Cafe"
-        Height="720"
-        Width="1280"
+        MinHeight="720"
+        MinWidth="1280"
         WindowState="Maximized"
         WindowStyle="SingleBorderWindow"
         Background="#072233">
@@ -126,77 +126,85 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <StackPanel Grid.Column="0">
-            <StackPanel VerticalAlignment="Center" Margin="0,30,20,0">
-                <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" FontFamily="Times New Roman" />
+        <Grid Grid.Column="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="120" MaxHeight="200"></RowDefinition>
+                <RowDefinition MinHeight="600"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
+                <StackPanel VerticalAlignment="Center">
+                    <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" FontFamily="Times New Roman" />
+                </StackPanel>
             </StackPanel>
-        </StackPanel>
-        <StackPanel Grid.Column="0" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-            
-            <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
-                <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 0 0 30" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
+                    <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="ItemName"  Content=" Name :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="ItemCategory"  Content=" Category :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <ComboBox x:Name="ItemCategoryComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="ItemPrice"  Content=" Price :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="25 25 25 20">
+                    <Button x:Name="addBtn" Content="ADD" MinWidth="180" Height="30" Margin="0 0 20 0" Click="addBtn_Click"/>
+                    <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="updateBtn_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Button x:Name="resetBtn" Content="RESET" MinWidth="180" Height="30" Margin="0 0 20 0" Click="resetBtn_Click" />
+                    <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="deleteBtn_Click" />
+                </StackPanel>
+                <StackPanel Orientation="Vertical" Margin="25 0 25 20">
+                    <Button Style="{StaticResource MainBtn}" x:Name="addRequirementBtn" IsEnabled="False" Content="ADD REQUIREMENT" MinWidth="400" MaxWidth="560" Height="30" Margin="0 0 0 5" Click="addRequirementBtn_Click" />
+                    <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME"  Height="30" MinWidth="400" MaxWidth="560" Margin="0 5 0 0" />
+                </StackPanel>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                <Label x:Name="ItemName"  Content=" Name :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                <Label x:Name="ItemCategory"  Content=" Category :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <ComboBox x:Name="ItemCategoryComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                <Label x:Name="ItemPrice"  Content=" Price :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
-                <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="25 25 25 20">
-                <Button x:Name="addBtn" Content="ADD" MinWidth="180" Height="30" Margin="0 0 20 0" Click="addBtn_Click"/>
-                <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="updateBtn_Click"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                <Button x:Name="resetBtn" Content="RESET" MinWidth="180" Height="30" Margin="0 0 20 0" Click="resetBtn_Click" />
-                <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="deleteBtn_Click" />
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Margin="25 0 25 20">
-                <Button Style="{StaticResource MainBtn}" x:Name="addRequirementBtn" IsEnabled="False" Content="ADD REQUIREMENT" MinWidth="400" MaxWidth="560" Height="30" Margin="0 0 0 5" Click="addRequirementBtn_Click" />
-                <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME"  Height="30" MinWidth="400" MaxWidth="560" Margin="0 5 0 0" />
-            </StackPanel>
-        </StackPanel>
+        </Grid>
 
 
-        <StackPanel Grid.Column="1" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 45 10 0">
-                <Label Content="Search: " FontSize="22" Margin="0 0 0 0"/>
-                <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" TextChanged="SearchBox_TextChanged" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+        <Grid Grid.Column="1">
+            <StackPanel Orientation="Vertical" Margin="10 0 20 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 45 0 0">
+                    <Label Content="Search: " FontSize="22" Margin="0 0 0 0"/>
+                    <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" TextChanged="SearchBox_TextChanged" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center">
+                    <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="0 5 0 0" Loaded="MenuItems_Loaded" SelectionChanged="MenuItems_SelectionChanged">
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                <Setter Property="BorderBrush" Value="gray"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header=" ID" Binding="{Binding item_id}" />
+                            <DataGridTextColumn Header=" NAME" Binding="{Binding item_name}"/>
+                            <DataGridTextColumn Header=" CATEGORY"  Binding="{Binding item_category}"/>
+                            <DataGridTextColumn Header=" PRICE" Binding="{Binding item_price}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+                </StackPanel>
             </StackPanel>
-            <StackPanel HorizontalAlignment="Center">
-                <DataGrid x:Name="MenuItems" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 5 10 0" Loaded="MenuItems_Loaded" SelectionChanged="MenuItems_SelectionChanged">
 
-                    <DataGrid.Resources>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="White"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="BorderThickness" Value="0,0,1,2"/>
-                            <Setter Property="BorderBrush" Value="gray"/>
-                            <Setter Property="FontSize" Value="14"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Style>
-                        <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Foreground" Value="Black"/>
-                        </Style>
-                    </DataGrid.Resources>
-
-                    <DataGrid.Columns >
-                        <DataGridTextColumn Header=" ID" Binding="{Binding item_id}" />
-                        <DataGridTextColumn Header=" NAME" Binding="{Binding item_name}"/>
-                        <DataGridTextColumn Header=" CATEGORY"  Binding="{Binding item_category}"/>
-                        <DataGridTextColumn Header=" PRICE" Binding="{Binding item_price}"/>
-                    </DataGrid.Columns>
-
-                </DataGrid>
-            </StackPanel>
-        </StackPanel>
-
+        </Grid>
     </Grid>
 
 </Window>
