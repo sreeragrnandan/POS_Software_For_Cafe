@@ -16,7 +16,7 @@ namespace Callista_Cafe.Classes
         private SqlDataReader reader;
         public int getIngredientId(String name)
         {
-            int id=int.Parse(null);
+            int id=0;
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
@@ -27,6 +27,10 @@ namespace Callista_Cafe.Classes
                 if (reader.Read())
                 {
                     id = int.Parse(reader["id"].ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Something went worng. Please try again !", "Error");
                 }
             }
             catch (Exception e)
