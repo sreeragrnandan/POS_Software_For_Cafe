@@ -30,6 +30,7 @@ namespace Callista_Cafe
         }
         ItemIngredientRequirement Itm_ing_req = new ItemIngredientRequirement();
         ItemIngredientRequirement InvItem = new ItemIngredientRequirement();
+        ItemIngredientRequirement SendData = new ItemIngredientRequirement();
         DatabaseFunctions DbFun = new DatabaseFunctions();
 
         private SqlConnection con;
@@ -77,11 +78,10 @@ namespace Callista_Cafe
             if (row_selected != null)
             {
                 IngredientTextBox.Text = row_selected[0].ToString();
-
-                /*addBtn.IsEnabled = false;
-                updateBtn.IsEnabled = true;
-                deleteBtn.IsEnabled = true;
-                addRequirementBtn.IsEnabled = true;*/
+                QtyTextBox.Text = "0";
+                addBtn.IsEnabled = true;
+                updateBtn.IsEnabled = false;
+                deleteBtn.IsEnabled = false;
             }
         }
 
@@ -94,10 +94,9 @@ namespace Callista_Cafe
                 IngredientTextBox.Text = row_selected[0].ToString();
                 QtyTextBox.Text = row_selected[1].ToString();
 
-                /*addBtn.IsEnabled = false;
+                addBtn.IsEnabled = false;
                 updateBtn.IsEnabled = true;
                 deleteBtn.IsEnabled = true;
-                addRequirementBtn.IsEnabled = true;*/
             }
         }
 
@@ -134,6 +133,93 @@ namespace Callista_Cafe
             {
                 con.Close();
             }
+        }
+
+        private bool BindData()
+        {
+            bool result = true;
+            if (ItemTextBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Something went wrong. Please close and reopen the window.", "Error");
+                result = false;
+                goto FUNEND;
+            }
+            else
+            {
+                SendData.menuItemId = menuItemId;
+            }
+            if (IngredientTextBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please select an ingredient.", "Error");
+                result = false;
+                goto FUNEND;
+            }
+            else
+            {
+                try
+                {
+                    SendData.ingredientId = DbFun.getIngredientId(IngredientTextBox.Text);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Something Went Wrong. Please try Again!", "Error");
+                    result = false;
+                    goto FUNEND;
+                }
+            }
+            if (QtyTextBox.Text.ToString().Equals("") || QtyTextBox.Text.ToString().Equals("0"))
+            {
+                MessageBox.Show("Please Enter a quantity.", "Error");
+                result = false;
+                goto FUNEND;
+            }
+            else
+            {
+                try
+                {
+                    SendData.ingredientQuantity = float.Parse(QtyTextBox.Text.ToString());
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Please Enter a valid price !", "Error");
+                    result = false;
+                    goto FUNEND;
+                }
+            }
+        FUNEND:
+            return result;
+        }
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindData = BindData();
+            if (bindData)
+            {
+                bool result = SendData.insert(SendData);
+                if (result)
+                {
+                    MessageBox.Show("Added Successfully..!", "Info");
+                    ResetFun();
+                    reqLoadGrid();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to Update..!", "Error");
+                }
+            }
+        }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ResetFun();
+        }
+
+        private void ResetFun()
+        {
+            IngredientTextBox.Text = "";
+            QtyTextBox.Text = "";
+            addBtn.IsEnabled = false;
+            updateBtn.IsEnabled = false;
+            deleteBtn.IsEnabled = false;
         }
     }
 }
