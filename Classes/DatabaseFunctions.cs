@@ -72,5 +72,19 @@ namespace Callista_Cafe.Classes
             return name;
         }
 
+        public bool areyousure()
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Update", MessageBoxButton.YesNo);
+            switch (messageBoxResult)
+            {
+                case MessageBoxResult.Yes:
+                    return true;
+                case MessageBoxResult.No:
+                    return false;
+            }
+
+            return false;
+        }
+
     }
 }
