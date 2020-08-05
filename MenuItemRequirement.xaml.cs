@@ -203,7 +203,7 @@ namespace Callista_Cafe
                 }
                 else
                 {
-                    MessageBox.Show("Failed to Update..!", "Error");
+                    MessageBox.Show("Failed to add..!", "Error");
                 }
             }
         }
@@ -220,6 +220,32 @@ namespace Callista_Cafe
             addBtn.IsEnabled = false;
             updateBtn.IsEnabled = false;
             deleteBtn.IsEnabled = false;
+            reqLoadGrid();
+            invLoadGrid();
+        }
+
+        private void updateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindData = BindData();
+            if (bindData)
+            {
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
+                {
+                    bool result = SendData.update(SendData);
+                    if (result)
+                    {
+                        MessageBox.Show("Updated Successfully..!", "Info");
+                        ResetFun();
+                        reqLoadGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to Update..!", "Error");
+                    }
+                }
+            }
+
         }
     }
 }
