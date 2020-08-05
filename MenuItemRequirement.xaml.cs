@@ -135,7 +135,7 @@ namespace Callista_Cafe
             }
         }
 
-        private bool BindData()
+        private bool BindData(bool qty)
         {
             bool result = true;
             if (ItemTextBox.Text.ToString().Equals(""))
@@ -167,23 +167,27 @@ namespace Callista_Cafe
                     goto FUNEND;
                 }
             }
-            if (QtyTextBox.Text.ToString().Equals("") || QtyTextBox.Text.ToString().Equals("0"))
+
+            if (qty)
             {
-                MessageBox.Show("Please Enter a quantity.", "Error");
-                result = false;
-                goto FUNEND;
-            }
-            else
-            {
-                try
+                if (QtyTextBox.Text.ToString().Equals("") || QtyTextBox.Text.ToString().Equals("0"))
                 {
-                    SendData.ingredientQuantity = float.Parse(QtyTextBox.Text.ToString());
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show("Please Enter a valid price !", "Error");
+                    MessageBox.Show("Please Enter a quantity.", "Error");
                     result = false;
                     goto FUNEND;
+                }
+                else
+                {
+                    try
+                    {
+                        SendData.ingredientQuantity = float.Parse(QtyTextBox.Text.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Please Enter a valid price !", "Error");
+                        result = false;
+                        goto FUNEND;
+                    }
                 }
             }
         FUNEND:
@@ -191,7 +195,7 @@ namespace Callista_Cafe
         }
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool bindData = BindData();
+            bool bindData = BindData(true);
             if (bindData)
             {
                 bool result = SendData.insert(SendData);
@@ -226,7 +230,7 @@ namespace Callista_Cafe
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool bindData = BindData();
+            bool bindData = BindData(true);
             if (bindData)
             {
                 bool areyousure = DbFun.areyousure();
@@ -246,6 +250,29 @@ namespace Callista_Cafe
                 }
             }
 
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindData = BindData(false);
+            if (bindData)
+            {
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
+                {
+                    bool result = SendData.delete(SendData);
+                    if (result)
+                    {
+                        MessageBox.Show("Deleted Successfully..!", "Info");
+                        ResetFun();
+                        reqLoadGrid();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to Delete..!", "Error");
+                    }
+                }
+            }
         }
     }
 }
