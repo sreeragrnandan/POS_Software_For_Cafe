@@ -71,6 +71,9 @@
     <Compile Include="MenuItemRequirement.xaml.cs">
       <DependentUpon>MenuItemRequirement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\MenuItemDescription.xaml.cs">
+      <DependentUpon>MenuItemDescription.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SupplierWindow.xaml.cs">
       <DependentUpon>SupplierWindow.xaml</DependentUpon>
     </Compile>
@@ -126,6 +129,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SubWindows\MenuItemDescription.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SupplierWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,6 +172,9 @@
     <Resource Include="assets\callista poster logo.png" />
     <Resource Include="assets\Logo Sqr.png" />
     <Resource Include="assets\logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="assets\callista.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
