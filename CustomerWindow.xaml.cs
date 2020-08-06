@@ -235,7 +235,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "SELECT * FROM customer WHERE c_name LIKE '%" + S_key + "%' OR c_location LIKE'%" + S_key + "%'  OR c_mobno LIKE'%" + S_key + "%';", con);
+                        "SELECT c_id,c_name,c_mobno, convert(varchar, c_dob, 3) as c_dob,c_email,c_location FROM customer WHERE c_name LIKE '%" + S_key + "%' OR c_location LIKE'%" + S_key + "%'  OR c_mobno LIKE'%" + S_key + "%';", con);
                     sda.Fill(dt);
                     Customers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
                 }
