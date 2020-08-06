@@ -30,7 +30,7 @@ namespace Callista_Cafe.Classes
             {
                 /*select id ingredient,price,qualtity,e_date,unit,min_quantity, supplier_name from inventory as inv, suppliers as sup where sup.supplier_id=inv.supplier_id*/
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                cmd = new SqlCommand("select id, ingredient,price,quantity,e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id= inv.supplier_id) END AS supplier_name FROM inventory as inv;", con);
+                cmd = new SqlCommand("select id, ingredient,price,quantity,convert(varchar, inv.e_date, 3) as e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id= inv.supplier_id) END AS supplier_name FROM inventory as inv;", con);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 con.Open();
                 adapter.Fill(dt);
