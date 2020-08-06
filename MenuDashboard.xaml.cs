@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Callista_Cafe.Classes;
+using Callista_Cafe.SubWindows;
 
 namespace Callista_Cafe
 {
@@ -224,7 +225,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "SELECT item_id, item_name, item_category, item_price FROM menu_items WHERE item_name LIKE '%"+S_key+"%' OR item_category LIKE'%"+S_key+"%';", con);
+                        "SELECT item_id, item_name, item_category, item_price, description, c_code FROM menu_items WHERE item_name LIKE '%" + S_key+"%' OR item_category LIKE'%"+S_key+"%';", con);
                     sda.Fill(dt);
                     MenuItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
                 }
@@ -307,6 +308,29 @@ namespace Callista_Cafe
             {
                 MessageBox.Show(ex.ToString(), "Info");
             }
+        }
+
+        private void MenuItems_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            if (row_selected != null)
+            {
+                int SelectedItemId = int.Parse(row_selected[0].ToString());
+                string SelectedItemDesc = row_selected[4].ToString();
+                string SelectedItemCode = row_selected[5].ToString();
+                
+                MenuItemDescription WindowMenuItemDescription = new MenuItemDescription(SelectedItemId,SelectedItemDesc,SelectedItemCode);
+                WindowMenuItemDescription.ShowDialog();
+                reset();
+            }
+        }
+
+        private void homeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord adminDashbord = new AdminDashbord();
+            adminDashbord.Show();
+            this.Close();
         }
     }
 }
