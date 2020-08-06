@@ -109,7 +109,7 @@ namespace Callista_Cafe
             {
                 con = new SqlConnection(ConString);
                 con.Open();
-                cmd = new SqlCommand("SELECT inv.ingredient,inv.quantity,inv.price, CASE WHEN inv.supplier_id IS NULL THEN '' ELSE (SELECT CONCAT(sup.supplier_name,' ',sup.supplier_mobile) FROM dbo.suppliers as sup WHERE sup.supplier_id=inv.supplier_id) END AS supplier_details FROM dbo.inventory as inv WHERE inv.quantity<inv.min_quantity", con);
+                cmd = new SqlCommand("SELECT inv.ingredient,CONCAT(inv.quantity,' ',inv.unit) as quantity,inv.price, CASE WHEN inv.supplier_id IS NULL THEN '' ELSE (SELECT CONCAT(sup.supplier_name,' ',sup.supplier_mobile) FROM dbo.suppliers as sup WHERE sup.supplier_id=inv.supplier_id) END AS supplier_details FROM dbo.inventory as inv WHERE inv.quantity<inv.min_quantity", con);
                 adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
                 InventoryRemaining.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
@@ -133,7 +133,7 @@ namespace Callista_Cafe
                 string date = DateTime.Today.AddDays(7).ToString("yyyy-MM-dd");
                 con = new SqlConnection(ConString);
                 con.Open();
-                cmd = new SqlCommand("select inv.ingredient,convert(varchar, inv.e_date, 3) as e_date,inv.price from dbo.inventory as inv where inv.e_date <= @date", con);
+                cmd = new SqlCommand("select inv.ingredient,CONCAT(inv.quantity,' ',inv.unit) as quantity,convert(varchar, inv.e_date, 3) as e_date,inv.price,CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT CONCAT(sup.supplier_name,' ',sup.supplier_mobile) FROM dbo.suppliers as sup where supplier_id= inv.supplier_id) END AS supplier_details from dbo.inventory as inv where inv.e_date <= @date", con);
                 cmd.Parameters.AddWithValue("@date", date.ToString());
                 adapter = new SqlDataAdapter(cmd);
                 adapter.Fill(dt);
