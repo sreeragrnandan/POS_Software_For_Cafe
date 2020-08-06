@@ -249,5 +249,12 @@ namespace Callista_Cafe
                 con.Close();
             }
         }
+
+        private void homeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord adminDashbord = new AdminDashbord();
+            adminDashbord.Show();
+            this.Close();
+        }
     }
 }
