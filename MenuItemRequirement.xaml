@@ -14,7 +14,8 @@
         MouseDown="Window_MouseDown"
         BorderBrush="DarkGray"
         BorderThickness="2"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        ShowInTaskbar="False">
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
