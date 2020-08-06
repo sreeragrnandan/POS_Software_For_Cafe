@@ -34,6 +34,12 @@ namespace Callista_Cafe
         InventoryItem itm = new InventoryItem();
         InventoryItem addItem = new InventoryItem();
 
+        InventoryItem toSendInventoryItem = new InventoryItem();
+
+        DatabaseFunctions DbFun = new DatabaseFunctions();
+
+        private int item_id = 0;
+
         public void FillComboBox()
         {
             try
@@ -67,98 +73,183 @@ namespace Callista_Cafe
             }
         }
 
-        private void addBtn_Click(object sender, RoutedEventArgs e)
+        private bool BindDataToObject(bool id)
         {
-            bool date = true;
-            try
+            bool flag = true;
+
+            if (id)
             {
-                if (nameTxtBox.Text.ToString().Equals(""))
+                if (item_id.ToString().Equals(""))
                 {
-                    MessageBox.Show("Please Enter a Valid Name..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.ingredient = nameTxtBox.Text;
-                }
-
-                addItem.price = priceTxtBox.Text;
-
-                if (qtyTxtBox.Text.ToString().Equals(""))
-                {
-                    MessageBox.Show("Please Enter The Quantity..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.quantity = qtyTxtBox.Text;
-                }
-
-                if (expDate.Text.ToString().Equals(""))
-                {
-                    date = false;
-                }
-                else
-                {
-                    addItem.e_date = expDate.SelectedDate.ToString();
-                }
-
-                if (unitComboBox.Text.ToString().Equals(""))
-                {
-                    MessageBox.Show("Please select a Unit..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.unit = unitComboBox.Text;
-                }
-
-                addItem.min_quantity = minQtyTxtBox.Text;
-
-                if (supplierComboBox.Text.ToString().Equals(""))
-                {
-                    addItem.supplier_name = null;
+                    MessageBox.Show("Item_ID ERROR. Failed to Update..!", "Error");
+                    flag = false;
+                    goto FUNEND;
                 }
                 else
                 {
                     try
                     {
-                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                        toSendInventoryItem.id = item_id;
                     }
-                    catch (Exception ex)
+                    catch (Exception e)
                     {
-                        MessageBox.Show("Please select a supplier form the list.", "Error");
-                        goto THEEND;
+                        MessageBox.Show("Item_ID ERROR. Failed to Update..!", "Error");
+                        flag = false;
+                        goto FUNEND;
                     }
+                }
+            }
+            else
+            {
+                toSendInventoryItem.id = 0;
+            }
 
+            if (nameTxtBox.Text.Equals(""))
+            {
+                MessageBox.Show("Please enter the name..!", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                toSendInventoryItem.ingredient = nameTxtBox.Text;
+            }
+
+            if (!priceTxtBox.Text.Equals(""))
+            {
+                try
+                {
+                    toSendInventoryItem.price = float.Parse(priceTxtBox.Text).ToString();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Please enter a valid price..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+            else
+            {
+                toSendInventoryItem.price = "";
+            }
+            
+            if (qtyTxtBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please enter the quantity..!", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                try
+                {
+                    toSendInventoryItem.quantity = float.Parse(qtyTxtBox.Text);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Please Enter a valid quantity.!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+
+            if (!expDate.Text.Equals(""))
+            {
+                try
+                {
+                    toSendInventoryItem.e_date = Convert.ToDateTime(expDate.Text).ToString();
+                }
+                catch
+                {
+                    MessageBox.Show("Please enter a valid date..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+            else
+            {
+                toSendInventoryItem.e_date = "";
+            }
+
+
+            if (unitComboBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please select/enter an unit..!", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                toSendInventoryItem.unit = unitComboBox.Text;
+            }
+
+            if (!minQtyTxtBox.Text.Equals(""))
+            {
+                try
+                {
+                    toSendInventoryItem.min_quantity = float.Parse(minQtyTxtBox.Text).ToString();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Please enter a valid minimum quantity..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+            else
+            {
+                toSendInventoryItem.min_quantity = "";
+            }
+
+            if (supplierComboBox.Text.ToString().Equals(""))
+            {
+                toSendInventoryItem.supplier_name = "";
+            }
+            else
+            {
+                try
+                {
+                    toSendInventoryItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Please select a supplier form the list..!", "Error");
+                    flag = false;
+                    goto FUNEND;
                 }
 
-                bool result = addItem.insert(addItem,date);
+            }
+            FUNEND: { }
+            return flag;
+        }
+
+
+
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindingResult = BindDataToObject(false);
+            bool result;
+            if (bindingResult)
+            {
+                result = itm.insert(toSendInventoryItem);
                 if (result)
                 {
-                    MessageBox.Show("New Item Added.", "Info");
-                    ResetFun();
+                    MessageBox.Show("New Item Inserted..!", "Success");
+                    reset();
                 }
-                else
-                {
-                    MessageBox.Show("Failed to add item.", "Info");
-                }
-                DataTable dt = itm.select();
-                InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
-                FillComboBox();
-                THEEND:{}
             }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.ToString(), "info");
-            }
-        
+
         }
 
         private void InventoryItems_Loaded(object sender, RoutedEventArgs e)
         {
+            loadGrid();
+        }
+
+        private void loadGrid()
+        {
             DataTable dt = itm.select();
-            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
+            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
         }
 
         private void InventoryItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -167,7 +258,7 @@ namespace Callista_Cafe
             DataRowView row_selected = gd.SelectedItem as DataRowView;
             if (row_selected != null)
             {
-                idTextBlock.Text = row_selected[0].ToString();
+                item_id = int.Parse(row_selected[0].ToString());
                 nameTxtBox.Text = row_selected[1].ToString();
                 priceTxtBox.Text = row_selected[2].ToString();
                 qtyTxtBox.Text = row_selected[3].ToString();
@@ -189,111 +280,31 @@ namespace Callista_Cafe
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool date = true;
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Update", MessageBoxButton.YesNo);
-            switch (messageBoxResult)
+            bool bindingResult = BindDataToObject(true);
+            bool result = false;
+            if (bindingResult)
             {
-                case MessageBoxResult.Yes:
-                    goto CONTINUE;
-                case MessageBoxResult.No:
-                    goto UPDATEEND;
-            }
-            CONTINUE:
-            try
-            {
-                addItem.id = int.Parse(idTextBlock.Text);
-                if (nameTxtBox.Text.ToString().Equals(""))
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
                 {
-                    MessageBox.Show("Please Enter a Valid Name..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.ingredient = nameTxtBox.Text;
-                }
-
-                addItem.price = priceTxtBox.Text;
-
-                if (qtyTxtBox.Text.ToString().Equals(""))
-                {
-                    MessageBox.Show("Please Enter The Quantity..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.quantity = qtyTxtBox.Text;
-                }
-
-                if (expDate.Text.ToString().Equals(""))
-                {
-                    date = false;
-                }
-                else
-                {
-                    addItem.e_date = expDate.SelectedDate.ToString();
-                }
-
-                if (unitComboBox.Text.ToString().Equals(""))
-                {
-                    MessageBox.Show("Please select a Unit..!", "Error");
-                    goto THEEND;
-                }
-                else
-                {
-                    addItem.unit = unitComboBox.Text;
-                }
-
-                addItem.min_quantity = minQtyTxtBox.Text;
-
-                if (supplierComboBox.Text.ToString().Equals(""))
-                {
-                    addItem.supplier_name = null;
-                }
-                else
-                {
-                    try
+                    result = itm.update(toSendInventoryItem);
+                    if (result)
                     {
-                        addItem.supplier_name = supplierComboBox.SelectedValue.ToString();
+                        MessageBox.Show(" Inventory item details updated successfully !", "Success");
+                        reset();
                     }
-                    catch(Exception exce)
-                    {
-                        MessageBox.Show("Please select a supplier form the list.", "Error");
-                        goto THEEND;
-                    }
-                    
                 }
-
-                bool result = addItem.update(addItem, date);
-                if (result)
-                {
-                    MessageBox.Show("Item Updated Successfully.", "Info");
-                    ResetFun();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to Updated.", "Info");
-                }
-                DataTable dt = itm.select();
-                InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                FillComboBox();
-                THEEND:{}
             }
-            catch (Exception exception)
-            {
-                MessageBox.Show(exception.ToString(), "info");
-            }
-
-            UPDATEEND:{}
         }
 
         private void ResetBtn_Click(object sender, RoutedEventArgs e)
         {
-            ResetFun();
+            reset();
         }
 
-        public void ResetFun()
+        public void reset()
         {
-            idTextBlock.Text = "";
+            item_id=0;
             nameTxtBox.Text = "";
             priceTxtBox.Text = "";
             qtyTxtBox.Text = "";
@@ -306,34 +317,31 @@ namespace Callista_Cafe
             addBtn.IsEnabled = true;
             DeleteBtn.IsEnabled = false;
             addQtyBtn.IsEnabled = false;
+            FillComboBox();
+            loadGrid();
         }
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            InventoryItem delItm = new InventoryItem();
-            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "DELETE", MessageBoxButton.YesNo);
-            switch (messageBoxResult)
+            bool id = item_id.ToString().Equals("0");
+            bool result = false;
+            if (id)
             {
-                case MessageBoxResult.Yes:
-                    goto DELETECONTINUE;
-                case MessageBoxResult.No:
-                    goto DELETEEND;
-            }
-            DELETECONTINUE:
-            delItm.id = int.Parse(idTextBlock.Text);
-            bool delResult = itm.delete(delItm);
-            if (delResult)
-            {
-                MessageBox.Show("Deleted Successfully","Info");
-                ResetFun();
+                MessageBox.Show("Please select an item.", "Error");
             }
             else
             {
-                MessageBox.Show("Failed to Delete", "Info");
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
+                {
+                    toSendInventoryItem.id = item_id;
+                    result = itm.delete(toSendInventoryItem);
+                    if (result)
+                    {
+                        MessageBox.Show(" Inventory item deleted successfull..!", "Success");
+                        reset();
+                    }
+                }
             }
-            DataTable dt = itm.select();
-            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-            FillComboBox();
-        DELETEEND:{}
         }
 
         private void searchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -352,7 +360,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
+                        "select id, ingredient,price,quantity,convert(varchar, inv.e_date, 3) as e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
                     sda.Fill(dt);
                     InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                 }
@@ -370,39 +378,40 @@ namespace Callista_Cafe
 
         private void addQtyBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (idTextBlock.Text.Equals(null) || int.Parse(addQtyTxtBox.Text) <= 0) 
+            bool result = false;
+            float addqty = 0.0f;
+            try
             {
-                MessageBox.Show("Try Again", "Error");
+                addqty = float.Parse(addQtyTxtBox.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Invalid input. Please check the input..!", "Error");
+                goto END;
+            }
+            if (item_id.ToString().Equals("0") || addqty <= 0 || item_id==0) 
+            {
+                MessageBox.Show("Check the input..!", "Error");
             }
             else
             {
-                InventoryItem addqty = new InventoryItem();
-                MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Add Quantity", MessageBoxButton.YesNo);
-                switch (messageBoxResult)
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
                 {
-                    case MessageBoxResult.Yes:
-                        addqty.id = int.Parse(idTextBlock.Text);
-                        addqty.quantity = addQtyTxtBox.Text;
-                        bool addqtyresult = addqty.addQty(addqty);
-                        if (addqtyresult)
-                        {
-                            MessageBox.Show("Quantity added successfully.", "Info");
-                            DataTable dt = itm.select();
-                            InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                            ResetFun();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Failed to add quantity. Try Again","Info");
-                        }
-                        break;
-                    case MessageBoxResult.No:
-                        break;
+                    toSendInventoryItem.id = item_id;
+                    result = itm.addQty(toSendInventoryItem,float.Parse(addQtyTxtBox.Text));
+                    if (result)
+                    {
+                        MessageBox.Show(" Quantity updated successfull..!", "Success");
+                        reset();
+                    }
                 }
             }
+            END:{}
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
             AdminDashbord adm = new AdminDashbord();
             adm.Show();

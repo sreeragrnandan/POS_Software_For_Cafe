@@ -11,22 +11,76 @@
         Height="720"
         Width="1280"
         WindowState="Maximized"
-        WindowStyle="ThreeDBorderWindow"
+        WindowStyle="SingleBorderWindow"
         Background="#072233">
 
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
-            <Setter Property="Foreground" Value="White" />
-            <Setter Property="FontWeight" Value="Light" />
-            <Setter Property="Background" Value="Teal" />
-            <Setter Property="MinHeight" Value="30" />
-            <Setter Property="FontSize" Value="22" />
-            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
 
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="15"
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="MainBtn" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
                                 BorderThickness="2"
                                 BorderBrush="White">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -36,98 +90,125 @@
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"
+                                        BorderThickness="2"
+                                        BorderBrush="WhiteSmoke">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
                 <Trigger Property="IsEnabled" Value="false">
                     <Setter Property="Opacity" Value=".5"/>
-                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Foreground" Value="Gray"/>
                 </Trigger>
             </Style.Triggers>
-
         </Style>
     </Window.Resources>
     
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="600" MinWidth="500"/>
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="450"/>
+            <ColumnDefinition MinWidth="830"/>
+        </Grid.ColumnDefinitions>
 
-            <Border Grid.ColumnSpan="1" CornerRadius="0 100 10 0">
-                <Border.Background>
-                    <SolidColorBrush Color="DarkSlateGray" Opacity=".5"/>
-                </Border.Background>
-            </Border>
-            <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10 0 0 0" HorizontalAlignment="Left">
-                <StackPanel Margin="10 0 0 10">
-                    <TextBlock Text="Inventory Dashboard" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48" Foreground="BlanchedAlmond" FontFamily="Californian FB" Margin="0,30,0,0"/>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="ID :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBlock x:Name="idTextBlock" Text="" FontSize="18" Foreground="White" MinWidth="300" Background="#555555" TextAlignment="Center" VerticalAlignment="Center" Height="30" />
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Name :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBox x:Name="nameTxtBox"  FontSize="18" Foreground="White" MinWidth="300" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="30" BorderThickness="2" />
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Price :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBox x:Name="priceTxtBox" FontSize="18" Foreground="White" MinWidth="300" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="30"  BorderThickness="2"/>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Quantity :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBox x:Name="qtyTxtBox" FontSize="18" Foreground="White" MinWidth="300" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="30"  BorderThickness="2"/>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Exp Date :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <DatePicker x:Name="expDate" FontSize="18" Background="Transparent"  MinWidth="300" Height="30" ></DatePicker>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Unit :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <ComboBox x:Name="unitComboBox" FontSize="18" Background="Transparent" MinWidth="300" IsEditable="True" Height="30"/>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Min Qty :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBox x:Name="minQtyTxtBox" FontSize="18" Foreground="White" MinWidth="300" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="30"  BorderThickness="2"/>
-                </StackPanel>
-                
-                
-                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                    <Label Content="Supplier :" FontSize="20" Foreground="White" Margin="10 0 10 0" MinWidth="70"/>
-                    <ComboBox x:Name="supplierComboBox"  FontSize="18" Background="Transparent" MinWidth="300" IsEditable="True" Height="30"/>
-                </StackPanel>
+        <Border Grid.ColumnSpan="1" CornerRadius="0 150 10 0">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#801717" Offset="0.35"/>
+                    <GradientStop Color="#072233" Offset=".75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Grid Grid.Column="0">
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-                    <Button x:Name="addBtn" Content="ADD" Click="addBtn_Click" MinWidth="150" Margin="0 20 50 25"/>
-                    <Button x:Name="updateBtn" Content="UPDATE" IsEnabled="False" Click="updateBtn_Click" MinWidth="150" Margin="50 20 0 25"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" MinWidth="150">
-                    <Button x:Name="ResetBtn" Content="RESET" Margin="0 0 50 0" MinWidth="150" Click="ResetBtn_Click" />
-                    <Button x:Name="DeleteBtn" Content="DELETE" IsEnabled="False" Margin="50 0 0 0" MinWidth="150" Click="DeleteBtn_Click"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0 40 0 0">
-                    <Label Content="Add Qty :" FontSize="20" Foreground="White" Height="35" Margin="10 0 10 0" MinWidth="70"/>
-                    <TextBox x:Name="addQtyTxtBox" Text="0" FontSize="23" VerticalContentAlignment="Center" Foreground="White" Width="200" Background="Transparent" TextAlignment="Center" VerticalAlignment="Center" Height="35"  BorderThickness="2"/>
-                    <Button x:Name="addQtyBtn" Width="150" MinHeight="35" IsEnabled="False" Margin="20 0 0 0" Content="Add Quantity" Click="addQtyBtn_Click" />
-                </StackPanel>
-                
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="260"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            
+            <StackPanel Margin="30 10 0 0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Left">
+                <TextBlock Text="Inventory Dashboard" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="35" Foreground="BlanchedAlmond" FontFamily="Californian FB" Margin="0,30,0,0"/>
             </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Vertical">
+
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 7" >
+                    <Label Content="Name :" Width="100" Margin="0 0 20 -2"/>
+                    <TextBox x:Name="nameTxtBox" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 7" >
+                    <Label Content="Price :" Width="100" Margin="0 0 20 -2"/>
+                    <TextBox x:Name="priceTxtBox" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 7">
+                    <Label Content="Quantity :" Width="100" Margin="0 0 20 -2"/>
+                    <TextBox x:Name="qtyTxtBox" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 7">
+                    <Label Content="Exp Date :" Width="100" Margin="0 0 20 -2"/>
+                    <DatePicker x:Name="expDate" FontSize="18" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 7">
+                    <Label Content="Unit :" Width="100" Margin="0 0 20 -2"/>
+                    <ComboBox x:Name="unitComboBox" FontSize="18" IsEditable="True" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 7">
+                    <Label Content="Min Qty :" Width="100" Margin="0 0 20 -2"/>
+                    <TextBox x:Name="minQtyTxtBox" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
+                    <Label Content="Supplier :" Width="100" Margin="0 0 20 -2"/>
+                    <ComboBox x:Name="supplierComboBox"  FontSize="18" IsEditable="True" Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0 0 0 5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 15">
+                    <Button x:Name="addBtn" Content="ADD" Click="addBtn_Click" Width="165" Height="35" Margin="0 0 20 0" />
+                    <Button x:Name="updateBtn" Content="UPDATE" IsEnabled="False" Width="165" Height="35" Margin="20 0 0 0" Click="updateBtn_Click"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="ResetBtn" Content="RESET" Click="ResetBtn_Click" Height="35" Width="165" Margin="0 0 20 0" />
+                    <Button x:Name="DeleteBtn" Content="DELETE" IsEnabled="False" Height="35" Margin="20 0 0 0" Click="DeleteBtn_Click" Width="165"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 25 0 0">
+                    <Label Content="Add Qty :"  Width="100" Margin="0 0 20 -2"/>
+                    <TextBox x:Name="addQtyTxtBox" Text="0"  Width="230" Margin="20 0 0 0" Height="30"/>
+                </StackPanel>
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 0 0 15">
+                    <Button Style="{StaticResource MainBtn}" x:Name="addQtyBtn" Width="370" Height="35" IsEnabled="False" Margin="0 10 0 0" Content="Add Quantity" Click="addQtyBtn_Click" />
+                    <Button Style="{StaticResource MainBtn}" x:Name="HomeBtn" Content="HOME" Width="370" Height="35" Margin="0 10 0 0" Click="HomeBtn_Click" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 40 0">
-                    <Button Width="200" Margin="0 0 50 0"  FontSize="20" Height="30" Click="ButtonBase_OnClick" Content="HOME" Background="Transparent" FontWeight="Bold" />
                     <Label Content="Search :" FontSize="25" Foreground="White" />
                     <TextBox x:Name="searchTxtBox" MinWidth="200" Height="30" BorderBrush="#ddeeff" Background="#07424A" Foreground="White" FontSize="20" TextAlignment="Center" BorderThickness="2" TextChanged="searchTxtBox_TextChanged">
                         <TextBox.Resources>
@@ -145,25 +226,32 @@
                                 <Setter Property="Background" Value="White"/>
                                 <Setter Property="FontWeight" Value="SemiBold"/>
                                 <Setter Property="BorderThickness" Value="0,0,1,2"/>
-                                <Setter Property="BorderBrush" Value="Black"/>
-                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="BorderBrush" Value="gray"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGrid}">
+                                <Setter Property="Background" Value="Transparent"/>
                             </Style>
                         </DataGrid.Resources>
-                        
+
                         <DataGrid.Columns >
-                            <DataGridTextColumn Header=" ID" Binding="{Binding id}"/>
+                            <DataGridTextColumn Header=" ID" Binding="{Binding id}" Width="65"/>
                             <DataGridTextColumn Header=" NAME" Binding="{Binding ingredient}"/>
-                            <DataGridTextColumn Header=" PRICE"  Binding="{Binding price}"/>
-                            <DataGridTextColumn Header=" Qty" Binding="{Binding quantity}"/>
-                            <DataGridTextColumn Header=" EXP DATE" Binding="{Binding e_date}"/>
-                            <DataGridTextColumn Header=" UNIT" Binding="{Binding unit}"/>
-                            <DataGridTextColumn Header=" MIN Qty" Binding="{Binding min_quantity}"/>
-                            <DataGridTextColumn Header=" SUPPLIER" Binding="{Binding supplier_name}"/>
+                            <DataGridTextColumn Header=" PRICE" Binding="{Binding price}" Width="100"/>
+                            <DataGridTextColumn Header=" Qty" Binding="{Binding quantity}" Width="70"/>
+                            <DataGridTextColumn Header=" EXP DATE" Binding="{Binding e_date}" Width="80"/>
+                            <DataGridTextColumn Header=" UNIT" Binding="{Binding unit}" Width="70"/>
+                            <DataGridTextColumn Header=" MIN Qty" Binding="{Binding min_quantity}" Width="70" />
+                            <DataGridTextColumn Header=" SUPPLIER" Binding="{Binding supplier_name}" />
                         </DataGrid.Columns>
-                        
+
                     </DataGrid>
                 </StackPanel>
-                
+
             </StackPanel>
         </Grid>
     </Grid>

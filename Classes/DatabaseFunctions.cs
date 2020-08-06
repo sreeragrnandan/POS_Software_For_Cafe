@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace Callista_Cafe.Classes
 {
@@ -13,21 +14,77 @@ namespace Callista_Cafe.Classes
         private SqlCommand cmd;
         private SqlConnection con;
         private SqlDataReader reader;
-        public string getSupplierName(int id)
+        public int getIngredientId(String name)
         {
-            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-            con.Open();
-            cmd = new SqlCommand("Select * from suppliers where supplier_id=@supplier_id", con);
-            cmd.Parameters.AddWithValue("@supplier_id", id);
-            reader = cmd.ExecuteReader();
-            if (reader.Read())
+            int id=0;
+            try
             {
-                return reader["supplier_name"].ToString();
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("Select id from inventory where ingredient=@name", con);
+                cmd.Parameters.AddWithValue("@name", name);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = int.Parse(reader["id"].ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Something went worng. Please try again !", "Error");
+                }
             }
-            else
+            catch (Exception e)
             {
-                return null;
+                MessageBox.Show(e.ToString(), "Error");
             }
+            finally
+            {
+                con.Close();
+            }
+
+            return id;
         }
+
+        public string getMenuItemName(int id)
+        {
+            string name = null;
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("Select item_name from menu_items where item_id=@id", con);
+                cmd.Parameters.AddWithValue("@id", id);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    name = reader["item_name"].ToString();
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return name;
+        }
+
+        public bool areyousure()
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show("Are you sure?", "Update", MessageBoxButton.YesNo);
+            switch (messageBoxResult)
+            {
+                case MessageBoxResult.Yes:
+                    return true;
+                case MessageBoxResult.No:
+                    return false;
+            }
+
+            return false;
+        }
+
     }
 }
