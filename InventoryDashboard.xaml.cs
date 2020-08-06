@@ -360,7 +360,7 @@ namespace Callista_Cafe
                     con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                     con.Open();
                     SqlDataAdapter sda = new SqlDataAdapter(
-                        "select id, ingredient,price,quantity,e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
+                        "select id, ingredient,price,quantity,convert(varchar, inv.e_date, 3) as e_date,unit,min_quantity, CASE WHEN supplier_id IS NULL THEN '' ELSE (SELECT supplier_name FROM suppliers where supplier_id=inv.supplier_id) END AS supplier_name FROM inventory as inv WHERE ingredient LIKE '%" + S_key+ "%'", con);
                     sda.Fill(dt);
                     InventoryItems.SetBinding(ItemsControl.ItemsSourceProperty, new Binding {Source = dt});
                 }
