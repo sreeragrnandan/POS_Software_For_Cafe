@@ -114,7 +114,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition MinWidth="450" MaxWidth="700"/>
+            <ColumnDefinition Width="450"/>
             <ColumnDefinition MinWidth="830"/>
         </Grid.ColumnDefinitions>
 
@@ -128,50 +128,51 @@
         </Border>
         <Grid Grid.Column="0" >
             <Grid.RowDefinitions>
-                <RowDefinition MinHeight="120" MaxHeight="200"></RowDefinition>
-                <RowDefinition MinHeight="600"></RowDefinition>
+                <RowDefinition Height="80"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="220"></RowDefinition>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
-                <StackPanel VerticalAlignment="Center">
-                    <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" FontFamily="Times New Roman" />
-                </StackPanel>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" Margin="30 10 0 0" HorizontalAlignment="Left">
+                <Label x:Name="TitleLabel" Content="Menu Dashboard" HorizontalContentAlignment="Center" FontSize="45"  Foreground="White" Margin="0,30,0,0" FontFamily="Times New Roman" />
             </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 0 0 30" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
 
                 <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
-                    <Label x:Name="ItemID"  Content=" ID :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <Label x:Name="ItemID"  Content=" ID :" Width="100" Margin="0 0 20 -2"/>
                     <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                    <Label x:Name="ItemName"  Content=" Name :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <Label x:Name="ItemName"  Content=" Name :" Width="100" Margin="0 0 20 -2"/>
                     <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                    <Label x:Name="ItemCategory"  Content=" Category :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <Label x:Name="ItemCategory"  Content=" Category :" Width="100" Margin="0 0 20 -2"/>
                     <ComboBox x:Name="ItemCategoryComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                    <Label x:Name="ItemPrice"  Content=" Price :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <Label x:Name="ItemPrice"  Content=" Price :" Width="100" Margin="0 0 20 -2"/>
                     <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="25 25 25 20">
-                    <Button x:Name="addBtn" Content="ADD" MinWidth="180" Height="30" Margin="0 0 20 0" Click="addBtn_Click"/>
-                    <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="updateBtn_Click"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0 0 0 5">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 15">
+                    <Button x:Name="addBtn" Content="ADD" Width="165" Height="35" Margin="0 0 20 0" Click="addBtn_Click"/>
+                    <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" Width="165" Height="35" Margin="20 0 0 0" Click="updateBtn_Click"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
-                    <Button x:Name="resetBtn" Content="RESET" MinWidth="180" Height="30" Margin="0 0 20 0" Click="resetBtn_Click" />
-                    <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="deleteBtn_Click" />
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Button x:Name="resetBtn" Content="RESET" Height="35" Width="165" Margin="0 0 20 0" Click="resetBtn_Click" />
+                    <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" Width="165" Height="35" Margin="20 0 0 0" Click="deleteBtn_Click" />
                 </StackPanel>
-                <StackPanel Orientation="Vertical" Margin="25 0 25 20">
-                    <Button Style="{StaticResource MainBtn}" x:Name="addRequirementBtn" IsEnabled="False" Content="ADD REQUIREMENT" MinWidth="400" MaxWidth="560" Height="30" Margin="0 0 0 5" Click="addRequirementBtn_Click" />
-                    <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME"  Height="30" MinWidth="400" MaxWidth="560" Margin="0 5 0 0" />
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0 15 0 20">
+                    <Button Style="{StaticResource MainBtn}" x:Name="addRequirementBtn" IsEnabled="False" Content="ADD REQUIREMENT" Margin="0 10 0 0" Width="370" Height="35" Click="addRequirementBtn_Click" />
+                    <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME" Width="370" Height="35" Margin="0 10 0 0"  />
                 </StackPanel>
             </StackPanel>
         </Grid>
 
 
         <Grid Grid.Column="1">
-            <StackPanel Orientation="Vertical" Margin="10 0 20 0">
+            <StackPanel Orientation="Vertical" Margin="10 8 20 0">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 45 0 0">
                     <Label Content="Search: " FontSize="22" Margin="0 0 0 0"/>
                     <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" TextChanged="SearchBox_TextChanged" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center"/>
