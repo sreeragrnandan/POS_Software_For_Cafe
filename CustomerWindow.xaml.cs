@@ -132,7 +132,24 @@ namespace Callista_Cafe
                 }
             }
 
-            ToSendCustomer.c_dob = dobTxtBox.Text;
+            if (!dobTxtBox.Text.Equals(""))
+            {
+                try
+                {
+                    ToSendCustomer.c_dob = dobTxtBox.Text;
+                }
+                catch
+                {
+                    MessageBox.Show("Please Enter a valid Date.!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+            else
+            {
+                ToSendCustomer.c_dob = "";
+            }
+            
             ToSendCustomer.c_email = emailTxtBox.Text;
             ToSendCustomer.loc = locationTxtBox.Text;
             ToSendCustomer.c_mob = mobTxtBox.Text;
@@ -188,7 +205,6 @@ namespace Callista_Cafe
                 bool areyousure = DbFun.areyousure();
                 if (areyousure)
                 {
-                    MenuItm delitm = new MenuItm();
                     ToSendCustomer.c_id = Customer_id;
                     result = cust.delete(ToSendCustomer);
                     if (result)
