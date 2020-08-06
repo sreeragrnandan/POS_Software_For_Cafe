@@ -204,7 +204,6 @@ namespace Callista_Cafe
                     {
                         MessageBox.Show("Item Successfully Updated !", "Success");
                         reset();
-                        loadGrid();
                     }
                 }
             }
@@ -260,7 +259,6 @@ namespace Callista_Cafe
                     {
                         MessageBox.Show("Item Successfully Deleted !", "Success");
                         reset();
-                        loadGrid();
                     }
                     else
                     {
