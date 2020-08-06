@@ -27,182 +27,211 @@ namespace Callista_Cafe
         {
             InitializeComponent();
         }
-        Customer c = new Customer();
+
+        private SqlConnection con;
+        private SqlCommand cmd;
 
 
-        void OnLoad(object sender, RoutedEventArgs e)
+        Customer cust = new Customer();
+        Customer ToSendCustomer = new Customer();
+
+
+        DatabaseFunctions DbFun = new DatabaseFunctions();
+
+
+        private int Customer_id=0;
+
+        public void loadGrid()
         {
-            DataTable dt = c.select();
-            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+            DataTable customerDataTable = cust.select();
+            Customers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = customerDataTable });
         }
-
-        private void ADD_Click(object sender, RoutedEventArgs e)//Insert
+        private void Customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            bool success = false;
-
-            c.cus_name = C_NAME.Text;
-            c.cus_location = C_LOC.Text;
-            c.cus_mobno = C_MOBNO.Text;
-            c.cus_email = C_EMAIL.Text;
-
-            if (c.cus_name == "")
-            {
-                success = false;
-                MessageBox.Show("Please fill the fields");
-            }
-            else
-            {
-
-                success = c.insert(c);
-
-                if (success == true)
-                {
-                    MessageBox.Show("New Customer details Inserted");
-                    clear();
-                }
-                else
-                {
-                    MessageBox.Show("Insertion Failed. Try again");
-                }
-
-                DataTable dt = c.select();
-                C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-            }
-        }
-
-        private void MODIFY_Click(object sender, RoutedEventArgs e)//Modify
-        {
-            MessageBoxResult result = MessageBox.Show("Do you want to modify the data ?", "Confirmation", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-
-                if (C_ID.Text == "")
-                {
-                    MessageBox.Show("Please Select a Field");
-                }
-                else
-                {
-                    c.cus_name = C_NAME.Text;
-                    c.cus_id = int.Parse(C_ID.Text);
-                    c.cus_mobno = C_MOBNO.Text;
-                    c.cus_location = C_LOC.Text;
-                    c.cus_email = C_EMAIL.Text;
-
-                    bool success = c.update(c);
-                    if (success == true)
-                    {
-                        DataTable dt = c.select();
-                        C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                        MessageBox.Show("Customer details are updated");
-                        clear();
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Failed To update Try again");
-                    }
-                }
-            }
-
-        }
-
-        private void DELETE_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Do you want to Delete the field", "Confirmation", MessageBoxButton.YesNo);
-            if (result == MessageBoxResult.Yes)
-            {
-                bool success = false;
-
-
-                c.cus_name = C_NAME.Text;
-                if (c.cus_name == "")
-                {
-                    MessageBox.Show("Please select a field to delete");
-                }
-                else
-                {
-                    c.cus_id = int.Parse(C_ID.Text);
-                    c.cus_name = C_NAME.Text;
-                    if (c.cus_name == "")
-                    {
-                        success = false;
-                    }
-                    //sageBox.Show(c.cus_id.ToString);
-                    else
-                    {
-                        success = c.delete(c);
-                    }
-                    if (success == true)
-                    {
-                        DataTable dt = c.select();
-                        C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-                        MessageBox.Show("The Data Deleted");
-                        clear();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Select an item to delete");
-                    }
-                }
-            }
-
-
-        }
-
-        private void CLEAR_Click(object sender, RoutedEventArgs e)
-        {
-            clear();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        public void clear()
-        {
-            C_ID.Text = "";
-            C_NAME.Text = "";
-            C_LOC.Text = "";
-            C_MOBNO.Text = "";
-            C_EMAIL.Text = "";
-        }
-
-        private void C_DG_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // For Data grid edit
             DataGrid gd = (DataGrid)sender;
             DataRowView row_selected = gd.SelectedItem as DataRowView;
             if (row_selected != null)
             {
-                C_NAME.Text = row_selected["C_NAME"].ToString();
-                C_ID.Text = row_selected["C_ID"].ToString();
-                C_EMAIL.Text = row_selected["C_EMAIL"].ToString();
-                C_MOBNO.Text = row_selected["C_MOBNO"].ToString();
-                C_LOC.Text = row_selected["C_LOCATION"].ToString();
+                Customer_id = int.Parse(row_selected[0].ToString());
+                CusNameTextBox.Text = row_selected[1].ToString();
+                mobTxtBox.Text = row_selected[2].ToString();
+                dobTxtBox.Text = row_selected[3].ToString();
+                emailTxtBox.Text = row_selected[4].ToString();
+                locationTxtBox.Text = row_selected[5].ToString();
 
-
+                addBtn.IsEnabled = false;
+                addBtn.IsDefault = false;
+                updateBtn.IsEnabled = true;
+                delBtn.IsEnabled = true;
             }
         }
-        static string myConString = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
-        private void C_SEARCH_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void Customers_Loaded(object sender, RoutedEventArgs e)
         {
-            //get the value from text box
-
-            string key = C_SEARCH.Text;
-
-            SqlConnection conn = new SqlConnection(myConString);
-            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM customer WHERE c_name LIKE '%" + key + "%' OR c_location LIKE '%" + key + "%'", conn);
-            DataTable dt = new DataTable();
-            sda.Fill(dt);
-            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
-
+            loadGrid();
         }
 
-        private void Refresh_click(object sender, RoutedEventArgs e)
+        private void reset()
         {
-            DataTable dt = c.select();
-            C_DG.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+            Customer_id = 0;
+            CusNameTextBox.Text = "";
+            dobTxtBox.Text = "";
+            emailTxtBox.Text = "";
+            locationTxtBox.Text = "";
+            mobTxtBox.Text = "";
+            addBtn.IsEnabled = true;
+            updateBtn.IsEnabled = false;
+            delBtn.IsEnabled = false;
+            addBtn.IsDefault = true;
+            loadGrid();
+        }
+
+        private void clearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            reset();
+        }
+
+        private bool BindDataToObject(bool id)
+        {
+            bool flag = true;
+            if (id)
+            {
+                if (Customer_id==0)
+                {
+                    MessageBox.Show("Customer_ID ERROR..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+                else
+                {
+                    ToSendCustomer.c_id = Customer_id;
+                }
+            }
+            else
+            {
+                ToSendCustomer.c_id = 0;
+            }
+
+            if (CusNameTextBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please Enter the Name.", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                try
+                {
+                    ToSendCustomer.c_name = CusNameTextBox.Text.ToString();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Please Enter a valid Name.!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+            }
+
+            ToSendCustomer.c_dob = dobTxtBox.Text;
+            ToSendCustomer.c_email = emailTxtBox.Text;
+            ToSendCustomer.loc = locationTxtBox.Text;
+            ToSendCustomer.c_mob = mobTxtBox.Text;
+            FUNEND: { }
+            return flag;
+        }
+
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindingResult = BindDataToObject(false);
+            bool result;
+            if (bindingResult)
+            {
+                result = cust.insert(ToSendCustomer);
+                if (result)
+                {
+                    MessageBox.Show("New Item Inserted..!", "Success");
+                    reset();
+                }
+            }
+        }
+
+        private void updateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool bindingResult = BindDataToObject(true);
+            bool result = false;
+            if (bindingResult)
+            {
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
+                {
+                    result = cust.update(ToSendCustomer);
+                    if (result)
+                    {
+                        MessageBox.Show("Customer details updated successfully !", "Success");
+                        reset();
+                        loadGrid();
+                    }
+                }
+            }
+        }
+
+        private void delBtn_Click(object sender, RoutedEventArgs e)
+        {
+            bool id = Customer_id.ToString().Equals("0");
+            bool result = false;
+            if (id)
+            {
+                MessageBox.Show("Please select a customer.", "Error");
+            }
+            else
+            {
+                bool areyousure = DbFun.areyousure();
+                if (areyousure)
+                {
+                    MenuItm delitm = new MenuItm();
+                    ToSendCustomer.c_id = Customer_id;
+                    result = cust.delete(ToSendCustomer);
+                    if (result)
+                    {
+                        MessageBox.Show("Item Successfully Deleted !", "Success");
+                        reset();
+                    }
+                    else
+                    {
+                        loadGrid();
+                    }
+                }
+            }
+        }
+
+        private void searchTxtBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string S_key = searchTxtBox.Text;
+            try
+            {
+                if (S_key == "")
+                {
+                    loadGrid();
+                }
+                else
+                {
+                    DataTable dt = new DataTable();
+                    con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                    con.Open();
+                    SqlDataAdapter sda = new SqlDataAdapter(
+                        "SELECT * FROM customer WHERE c_name LIKE '%" + S_key + "%' OR c_location LIKE'%" + S_key + "%'  OR c_mobno LIKE'%" + S_key + "%';", con);
+                    sda.Fill(dt);
+                    Customers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
+                }
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString(), "Info");
+            }
+            finally
+            {
+                con.Close();
+            }
         }
     }
 }
