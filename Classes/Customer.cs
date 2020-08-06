@@ -13,157 +13,156 @@ namespace Callista_Cafe.Classes
 {
     class Customer
     {
-        //getter and setter (Data Carriers)
-        public int cus_id { get; set; }
+        public int c_id { get; set; }
 
-        public string cus_name { get; set; }
-
-        public string cus_location { get; set; }
-
-        public string cus_mobno { get; set; }
-
-        public string cus_email { get; set; }
-
-        static string myConString = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
-
-        //Select Functions
+        public string c_name { get; set; }
+        public string c_mob { get; set; }
+        public string c_dob { get; set; }
+        public string c_email { get; set; }
+        public string loc { get; set; }
+        
+        private SqlConnection con;
+        private SqlCommand cmd;
         public DataTable select()
         {
-            SqlConnection conn = new SqlConnection(myConString);
-            DataTable dt = new DataTable();
+            DataTable customerDataTable = new DataTable();
             try
             {
-                string com = "SELECT * FROM customer";
-                SqlCommand cmd = new SqlCommand(com, conn);
-                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                conn.Open();
-                adapter.Fill(dt);
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                cmd = new SqlCommand("SELECT * FROM customer;", con);
+                SqlDataAdapter itemDataAdapter = new SqlDataAdapter(cmd);
+                con.Open();
+                itemDataAdapter.Fill(customerDataTable);
 
             }
-            catch (Exception ex) { }
-
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
             finally
             {
-                conn.Close();
+                con.Close();
             }
-            return dt;
+
+            return customerDataTable;
         }
 
-        public bool insert(Customer c)
+        public bool insert(Customer customer)
         {
-            bool isSuccess = false;
-            SqlConnection conn = new SqlConnection(myConString);
-
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
             try
             {
-                string com = "INSERT INTO customer(c_name,c_location,c_mobno,c_email) VALUES (@name,@location,@mobno,@email)";//
-                SqlCommand cmd = new SqlCommand(com, conn);
-                //
-                cmd.Parameters.AddWithValue("@name", c.cus_name);
-                cmd.Parameters.AddWithValue("@location", c.cus_location);
-                cmd.Parameters.AddWithValue("@mobno", c.cus_mobno);
-                cmd.Parameters.AddWithValue("@email", c.cus_email);
-                //
-
-                conn.Open();
+                cmd = new SqlCommand(
+                    "INSERT INTO customer (c_name, c_mobno, c_dob,c_email,c_location) VALUES(@name,@mob,@dob,@email,@loc)",
+                    con);
+                cmd.Parameters.AddWithValue("@name", customer.c_name);
+                cmd.Parameters.AddWithValue("@mob", customer.c_mob);
+                if (customer.c_dob.ToString().Equals(""))
+                    cmd.Parameters.AddWithValue("@dob", DBNull.Value);
+                else
+                {
+                    cmd.Parameters.AddWithValue("@dob", customer.c_dob);
+                }
+                cmd.Parameters.AddWithValue("@email", customer.c_email);
+                cmd.Parameters.AddWithValue("@loc", customer.loc);
+                con.Open();
                 int rows = cmd.ExecuteNonQuery();
 
                 if (rows > 0)
                 {
-                    isSuccess = true;
+                    result = true;
                 }
                 else
                 {
-                    isSuccess = false;
+                    MessageBox.Show("Failed to insert. Try Again !", "Error");
                 }
-
-
             }
-
-            catch (Exception ex) { }
-
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
             finally
             {
-                conn.Close();
+                con.Close();
             }
-
-            return isSuccess;
+            return result;
         }
 
-
-        public bool update(Customer c)
+        public bool update(Customer customer)
         {
-            bool isSuccess = false;
-            SqlConnection conn = new SqlConnection(myConString);
-
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
             try
             {
-                string com = "UPDATE customer SET c_name=@name, c_location=@location,c_mobno=@mobno,c_email=@email WHERE c_id=@id";//
-                SqlCommand cmd = new SqlCommand(com, conn);
-                cmd.Parameters.AddWithValue("@name", c.cus_name);//
-                cmd.Parameters.AddWithValue("@location", c.cus_location);//
-                cmd.Parameters.AddWithValue("@mobno", c.cus_mobno);//
-                cmd.Parameters.AddWithValue("@email", c.cus_email);//
-                cmd.Parameters.AddWithValue("@id", c.cus_id);//
-
-                conn.Open();
+                cmd = new SqlCommand(
+                    "UPDATE customer SET c_name=@name , c_mobno=@mob , c_dob=@dob ,c_email=@email ,c_location=@loc WHERE c_id=@id;",
+                    con);
+                cmd.Parameters.AddWithValue("@id", customer.c_id);
+                cmd.Parameters.AddWithValue("@name", customer.c_name);
+                cmd.Parameters.AddWithValue("@mob", customer.c_mob);
+                if (customer.c_dob.ToString().Equals(""))
+                    cmd.Parameters.AddWithValue("@dob", DBNull.Value);
+                else
+                {
+                    cmd.Parameters.AddWithValue("@dob", customer.c_dob);
+                }
+                cmd.Parameters.AddWithValue("@email", customer.c_email);
+                cmd.Parameters.AddWithValue("@loc", customer.loc);
+                con.Open();
                 int rows = cmd.ExecuteNonQuery();
 
                 if (rows > 0)
                 {
-                    isSuccess = true;
+                    result = true;
                 }
                 else
                 {
-                    isSuccess = false;
+                    MessageBox.Show("Failed to Update. Try Again !", "Error");
                 }
-
-
             }
-
-            catch (Exception ex) { }
-
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
             finally
             {
-                conn.Close();
+                con.Close();
             }
-
-            return isSuccess;
+            return result;
         }
-        public bool delete(Customer c)
-        {
-            bool isSuccess = false;
-            SqlConnection conn = new SqlConnection(myConString);
 
+        public bool delete(Customer customer)
+        {
+            bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
             try
             {
-                string com = "DELETE FROM customer WHERE c_id=@cid";
-                SqlCommand cmd = new SqlCommand(com, conn);
-                cmd.Parameters.AddWithValue("@cid", c.cus_id);
-
-                conn.Open();
+                cmd = new SqlCommand(
+                    "DELETE FROM customer WHERE c_id=@id;",
+                    con);
+                cmd.Parameters.AddWithValue("@id", customer.c_id);
+                con.Open();
                 int rows = cmd.ExecuteNonQuery();
 
                 if (rows > 0)
                 {
-                    isSuccess = true;
+                    result = true;
                 }
                 else
                 {
-                    isSuccess = false;
+                    MessageBox.Show("Failed to Delete. Try Again !", "Error");
                 }
-
-
             }
-
-            catch (Exception ex) { }
-
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
             finally
             {
-                conn.Close();
+                con.Close();
             }
-
-            return isSuccess;
+            return result;
         }
 
     }
