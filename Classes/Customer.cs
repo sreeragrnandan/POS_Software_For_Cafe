@@ -29,7 +29,7 @@ namespace Callista_Cafe.Classes
             try
             {
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                cmd = new SqlCommand("SELECT * FROM customer;", con);
+                cmd = new SqlCommand("SELECT c_id,c_name,c_mobno, convert(varchar, c_dob, 3) as c_dob,c_email,c_location FROM customer;", con);
                 SqlDataAdapter itemDataAdapter = new SqlDataAdapter(cmd);
                 con.Open();
                 itemDataAdapter.Fill(customerDataTable);
