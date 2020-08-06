@@ -5,42 +5,219 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
         mc:Ignorable="d"
-        Title="Customer | Callista Cafe"
-        MinHeight="719.5"
+        Title="Customer Dashboard | Callista Cafe"
+        MinHeight="720"
         MinWidth="1280"
-        WindowState="Maximized">
-    <Grid x:Name="C_G" Background="#FFE7D8D8" Margin="0,0,-0.4,-0.4"
-          Loaded="OnLoad">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label x:Name="Toplabel" Content="Customer Data" HorizontalAlignment="Center" Margin="32,51,439.6,0" VerticalAlignment="Top" Width="290" FontSize="36" Height="58" Background="#FFE7D8D8" Foreground="#FFEB2E2E" FontWeight="Bold"/>
-        <Label x:Name="Customer_id" Content="Customer ID" HorizontalAlignment="Left" Margin="32.2,161,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
-        <Label x:Name="Email" Content="E-mail" HorizontalAlignment="Left" Margin="32.2,383,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
-        <Label x:Name="Location" Content="Location" HorizontalAlignment="Left" Margin="32.2,270,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
-        <Label x:Name="Name" Content="Name" HorizontalAlignment="Left" Margin="32.2,214,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
-        <Label x:Name="Mobile_no" Content="Mobile Number" HorizontalAlignment="Left" Margin="32.2,330,0,0" VerticalAlignment="Top" Width="112" FontWeight="Bold" Height="26"/>
-        <TextBox x:Name="C_ID" HorizontalAlignment="Left" Height="23" Margin="144.2,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" IsReadOnly="True"/>
-        <TextBox x:Name="C_NAME" HorizontalAlignment="Left" Height="23" Margin="144.2,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_LOC" HorizontalAlignment="Left" Height="23" Margin="144.2,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_MOBNO" HorizontalAlignment="Left" Height="23" Margin="144.2,325,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194"/>
-        <TextBox x:Name="C_EMAIL" HorizontalAlignment="Left" Height="23" Margin="144.2,383,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="194" RenderTransformOrigin="0.495,0.339"/>
-        <Button x:Name="ADD" Content="Add" HorizontalAlignment="Left" Margin="32,455,0,0" VerticalAlignment="Top" Width="75" Click="ADD_Click" FontWeight="Bold" Background="#FF50ED1F" Foreground="White" Height="19"/>
-        <DataGrid x:Name="C_DG" HorizontalAlignment="Left" Height="245" Margin="364.2,161,-23.4,0" VerticalAlignment="Top" Width="376" Background="#FFC8BFBF" HeadersVisibility="All" CanUserAddRows="False" SelectionChanged="C_DG_SelectionChanged" IsReadOnly="True"/>
-        <Label Content="Search" HorizontalAlignment="Left" Margin="364.2,130,0,0" VerticalAlignment="Top" Height="26" Width="45"/>
-        <TextBox x:Name="C_SEARCH" HorizontalAlignment="Left" Height="23" Margin="428.2,130,-23.4,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="312" TextChanged="C_SEARCH_TextChanged"/>
-        <Button x:Name="C_MODIFY" Content="Modify" HorizontalAlignment="Left" Margin="161,455,0,0" VerticalAlignment="Top" Width="75" Click="MODIFY_Click" FontWeight="Bold" Background="#FF1F4EED" Foreground="White" Height="19"/>
-        <Button x:Name="C_DELETE" Content="Delete" HorizontalAlignment="Left" Margin="290,455,0,0" VerticalAlignment="Top" Width="76" Click="DELETE_Click" FontWeight="Bold" Background="#FFFF0037" Foreground="White" RenderTransformOrigin="-0.054,0.766" Height="19"/>
-        <Button x:Name="C_CLEAR" Content="Clear" HorizontalAlignment="Left" Margin="420,455,0,0" VerticalAlignment="Top" Width="75" Click="CLEAR_Click" FontWeight="Bold" Background="#FFEAD733" Foreground="White" Height="19"/>
-        <Button x:Name="exit" Content="Exit" HorizontalAlignment="Left" Margin="667,454,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click" FontWeight="Bold" Foreground="White" FontSize="14" Height="22">
-            <Button.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop Color="#FFCB2929" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.Background>
-        </Button>
-        <Button x:Name="C_REFRESH" Content="Refresh" HorizontalAlignment="Left" Margin="546,455,0,0" VerticalAlignment="Top" Width="75" Click="Refresh_click" FontWeight="Bold" Background="#FF33EAE7" Foreground="White" Height="19"/>
+        WindowState="Maximized"
+        WindowStyle="SingleBorderWindow"
+        Background="#072233">
 
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="MainBtn" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"
+                                        BorderThickness="2"
+                                        BorderBrush="WhiteSmoke">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="450" MaxWidth="700"></ColumnDefinition>
+            <ColumnDefinition MinWidth="830"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Border Grid.ColumnSpan="1" CornerRadius="0 150 10 0">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#801717" Offset="0.35"/>
+                    <GradientStop Color="#072233" Offset=".75"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="120" MaxHeight="200"></RowDefinition>
+                <RowDefinition MinHeight="600"></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" VerticalAlignment="Center" >
+                <StackPanel VerticalAlignment="Center">
+                    <Label x:Name="TitleLabel" Content="CUSTOMER DETAILS" HorizontalContentAlignment="Center" FontSize="35" Margin="0 0 50 0"  Foreground="White" FontFamily="Times New Roman" />
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0 0 0 30" VerticalAlignment="Stretch" HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
+                    <Label x:Name="Name" Content="Name"  Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="CusNameTextBox"  MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="DOB" Content="DOB" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <DatePicker x:Name="dobTxtBox" MaxWidth="350" MinWidth="225" Height="30" FontSize="18"  Margin="20 0 0 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="Email" Content="E-mail" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="emailTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="Mobile_no" Content="Mobile :" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="mobTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Label x:Name="Location" Content="Location" Height="35" MaxWidth="210" MinWidth="135" Margin="0 0 20 5"/>
+                    <TextBox x:Name="locationTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                </StackPanel>
+
+                
+
+                <StackPanel Orientation="Horizontal" Margin="25 25 25 20">
+                    <Button x:Name="addBtn" IsDefault="True" Content="ADD" MinWidth="180" Height="30" Margin="0 0 20 0" Click="addBtn_Click" />
+                    <Button x:Name="updateBtn" IsEnabled="False" Content="UPDATE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="updateBtn_Click" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
+                    <Button x:Name="clearBtn" Content="RESET" MinWidth="180" Height="30" Margin="0 0 20 0" Click="clearBtn_Click"  />
+                    <Button x:Name="delBtn" IsEnabled="False"  Content="DETELE" MinWidth="180" Height="30" Margin="20 0 0 0" Click="delBtn_Click"  />
+                </StackPanel>
+
+                <StackPanel Orientation="Vertical" Margin="25 0 25 20">
+                    <Button Style="{StaticResource MainBtn}" x:Name="homeBtn" Content="HOME"  Height="30" MinWidth="400" MaxWidth="560" Margin="0 5 0 0" />
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <StackPanel Orientation="Vertical" Margin="10 0 20 0" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 45 0 0">
+                    <Label Content="Search: " FontSize="22" Margin="0 0 0 0"/>
+                    <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" TextChanged="searchTxtBox_TextChanged"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center">
+                    <DataGrid x:Name="Customers" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ColumnWidth="*" MaxHeight="500" AutoGenerateColumns="False" x:FieldModifier="public" Margin="0 5 0 0" SelectionChanged="Customers_SelectionChanged" Loaded="Customers_Loaded" >
+
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="White"/>
+                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                <Setter Property="BorderThickness" Value="0,0,1,2"/>
+                                <Setter Property="BorderBrush" Value="gray"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGrid}">
+                                <Setter Property="Background" Value="Transparent"></Setter>
+                                <Setter Property="BorderThickness" Value="0,0,0,0"/>
+                                <Setter Property="BorderBrush" Value="gray"/>
+                            </Style>
+                        </DataGrid.Resources>
+
+                        <DataGrid.Columns >
+                            <DataGridTextColumn Header=" ID" Binding="{Binding c_id}" MinWidth="70"  MaxWidth="125" />
+                            <DataGridTextColumn Header=" NAME" Binding="{Binding c_name}" MinWidth="150"/>
+                            <DataGridTextColumn Header=" MOBILE"  Binding="{Binding c_mobno}" MaxWidth="125"/>
+                            <DataGridTextColumn Header=" DOB" Binding="{Binding c_dob}" MaxWidth="150"/>
+                            <DataGridTextColumn Header=" E-Mail" Binding="{Binding c_email}" MinWidth="200"/>
+                            <DataGridTextColumn Header=" LOCATION" Binding="{Binding c_location}" MaxWidth="250"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>
