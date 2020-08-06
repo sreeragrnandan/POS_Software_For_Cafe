@@ -62,7 +62,7 @@ namespace Callista_Cafe.Classes
                     cmd.Parameters.AddWithValue("@dob", DBNull.Value);
                 else
                 {
-                    cmd.Parameters.AddWithValue("@dob", customer.c_dob);
+                    cmd.Parameters.AddWithValue("@dob", Convert.ToDateTime(customer.c_dob));
                 }
                 cmd.Parameters.AddWithValue("@email", customer.c_email);
                 cmd.Parameters.AddWithValue("@loc", customer.loc);
@@ -105,7 +105,7 @@ namespace Callista_Cafe.Classes
                     cmd.Parameters.AddWithValue("@dob", DBNull.Value);
                 else
                 {
-                    cmd.Parameters.AddWithValue("@dob", customer.c_dob);
+                    cmd.Parameters.AddWithValue("@dob", Convert.ToDateTime(customer.c_dob));
                 }
                 cmd.Parameters.AddWithValue("@email", customer.c_email);
                 cmd.Parameters.AddWithValue("@loc", customer.loc);
