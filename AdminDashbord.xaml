@@ -123,7 +123,7 @@
                 <StackPanel Grid.Column="0" Orientation="Vertical"></StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
                     <Label Content="Low Quantity Items"/>
-                    <DataGrid x:Name="InventoryRemaining" IsReadOnly="True" BorderThickness="0" AutoGenerateColumns="False" Loaded="InventoryRemaining_OnLoaded">
+                    <DataGrid x:Name="InventoryRemaining" IsReadOnly="True" BorderThickness="0" AutoGenerateColumns="False" Loaded="InventoryRemaining_OnLoaded" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Ingredient Name" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Quantity Available" Width="*"  Binding="{Binding quantity}"></DataGridTextColumn>
@@ -132,7 +132,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label Content="Items Expiring Soon"/>
-                    <DataGrid x:Name="ExpiredItems" Loaded="ExpiredItems_OnLoaded" BorderThickness="0" AutoGenerateColumns="False" IsReadOnly="True">
+                    <DataGrid x:Name="ExpiredItems" Loaded="ExpiredItems_OnLoaded" BorderThickness="0" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Ingredient Name" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Expiry Date" Width="*"  Binding="{Binding e_date}"></DataGridTextColumn>
