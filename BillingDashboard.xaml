@@ -4,13 +4,190 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="Billing Dashboard | Callista Cafe"
         MinHeight="720"
         MinWidth="1280"
         WindowState="Maximized"
-        >
+        Background="#595959">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="MainBtn" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="FontSize" Value="18" />
+
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#555555" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="WhiteSmoke"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type Button}">
+                                <Border Background="{TemplateBinding Background}" CornerRadius="5"
+                                        BorderThickness="2"
+                                        BorderBrush="WhiteSmoke">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="450" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1"  CornerRadius="150 0 0 10">
+            <Border.Background>
+                <SolidColorBrush Color="#262626"/>
+            </Border.Background>
+        </Border>
+
+        <Grid Grid.Column="1" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Source="assets/Logo Sqr.png" Width="170" Margin="30 10 0 0"/>
+        </Grid>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 20 0 0" VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Account"
+                                                Foreground="White"
+                                                RenderTransformOrigin="2.684,0.331"
+                                                Width="20"
+                                                Height="30"/>
+                    <Label x:Name="usernameLabel" Content="" FontSize="22" Height="30"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Label Name="dateandtime" FontSize="22" Foreground="White" Margin="0 20 10 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="activeBills" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 25 10 0" >
+
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="BorderThickness" Value="1,1,1,2"/>
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Foreground" Value="Black"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"></Setter>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header=" TABLE" Binding="{Binding}"/>
+                        <DataGridTextColumn Header=" TIME" Binding="{Binding}"/>
+                        <DataGridTextColumn Header=" ITEMS" Binding="{Binding}"/>
+                        <DataGridTextColumn Header=" AMOUNT" Binding="{Binding}"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
