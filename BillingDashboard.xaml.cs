@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Callista_Cafe.Classes;
 
 namespace Callista_Cafe
 {
@@ -30,9 +32,23 @@ namespace Callista_Cafe
             usernameLabel.Content = "User";
         }
 
+        Bills bills = new Bills();
+
+
         void timer_Tick(object sender, EventArgs e)
         {
             dateandtime.Content = DateTime.Now.ToString("dddd , MMM dd yyyy , hh:mm:ss tt");
+        }
+
+        private void activeBills_Loaded(object sender, RoutedEventArgs e)
+        {
+            loadBillGrid();
+        }
+
+        private void loadBillGrid()
+        {
+            DataTable dt = bills.LoadBillTable();
+            activeBills.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
         }
     }
 }

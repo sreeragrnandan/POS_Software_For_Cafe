@@ -158,19 +158,28 @@
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <DataGrid x:Name="activeBills" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 25 10 0" >
+                <DataGrid x:Name="activeBills" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 25 10 0" Loaded="activeBills_Loaded" >
 
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="#595959"/>
-                            <Setter Property="FontWeight" Value="SemiBold"/>
-                            <Setter Property="BorderThickness" Value="1,1,1,2"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderThickness" Value="2,2,2,2"/>
                             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
                             <Setter Property="FontSize" Value="14"/>
                             <Setter Property="Foreground" Value="White"/>
                         </Style>
                         <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Foreground" Value="Black"/>
+                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="13"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="BorderThickness" Value="0,0,2,0"></Setter>
                         </Style>
                         <Style TargetType="{x:Type DataGrid}">
                             <Setter Property="Background" Value="Transparent"/>
@@ -179,10 +188,11 @@
                     </DataGrid.Resources>
 
                     <DataGrid.Columns >
-                        <DataGridTextColumn Header=" TABLE" Binding="{Binding}"/>
-                        <DataGridTextColumn Header=" TIME" Binding="{Binding}"/>
-                        <DataGridTextColumn Header=" ITEMS" Binding="{Binding}"/>
-                        <DataGridTextColumn Header=" AMOUNT" Binding="{Binding}"/>
+                        <DataGridTextColumn Header=" TABLE" Binding="{Binding table_no}"/>
+                        <DataGridTextColumn Header=" TIME" Binding="{Binding bill_datetime}"/>
+                        <DataGridTextColumn Header=" ITEMS" Binding="{Binding item_count}"/>
+                        <DataGridTextColumn Header=" AMOUNT" Binding="{Binding amount }" />
+                        <DataGridTextColumn Header=" CUSTOMER" Binding="{Binding customer_name }" />
 
                     </DataGrid.Columns>
 
