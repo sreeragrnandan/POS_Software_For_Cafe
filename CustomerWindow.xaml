@@ -119,9 +119,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450"></ColumnDefinition>
-            <ColumnDefinition Width="830"></ColumnDefinition>
+            <ColumnDefinition Width="8*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Border Grid.ColumnSpan="1" CornerRadius="0 150 150 0" Margin="0 10 0 10">
+        <Border Grid.ColumnSpan="1" CornerRadius="0 120 120 0" Margin="0 10 0 10">
             <Border.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="#801717" Offset="0.35"/>
@@ -192,7 +192,7 @@
                     <TextBox x:Name="searchTxtBox" MinWidth="225" MaxWidth="350" Height="30" Margin="0 0 0 5" Foreground="White" CaretBrush="White" TextAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" TextChanged="searchTxtBox_TextChanged"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center">
-                    <DataGrid x:Name="Customers" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ColumnWidth="*" MaxHeight="500" AutoGenerateColumns="False" x:FieldModifier="public" Margin="0 5 0 0" SelectionChanged="Customers_SelectionChanged" Loaded="Customers_Loaded" >
+                    <DataGrid x:Name="Customers" IsReadOnly="True" ScrollViewer.CanContentScroll="True" ColumnWidth="*" VerticalScrollBarVisibility="Auto"  HorizontalScrollBarVisibility="Disabled" Height="640" AutoGenerateColumns="False" x:FieldModifier="public" Margin="0 5 0 0" SelectionChanged="Customers_SelectionChanged" Loaded="Customers_Loaded" >
 
                         <DataGrid.Resources>
                             <Style TargetType="{x:Type DataGridColumnHeader}">
