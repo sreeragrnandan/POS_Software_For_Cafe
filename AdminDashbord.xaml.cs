@@ -28,6 +28,8 @@ namespace Callista_Cafe
         private SqlCommand cmd;
         private string ConString = ConfigurationManager.ConnectionStrings["conString"].ConnectionString;
         private SqlDataAdapter adapter;
+        public object Private { get; private set; }
+
         public AdminDashbord()
         {
             InitializeComponent();
@@ -146,6 +148,100 @@ namespace Callista_Cafe
             finally
             {
                 con.Close();
+            }
+        }
+
+        private void BtnIncome_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string date = DateTime.Today.ToString("yyyy-MM-dd");
+                string income = "0";
+                con = new SqlConnection(ConString);
+                con.Open();
+                cmd = new SqlCommand(
+                    "select SUM(bill_amount) as total from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" +
+                    date + "%' AND bill_status != 'PENDING'", con);
+                SqlDataReader reader;
+                reader = cmd.ExecuteReader();
+                reader.Read();
+                income = reader["total"].ToString();
+                if (income.Equals(""))
+                {
+                    income = "0";
+                    BtnIncome.Content = "No Bills Closed Yet!";
+                    BtnIncome.IsEnabled = false;
+                }
+                else
+                {
+                    BtnIncome.Content = "Today's Income: ₹" + income;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void BtnActiveBills_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string active_bills = "0";
+                con = new SqlConnection(ConString);
+                con.Open();
+                cmd = new SqlCommand(
+                    "select COUNT(bill_id) as active_bills from bills where bill_status != 'CLOSED'", con);
+                SqlDataReader reader;
+                reader = cmd.ExecuteReader();
+                reader.Read();
+                active_bills = reader["active_bills"].ToString();
+                if (active_bills.Equals("0"))
+                {
+                    active_bills = "0";
+                    BtnActiveBills.Content = "No Active Bills!";
+                    BtnActiveBills.IsEnabled = false;
+                }
+                else
+                {
+                    BtnActiveBills.Content = active_bills + " Active Bill";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void BtnTotalBills_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string date = DateTime.Today.ToString("yyyy-MM-dd");
+                string total_customers = "0";
+                con = new SqlConnection(ConString);
+                con.Open();
+                cmd = new SqlCommand(
+                    "select COUNT(bill_id) as total_bills_today from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" +
+                    date + "%' AND bill_status != 'PENDING'", con);
+                SqlDataReader reader;
+                reader = cmd.ExecuteReader();
+                reader.Read();
+                total_customers = reader["total_bills_today"].ToString();
+                if (total_customers.Equals("0"))
+                {
+                    total_customers = "0";
+                    BtnTotalBills.Content = "No Bills Closed Today!";
+                    BtnTotalBills.IsEnabled = false;
+                }
+                else
+                {
+                    BtnTotalBills.Content = total_customers + " Bill Closed";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
         }
     }
