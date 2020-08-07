@@ -54,7 +54,7 @@
         <Style TargetType="Label">
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="Margin" Value="50,20,0,0"/>
+            <Setter Property="Margin" Value="50,20,10,10"/>
         </Style>
     </Window.Resources>
     <Grid>
