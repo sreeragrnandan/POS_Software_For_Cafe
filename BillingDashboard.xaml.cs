@@ -50,5 +50,68 @@ namespace Callista_Cafe
             DataTable dt = bills.LoadBillTable();
             activeBills.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
         }
+
+
+        private void HomeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AdminDashbord adminDashbord = new AdminDashbord();
+            adminDashbord.Show();
+            this.Close();
+        }
+
+        private void CustomerBtn_Click(object sender, RoutedEventArgs e)
+        {
+            CustomerWindow customerWindow = new CustomerWindow();
+            if (UserInfo.User_Type>1)
+            {
+                customerWindow.homeBtn.IsEnabled = false;
+                //Enable Close Button
+            }
+            else
+            {
+                //Enable close button
+            }
+            customerWindow.ShowDialog();
+        }
+
+        private void addBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void openBillBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void closeBillBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void deleteBillVtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void logOutBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
+        }
+
+        private void closeBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (UserInfo.User_Type == 0 || UserInfo.User_Type == 1)
+            {
+                HomeBtn.IsEnabled = true;
+            }
+        }
     }
 }
