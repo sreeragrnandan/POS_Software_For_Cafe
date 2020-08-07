@@ -34,15 +34,12 @@ namespace Callista_Cafe
         {
             InitializeComponent();
 
-
-            ///Enable This Before Merging into Master
-
-            //if(!Classes.UserInfo.Login)
-            //{
-            //    MainWindow logWindow = new MainWindow();
-            //    logWindow.Show();
-            //    this.Close();
-            //}
+            if (!Classes.UserInfo.Login)
+            {
+                MainWindow logWindow = new MainWindow();
+                logWindow.Show();
+                this.Close();
+            }
 
             DispatcherTimer timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
