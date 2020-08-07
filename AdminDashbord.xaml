@@ -52,7 +52,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <Style TargetType="Label">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="24"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Margin" Value="50,20,0,0"/>
         </Style>
@@ -63,18 +63,17 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border Grid.ColumnSpan="1" CornerRadius="0 75 0 0 ">
+        <Border Grid.ColumnSpan="1" Margin="0,20,0,20" CornerRadius="0 75 75 0 ">
             <Border.Background>
                 <LinearGradientBrush>
                     <GradientStop Color="#801717" Offset="0.35"/>
-                    <GradientStop Color="#072233" Offset=".75"/>
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
 
 
 
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20,20,20,20">
             <StackPanel VerticalAlignment="Center" Margin="0,20,0,0">
                 <Image Source="assets/Logo Sqr.png" Width="150"/>
             </StackPanel>
@@ -108,12 +107,12 @@
 
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition MaxHeight="50"/>
+                <RowDefinition MaxHeight="100"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Label x:Name="lblUsername" HorizontalAlignment="Left" FontSize="18" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Center"/>
-                <Label x:Name="dateandtime" FontSize="14" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <Label x:Name="lblUsername" HorizontalAlignment="Left" FontSize="20" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="dateandtime" FontSize="16" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -124,28 +123,26 @@
                     <Label x:Name="LblHighlights" Content="Highlights" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Button x:Name="BtnTotalBills" Margin="0,25,0,15" MinWidth="250" MinHeight="50" FontSize="20" Loaded="BtnTotalBills_OnLoaded"/>
-                        <Button Loaded="BtnIncome_OnLoaded" x:Name="BtnIncome" Margin="0,15,0,15" MinHeight="50" MinWidth="250" FontSize="20"/>
-                        <Button x:Name="BtnActiveBills" Margin="0,15,0,15" MinHeight="50" MinWidth="250" FontSize="20" Loaded="BtnActiveBills_OnLoaded"/>
+                        <Button Loaded="BtnIncome_OnLoaded" x:Name="BtnIncome" Margin="0,5,0,5" MinHeight="50" MinWidth="250" FontSize="20"/>
+                        <Button x:Name="BtnActiveBills" Margin="0,5,0,5" MinHeight="50" MinWidth="250" FontSize="20" Loaded="BtnActiveBills_OnLoaded"/>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Vertical">
                     <Label Content="Low Quantity Items"/>
-                    <DataGrid x:Name="InventoryRemaining" IsReadOnly="True" BorderThickness="0" AutoGenerateColumns="False" Loaded="InventoryRemaining_OnLoaded" GridLinesVisibility="Horizontal">
+                    <DataGrid x:Name="InventoryRemaining" IsReadOnly="True" Background="#072233" BorderThickness="0" AutoGenerateColumns="False" Loaded="InventoryRemaining_OnLoaded" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ingredient Name" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Quantity Available" Width="*"  Binding="{Binding quantity}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Price" Width="*" Binding="{Binding price}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Supplier Details" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="INGREDIENT" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="QTY AVAILABLE" Width="*"  Binding="{Binding quantity}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="SUPPLIER" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label Content="Items Expiring Soon"/>
                     <DataGrid x:Name="ExpiredItems" Loaded="ExpiredItems_OnLoaded" BorderThickness="0" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Ingredient Name" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Expiry Date" Width="*"  Binding="{Binding e_date}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Quantity Remaining" Binding="{Binding quantity}" Width="*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Price" Width="*" Binding="{Binding price}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Supplier Details" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="INGREDIENT" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="EXP DATE" Width="*"  Binding="{Binding e_date}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="QTY REMAINING" Binding="{Binding quantity}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="SUPPLIER" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
