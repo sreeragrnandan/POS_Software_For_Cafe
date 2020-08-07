@@ -182,9 +182,16 @@ namespace Callista_Cafe
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            AdminDashbord AdminWindow = new AdminDashbord();
-            AdminWindow.Show();
-            this.Close();
+            try
+            {
+                AdminDashbord AdminWindow = new AdminDashbord();
+                this.Close();
+                AdminWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
