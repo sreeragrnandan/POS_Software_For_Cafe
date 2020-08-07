@@ -126,7 +126,7 @@
                 </LinearGradientBrush>
             </Border.Background>
         </Border>
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="100"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -139,7 +139,7 @@
 
             <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 7" >
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 7" Visibility="Hidden">
                     <Label Content="ID :" Width="100" Margin="0 0 20 -2"/>
                     <TextBox x:Name="Txtsupplierid" Width="230" Margin="20 0 0 0" Height="30" IsEnabled="False"/>
                 </StackPanel>
