@@ -93,6 +93,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Bills.cs" />
     <Compile Include="Classes\ItemIngredientRequirement.cs" />
     <Compile Include="Classes\MenuItm.cs" />
     <Compile Include="Classes\Supplier.cs" />
