@@ -17,7 +17,7 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Helvetica"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="Opacity" Value="1"/>
             <Setter Property="FontSize" Value="18" />
 
             <Setter Property="Background" Value="Transparent"/>
@@ -54,10 +54,13 @@
             <Setter Property="FontFamily" Value="Helvetica"/>
         </Style>
         <Style TargetType="{x:Type TextBox}">
-            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontSize" Value="20"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="BorderBrush" Value="White"></Setter>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="White"/>
             <Style.Resources>
                 <Style TargetType="{x:Type Border}">
                     <Setter Property="CornerRadius" Value="10" />
@@ -68,7 +71,7 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontFamily" Value="Helvetica"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Opacity" Value=".7"/>
+            <Setter Property="Opacity" Value="1"/>
             <Setter Property="FontSize" Value="18" />
 
             <Setter Property="Background" Value="Transparent"/>
@@ -113,6 +116,7 @@
         </Style>
     </Window.Resources>
 
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450"/>
@@ -140,19 +144,19 @@
 
                 <StackPanel Orientation="Horizontal" Margin="25 50 25 20">
                     <Label x:Name="ItemID"  Content=" ID :" Width="110" Margin="0 0 20 -2"/>
-                    <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                    <TextBox x:Name="ItemIDTxtBox" IsEnabled="False" Width="225" Height="35" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                     <Label x:Name="ItemName"  Content=" Name :" Width="110" Margin="0 0 20 -2"/>
-                    <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                    <TextBox x:Name="ItemNameTxtBox" MinWidth="225" MaxWidth="350" Height="35" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                     <Label x:Name="ItemCategory"  Content=" Category :" Width="110" Margin="0 0 20 -2"/>
-                    <ComboBox x:Name="ItemCategoryComboBox" FontSize="18" Background="Transparent" MinWidth="225" MaxWidth="350" IsEditable="True" Height="30" Margin="20 0 0 0"/>
+                    <ComboBox x:Name="ItemCategoryComboBox" FontSize="20" Background="Transparent" Width="225"  IsEditable="True" Height="35" Margin="20 0 0 0"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="25 0 25 20">
                     <Label x:Name="ItemPrice"  Content=" Price :" Width="110" Margin="0 0 20 -2"/>
-                    <TextBox x:Name="ItemPriceTxtBox" MinWidth="225" MaxWidth="350" Height="30" FontSize="18" TextAlignment="Center" Margin="20 0 0 0"/>
+                    <TextBox x:Name="ItemPriceTxtBox" Width="225" Height="35" TextAlignment="Center" Margin="20 0 0 0"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Row="2" VerticalAlignment="Bottom" Margin="0 0 0 5">
