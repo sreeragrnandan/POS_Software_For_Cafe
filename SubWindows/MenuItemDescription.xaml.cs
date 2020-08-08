@@ -128,7 +128,12 @@ namespace Callista_Cafe.SubWindows
             }
             catch (Exception exception)
             {
-                MessageBox.Show("Something went wrong. Please try again.", "Error");
+                if (exception.ToString().Contains("Violation of UNIQUE KEY"))
+                {
+                    MessageBox.Show("Item already exist !", "Error");
+                }
+                else
+                    MessageBox.Show("Something went wrong. Please try again.", "Error");
             }
             finally
             {
