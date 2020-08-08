@@ -118,5 +118,59 @@ namespace Callista_Cafe.Classes
             return false;
         }
 
+        public float getbilltotal(int bill_id)
+        {
+            float total = 0;
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("SELECT SUM(item_total) as total FROM detailed_bill WHERE bill_id=@id", con);
+                cmd.Parameters.AddWithValue("@id", bill_id);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    total = float.Parse(reader["total"].ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return total;
+        }
+
+        public float getbilltotalitems(int bill_id)
+        {
+            float total = 0;
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("SELECT COUNT(item_id) as total FROM detailed_bill WHERE bill_id=@id", con);
+                cmd.Parameters.AddWithValue("@id", bill_id);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    total = float.Parse(reader["total"].ToString());
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return total;
+        }
+
     }
 }
