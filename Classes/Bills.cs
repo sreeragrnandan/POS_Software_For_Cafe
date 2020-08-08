@@ -19,6 +19,8 @@ namespace Callista_Cafe.Classes
 
         private SqlTransaction transaction;
 
+        DatabaseFunctions DbFun = new DatabaseFunctions();
+
         public int bill_id { get; set; }
 
         public string bill_table { get; set; }
@@ -42,7 +44,7 @@ namespace Callista_Cafe.Classes
             {
                 /*select id ingredient,price,qualtity,e_date,unit,min_quantity, supplier_name from inventory as inv, suppliers as sup where sup.supplier_id=inv.supplier_id*/
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
-                cmd = new SqlCommand("select bill.bill_id, bill.payment_method, bill.table_no, bill.bill_datetime,(SELECT COUNT(D1.item_id) FROM detailed_bill AS D1 WHERE D1.bill_id = bill.bill_id) AS item_count,(SELECT STR(SUM(D1.item_total)) + ' Rs' FROM detailed_bill AS D1 WHERE D1.bill_id = bill.bill_id) AS amount,CASE WHEN bill.c_id IS NULL THEN '' ELSE (SELECT c_name FROM customer where c_id= bill.c_id) END AS customer_name from bills as bill WHERE bill.bill_status='Pending';", con);
+                cmd = new SqlCommand("select bill.bill_id, bill.payment_method, bill.table_no, bill.bill_datetime,(SELECT COUNT(D1.item_id) FROM detailed_bill AS D1 WHERE D1.bill_id = bill.bill_id) AS item_count,(SELECT STR(SUM(D1.item_total)) + ' Rs' FROM detailed_bill AS D1 WHERE D1.bill_id = bill.bill_id) AS amount,CASE WHEN bill.c_id IS NULL THEN '' ELSE (SELECT c_name FROM customer where c_id= bill.c_id) END AS customer_name from bills as bill WHERE bill.bill_status='PENDING';", con);
                 SqlDataAdapter adapter = new SqlDataAdapter(cmd);
                 con.Open();
                 adapter.Fill(dt);
@@ -125,9 +127,9 @@ namespace Callista_Cafe.Classes
                 con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
                 cmd = new SqlCommand("SELECT DBILL.item_id,(SELECT D1.item_name FROM menu_items AS D1 WHERE D1.item_id=DBILL.item_id) AS item_name, DBill.item_quantity, DBill.item_price, DBill.item_total FROM detailed_bill AS DBill WHERE DBill.bill_id=@bill_id;", con);
                 cmd.Parameters.AddWithValue("@bill_id", billid);
-                SqlDataAdapter InvAdapter = new SqlDataAdapter(cmd);
+                SqlDataAdapter Adapter = new SqlDataAdapter(cmd);
                 con.Open();
-                InvAdapter.Fill(billedItemDataTable);
+                Adapter.Fill(billedItemDataTable);
 
             }
             catch (Exception e)
@@ -145,9 +147,35 @@ namespace Callista_Cafe.Classes
         public bool closeBill(int bill_id)
         {
             bool result = false;
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                cmd = new SqlCommand(
+                    "UPDATE bills SET bill_status='CLOSED', bill_amount = @amount, bill_close_datetime=@time WHERE bill_id=@bill_id",
+                    con);
+                cmd.Parameters.AddWithValue("@bill_id", bill_id);
+                cmd.Parameters.AddWithValue("@amount", DbFun.getbilltotal(bill_id).ToString());
+                cmd.Parameters.AddWithValue("@time", DateTime.Now.ToString());
+                con.Open();
+                int rows = cmd.ExecuteNonQuery();
 
-
-
+                if (rows > 0)
+                {
+                    result = true;
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong. Please try again!", "Error");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
             return result;
         }
 
