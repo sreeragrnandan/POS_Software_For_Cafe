@@ -11,7 +11,7 @@
         Height="720"
         Width="1280"
         WindowState="Maximized"
-        WindowStyle="ThreeDBorderWindow"
+        WindowStyle="None"
         Background="#072233">
     <Window.Resources>
         <Style TargetType="{x:Type TextBox}">
