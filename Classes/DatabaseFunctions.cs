@@ -45,6 +45,38 @@ namespace Callista_Cafe.Classes
             return id;
         }
 
+        public int getCustomerId(String name)
+        {
+            int id = 0;
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("Select c_id from customer where c_name=@name", con);
+                cmd.Parameters.AddWithValue("@name", name);
+                reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    id = int.Parse(reader["c_id"].ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Something went worng. Please try again !", "Error");
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+            return id;
+        }
+
+
+
         public string getMenuItemName(int id)
         {
             string name = null;
