@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,9 +32,19 @@ namespace Callista_Cafe
             timer.Tick += timer_Tick;
             timer.Start();
             usernameLabel.Content = UserInfo.User_Name;
+            FillComboBox();
         }
 
+        private SqlConnection con;
+        private SqlCommand cmd;
+
         Bills bills = new Bills();
+
+        Bills tosentBills = new Bills();
+
+        DatabaseFunctions DbFun = new DatabaseFunctions();
+
+        private int bill_id;
 
 
         void timer_Tick(object sender, EventArgs e)
@@ -66,6 +78,103 @@ namespace Callista_Cafe
             }
         }
 
+        private bool bindDataBills(bool id)
+        {
+
+            bool flag = true;
+
+
+            if (id)
+            {
+                if (bill_id.ToString().Equals("") || bill_id.ToString().Equals("0"))
+                {
+                    MessageBox.Show("BILL ID ERROR. Failed to Update..!", "Error");
+                    flag = false;
+                    goto FUNEND;
+                }
+                else
+                {
+                    try
+                    {
+                        tosentBills.bill_id = bill_id;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("BILL_ID ERROR. Failed to Update..!", "Error");
+                        flag = false;
+                        goto FUNEND;
+                    }
+                }
+            }
+            else
+            {
+                tosentBills.bill_id = 0;
+            }
+
+            if (tableTxtBox.Text.Equals(""))
+            {
+                MessageBox.Show("Please enter the table name..!", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                tosentBills.bill_table = tableTxtBox.Text;
+            }
+
+            if (PaymentComboBox.Text.ToString().Equals(""))
+            {
+                MessageBox.Show("Please Select a payment method..!", "Error");
+                flag = false;
+                goto FUNEND;
+            }
+            else
+            {
+                tosentBills.bill_payment = PaymentComboBox.Text;
+            }
+
+            if (CustomerComboBox.Text.ToString().Equals(""))
+                tosentBills.bill_customer = "";
+            else
+            {
+                try
+                {
+                    tosentBills.bill_customer = CustomerComboBox.SelectedValue.ToString();
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxResult messageBoxResult = MessageBox.Show("Customer Not found. Do you want to add?", "Customer", MessageBoxButton.YesNo);
+                    switch (messageBoxResult)
+                    {
+                        case MessageBoxResult.Yes:
+                            CustomerWindow customerWindow = new CustomerWindow();
+                            customerWindow.homeBtn.IsEnabled = false;
+                            customerWindow.closeBtn.IsEnabled = true;
+                            customerWindow.CusNameTextBox.Text = CustomerComboBox.Text;
+                            customerWindow.isOpenedForAdd = true;
+                            customerWindow.CusNameTextBox.IsEnabled = false;
+                            customerWindow.clearBtn.IsEnabled = false;
+                            customerWindow.ShowDialog();
+                            if (DbFun.getCustomerId(CustomerComboBox.Text.ToString())!=0)
+                            {
+                                tosentBills.bill_customer = DbFun.getCustomerId(CustomerComboBox.Text.ToString()).ToString();
+                            }
+                            else
+                            {
+                                tosentBills.bill_customer = "";
+                            }
+                            break;
+                        case MessageBoxResult.No:
+                            tosentBills.bill_customer = "";
+                            break;
+                    }
+                }
+            }
+
+            FUNEND: {}
+            return flag;
+        }
+
         private void CustomerBtn_Click(object sender, RoutedEventArgs e)
         {
             CustomerWindow customerWindow = new CustomerWindow();
@@ -76,6 +185,23 @@ namespace Callista_Cafe
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
+            bool bindingResult = bindDataBills(false);
+            bool result;
+            if (bindingResult)
+            {
+                result = bills.insert(tosentBills);
+                if (result)
+                {
+                    MessageBox.Show("New Item Inserted..!", "Success");
+                    reset();
+                }
+            }
+
+        }
+
+        private void updateBtn_Click(object sender, RoutedEventArgs e)
+        {
+
 
         }
 
@@ -89,7 +215,7 @@ namespace Callista_Cafe
 
         }
 
-        private void deleteBillVtn_Click(object sender, RoutedEventArgs e)
+        private void deleteBillBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -104,6 +230,58 @@ namespace Callista_Cafe
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void activeBills_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            if (row_selected != null)
+            {
+                bill_id = int.Parse(row_selected[0].ToString());
+                tableTxtBox.Text = row_selected[2].ToString();
+                CustomerComboBox.Text = row_selected[6].ToString();
+                PaymentComboBox.Text = row_selected[1].ToString();
+            }
+        }
+
+        private void FillComboBox()
+        {
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                con.Open();
+                cmd = new SqlCommand("Select * from customer", con);
+                SqlDataAdapter Supplieradapter = new SqlDataAdapter(cmd);
+                DataTable SupplierDt = new DataTable();
+                Supplieradapter.Fill(SupplierDt);
+                CustomerComboBox.ItemsSource = SupplierDt.DefaultView;
+                CustomerComboBox.DisplayMemberPath = "c_name";
+                CustomerComboBox.SelectedValuePath = "c_id";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Info");
+            }
+            finally
+            {
+                cmd.Dispose();
+                con.Close();
+            }
+        }
+
+        private void reset()
+        {
+            FillComboBox();
+            tableTxtBox.Text = "";
+            CustomerComboBox.Text = "";
+            addBtn.IsEnabled = true;
+            updateBtn.IsEnabled = false;
+            deleteBillBtn.IsEnabled = true;
+            openBillBtn.IsEnabled = false;
+            closeBillBtn.IsEnabled = false;
+            deleteBillBtn.IsEnabled = false;
+            loadBillGrid();
         }
     }
 }

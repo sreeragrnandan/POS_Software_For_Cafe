@@ -64,12 +64,15 @@ namespace Callista_Cafe
                 unitComboBox.ItemsSource = Unitdt.DefaultView;
                 unitComboBox.DisplayMemberPath = "unit";
                 unitComboBox.SelectedValuePath = "unit";
-                cmd.Dispose();
-                con.Close();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), "Info");
+            }
+            finally
+            {
+                cmd.Dispose();
+                con.Close();
             }
         }
 
@@ -79,7 +82,7 @@ namespace Callista_Cafe
 
             if (id)
             {
-                if (item_id.ToString().Equals(""))
+                if (item_id.ToString().Equals("") || item_id.ToString().Equals("0"))
                 {
                     MessageBox.Show("Item_ID ERROR. Failed to Update..!", "Error");
                     flag = false;

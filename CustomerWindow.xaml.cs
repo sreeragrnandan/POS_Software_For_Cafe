@@ -31,6 +31,7 @@ namespace Callista_Cafe
         private SqlConnection con;
         private SqlCommand cmd;
 
+        public bool isOpenedForAdd = false;
 
         Customer cust = new Customer();
         Customer ToSendCustomer = new Customer();
@@ -48,21 +49,28 @@ namespace Callista_Cafe
         }
         private void Customers_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGrid gd = (DataGrid)sender;
-            DataRowView row_selected = gd.SelectedItem as DataRowView;
-            if (row_selected != null)
+            if (isOpenedForAdd)
             {
-                Customer_id = int.Parse(row_selected[0].ToString());
-                CusNameTextBox.Text = row_selected[1].ToString();
-                mobTxtBox.Text = row_selected[2].ToString();
-                dobTxtBox.Text = row_selected[3].ToString();
-                emailTxtBox.Text = row_selected[4].ToString();
-                locationTxtBox.Text = row_selected[5].ToString();
+                MessageBox.Show("Only ADD function is available. Please reopen the window.", "Error");
+            }
+            else
+            {
+                DataGrid gd = (DataGrid)sender;
+                DataRowView row_selected = gd.SelectedItem as DataRowView;
+                if (row_selected != null)
+                {
+                    Customer_id = int.Parse(row_selected[0].ToString());
+                    CusNameTextBox.Text = row_selected[1].ToString();
+                    mobTxtBox.Text = row_selected[2].ToString();
+                    dobTxtBox.Text = row_selected[3].ToString();
+                    emailTxtBox.Text = row_selected[4].ToString();
+                    locationTxtBox.Text = row_selected[5].ToString();
 
-                addBtn.IsEnabled = false;
-                addBtn.IsDefault = false;
-                updateBtn.IsEnabled = true;
-                delBtn.IsEnabled = true;
+                    addBtn.IsEnabled = false;
+                    addBtn.IsDefault = false;
+                    updateBtn.IsEnabled = true;
+                    delBtn.IsEnabled = true;
+                }
             }
         }
 
@@ -167,7 +175,10 @@ namespace Callista_Cafe
                 if (result)
                 {
                     MessageBox.Show("New Item Inserted..!", "Success");
-                    reset();
+                    if(isOpenedForAdd)
+                        this.Close();
+                    else
+                        reset();
                 }
             }
         }
@@ -254,6 +265,11 @@ namespace Callista_Cafe
         {
             AdminDashbord adminDashbord = new AdminDashbord();
             adminDashbord.Show();
+            this.Close();
+        }
+
+        private void closeBtn_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
     }
