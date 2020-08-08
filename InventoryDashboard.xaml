@@ -11,7 +11,7 @@
         Height="720"
         Width="1280"
         WindowState="Maximized"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         Background="#072233">
 
     <Window.Resources>
