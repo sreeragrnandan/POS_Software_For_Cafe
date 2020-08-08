@@ -137,6 +137,9 @@ namespace Callista_Cafe
         private void ResetSupplierBtnClick(object sender, RoutedEventArgs e)
         {
             reset_txtbox();
+            DataTable dt = new DataTable();
+            dt = supplier_object.select_query();
+            Suppliers.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = dt });
         }
         private void DataGrid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -182,9 +185,16 @@ namespace Callista_Cafe
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            AdminDashbord AdminWindow = new AdminDashbord();
-            AdminWindow.Show();
-            this.Close();
+            try
+            {
+                AdminDashbord AdminWindow = new AdminDashbord();
+                this.Close();
+                AdminWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

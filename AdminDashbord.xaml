@@ -44,61 +44,110 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="50,10,55,10"/>
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="MinHeight" Value="150"/>
+            <Setter Property="Background" Value="#072233"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="50,20,10,10"/>
+        </Style>
     </Window.Resources>
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="250" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MaxWidth="250" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-            <Border Grid.ColumnSpan="1" CornerRadius="0 75 0 0 ">
-                <Border.Background>
-                    <LinearGradientBrush>
-                        <GradientStop Color="#801717" Offset="0.35"/>
-                        <GradientStop Color="#072233" Offset=".75"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-            </Border>
+        <Border Grid.ColumnSpan="1" Margin="0,20,0,20" CornerRadius="0 75 75 0 ">
+            <Border.Background>
+                <LinearGradientBrush>
+                    <GradientStop Color="#801717" Offset="0.35"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
 
 
 
-            <StackPanel Grid.Column="0" Orientation="Vertical">
-                <StackPanel VerticalAlignment="Center" Margin="0,20,0,0">
-                    <Image Source="assets/Logo Sqr.png" Width="150"/>
-                </StackPanel>
-
-                <StackPanel Margin="0,50,0,0">
-                    <Button x:Name="BillBtn" Width="200" Content="BILLING" MinHeight="30" Click="billingBtnClick" FontSize="15" FontWeight="DemiBold" />
-                </StackPanel>
-
-                <StackPanel Margin="0,15,0,0">
-                    <Button x:Name="MenuBtn" Width="200"  Content="Menu" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="MenuBtn_Click" />
-                </StackPanel>
-
-                <StackPanel Margin="0,15,0,0">
-                    <Button x:Name="InventoryBtn" Width="200" Content="Inventory" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="ButtonBase_OnClick"/>
-                </StackPanel>
-
-                <StackPanel Margin="0,15,0,0">
-                    <Button x:Name="CustBtn" Width="200" Content="Customers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="CustBtn_Click" />
-                </StackPanel>
-
-                <StackPanel Margin="0,15,0,0">
-                    <Button x:Name="SupplierBtm" Width="200" Content="Suppliers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="SupplierBtm_Click"  />
-                </StackPanel>
-
-                <StackPanel Margin="0,15,0,0">
-                    <Button x:Name="LogOutBtn" Width="200" Click="logout_Button_Click" Content="LOGOUT" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
-                </StackPanel>
-
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="20,20,20,20">
+            <StackPanel VerticalAlignment="Center" Margin="0,20,0,0">
+                <Image Source="assets/Logo Sqr.png" Width="150"/>
             </StackPanel>
 
-            <StackPanel Grid.Column="1" Orientation="Vertical">
-                <Label Name="dateandtime" FontSize="14" Foreground="White" HorizontalAlignment="Right"></Label>
-                <Label Name="lblUsername" FontSize="18" Foreground="White" HorizontalContentAlignment="Left"></Label>
+            <StackPanel Margin="0,50,0,0">
+                <Button x:Name="BillBtn" Width="200" Content="BILLING" MinHeight="30" Click="billingBtnClick" FontSize="15" FontWeight="DemiBold" />
             </StackPanel>
 
+            <StackPanel Margin="0,15,0,0">
+                <Button x:Name="MenuBtn" Width="200"  Content="Menu" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="MenuBtn_Click" />
+            </StackPanel>
+
+            <StackPanel Margin="0,15,0,0">
+                <Button x:Name="InventoryBtn" Width="200" Content="Inventory" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="ButtonBase_OnClick"/>
+            </StackPanel>
+
+            <StackPanel Margin="0,15,0,0">
+                <Button x:Name="CustBtn" Width="200" Content="Customers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="CustBtn_Click" />
+            </StackPanel>
+
+            <StackPanel Margin="0,15,0,0">
+                <Button x:Name="SupplierBtm" Width="200" Content="Suppliers" MinHeight="30" FontSize="15" FontWeight="DemiBold" Click="SupplierBtm_Click"  />
+            </StackPanel>
+
+            <StackPanel Margin="0,15,0,0">
+                <Button x:Name="LogOutBtn" Width="200" Click="logout_Button_Click" Content="LOGOUT" MinHeight="30" FontSize="15" FontWeight="DemiBold" />
+            </StackPanel>
+
+        </StackPanel>
+
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition MaxHeight="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label x:Name="lblUsername" HorizontalAlignment="Left" FontSize="20" Foreground="White" HorizontalContentAlignment="Left" VerticalAlignment="Top"/>
+                <Label x:Name="dateandtime" FontSize="16" Foreground="White" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="450"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Vertical">
+                    <Label x:Name="LblHighlights" Content="Highlights" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,70,0,0"/>
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Button x:Name="BtnTotalBills" Margin="0,25,0,15" MinWidth="250" MinHeight="50" FontSize="20" Loaded="BtnTotalBills_OnLoaded"/>
+                        <Button Loaded="BtnIncome_OnLoaded" x:Name="BtnIncome" Margin="0,5,0,5" MinHeight="50" MinWidth="250" FontSize="20"/>
+                        <Button x:Name="BtnActiveBills" Margin="0,5,0,5" MinHeight="50" MinWidth="250" FontSize="20" Loaded="BtnActiveBills_OnLoaded"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <Label Content="Low Quantity Items"/>
+                    <DataGrid x:Name="InventoryRemaining" IsReadOnly="True" Background="#072233" BorderThickness="0" AutoGenerateColumns="False" Loaded="InventoryRemaining_OnLoaded" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="INGREDIENT" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="QTY AVAILABLE" Width="*"  Binding="{Binding quantity}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="SUPPLIER" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label Content="Items Expiring Soon"/>
+                    <DataGrid x:Name="ExpiredItems" Loaded="ExpiredItems_OnLoaded" BorderThickness="0" AutoGenerateColumns="False" IsReadOnly="True" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="INGREDIENT" Width="*" Binding="{Binding ingredient}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="EXP DATE" Width="*"  Binding="{Binding e_date}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="QTY REMAINING" Binding="{Binding quantity}" Width="*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="SUPPLIER" Width="*" Binding="{Binding supplier_details}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </StackPanel>
+            </Grid>
         </Grid>
+
     </Grid>
 </Window>
