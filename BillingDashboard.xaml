@@ -4,13 +4,254 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Callista_Cafe"
+        xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         mc:Ignorable="d"
         Title="Billing Dashboard | Callista Cafe"
-        MinHeight="720"
-        MinWidth="1280"
+        MinHeight="768"
+        MinWidth="1336"
         WindowState="Maximized"
-        >
+        WindowStyle="SingleBorderWindow"
+        Background="#595959">
+
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value=".8"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                    <Setter Property="Opacity" Value="1"/>
+
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+        </Style>
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="IsTextSearchEnabled" Value="True"></Setter>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="20" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="CaretBrush" Value="White"/>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        <Style x:Key="MainBtn" TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="WhiteSmoke"/>
+            <Setter Property="FontFamily" Value="Helvetica"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Opacity" Value="1"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Background" Value="Transparent"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="20"
+                                BorderThickness="2"
+                                BorderBrush="White">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Opacity" Value="1"/>
+                    <Setter Property="Foreground" Value="Red"/>
+                    <Setter Property="FontSize" Value="20"></Setter>
+                    <Setter Property="Cursor" Value="Hand"/>
+
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="false">
+                    <Setter Property="Opacity" Value=".5"/>
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="450" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1"  CornerRadius="100 0 0 100" Margin="0 10 0 10">
+            <Border.Background>
+                <SolidColorBrush Color="#262626"/>
+            </Border.Background>
+        </Border>
+
         
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="10 20 0 0" VerticalAlignment="Center">
+                    <iconPacks:PackIconMaterial Kind="Account"
+                                                Foreground="White"
+                                                RenderTransformOrigin="2.684,0.331"
+                                                Width="20"
+                                                Height="30"/>
+                    <Label x:Name="usernameLabel" Content="" FontSize="22" Height="30" Margin="10 0 0 0"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                    <Label Name="dateandtime" FontSize="22" Foreground="White" Margin="0 20 10 0" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="activeBills" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="10 25 10 0" Loaded="activeBills_Loaded" >
+
+                    <DataGrid.Resources>
+                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="BorderThickness" Value="2,2,2,2"/>
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGridRow}">
+                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontSize" Value="13"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                        </Style>
+                        <Style x:Key="end" TargetType="{x:Type DataGridCell}">
+                            <Setter Property="BorderBrush" Value="WhiteSmoke"/>
+                            <Setter Property="BorderThickness" Value="0,0,2,0"/>
+                        </Style>
+                        <Style TargetType="{x:Type DataGrid}">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
+                        </Style>
+                    </DataGrid.Resources>
+
+                    <DataGrid.Columns >
+                        <DataGridTextColumn Header=" TABLE" Binding="{Binding table_no}"/>
+                        <DataGridTextColumn Header=" TIME" Binding="{Binding bill_datetime}"/>
+                        <DataGridTextColumn Header=" ITEMS" Binding="{Binding item_count}"/>
+                        <DataGridTextColumn Header=" AMOUNT" Binding="{Binding amount }" />
+                        <DataGridTextColumn CellStyle="{StaticResource end}" Header=" CUSTOMER" Binding="{Binding customer_name }" />
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Column="1" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Image Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Source="assets/Logo Sqr.png" Width="180" Margin="30 20 0 0"/>
+            <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                    <Label Content="TABLE " Width="125" Margin="0 0 10 0" FontSize="25" FontFamily="LiSu" />
+                    <TextBox x:Name="tableTxtBox" Width="250" Margin="10 0 0 0" Height="35"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+                    <Label Content="CUSTOMER" Width="125" Margin="0 0 10 0" FontSize="25" FontFamily="LiSu"/>
+                    <ComboBox x:Name="CusomerComboBox" Margin="10 0 0 0" FontSize="18" IsEditable="True" Width="250" Foreground="Black"  Height="35"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0" >
+                    <Label Content="PAYMENT " Width="125" Margin="0 0 10 0" FontFamily="LiSu" FontSize="25"/>
+                    <ComboBox x:Name="PaymentComboBox" Margin="10 0 0 0" FontSize="18" IsEditable="True" Width="250" Foreground="Black"  Height="35">
+                        <ComboBoxItem IsSelected="True">CASH</ComboBoxItem>
+                        <ComboBoxItem>CARD</ComboBoxItem>
+                        <ComboBoxItem>ONLINE</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin=" 0 30 0 0">
+                    <Button x:Name="addBtn" Content="ADD BILL" IsEnabled="True" Height="35" Width="180" Margin="0 0 15 7.5" Click="addBtn_Click" />
+                    <Button x:Name="openBillBtn" Content="OPEN BILL" IsEnabled="False" Height="35" Width="180" Margin="15 0 0 7.5" Click="openBillBtn_Click" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 0 0 0">
+                    <Button Style="{StaticResource MainBtn}" IsEnabled="False" x:Name="closeBillBtn" Content="CLOSE BILL" Height="35" Width="180" Margin="0 7.5 15 0" Click="closeBillBtn_Click"/>
+                    <Button x:Name="deleteBillVtn" Style="{StaticResource MainBtn}" IsEnabled="False" Content="DELETE BILL" Height="35" Width="180" Margin="15 7.5 0 0 " Click="deleteBillVtn_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0 0 0 70">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="HomeBtn" IsEnabled="True" Content="HOME"  Height="35" Width="180" Margin="0 0 15 7.5" Click="HomeBtn_Click"/>
+                    <Button x:Name="CustomerBtn" Content="CUSTOMER" Height="35" Width="180" Margin="15 0 0 7.5 " Click="CustomerBtn_Click"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button x:Name="logOutBtn" Content="LOGOUT" Foreground="#C01717" Height="35" Opacity=".8" Width="180" Margin="0 0 15 7.5" Click="logOutBtn_Click"/>
+                    <Button x:Name="closeBtn" Content="CLOSE" Foreground="#C01717" Opacity=".8" Height="35" Width="180" Margin="15 0 0 7.5 " Click="closeBtn_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+
+
+        </Grid>
     </Grid>
 </Window>
