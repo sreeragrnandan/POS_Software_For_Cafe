@@ -205,10 +205,6 @@ namespace Callista_Cafe
                     ResetFun();
                     reqLoadGrid();
                 }
-                else
-                {
-                    MessageBox.Show("Failed to add..!", "Error");
-                }
             }
         }
 

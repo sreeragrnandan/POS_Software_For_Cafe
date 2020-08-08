@@ -92,7 +92,7 @@ namespace Callista_Cafe.Classes
                 }
                 else
                 {
-                    result = false;
+                    MessageBox.Show("Failed to add..!", "Error");
                 }
             }
             catch (Exception e)
