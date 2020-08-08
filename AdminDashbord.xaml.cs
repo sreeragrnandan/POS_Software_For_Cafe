@@ -157,8 +157,7 @@ namespace Callista_Cafe
                 con = new SqlConnection(ConString);
                 con.Open();
                 cmd = new SqlCommand(
-                    "select SUM(bill_amount) as total from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" +
-                    date + "%' AND bill_status != 'PENDING'", con);
+                    "select SUM(bill_amount) as total from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" + date + "%' AND bill_status = 'CLOSED'", con);
                 SqlDataReader reader;
                 reader = cmd.ExecuteReader();
                 reader.Read();
@@ -188,7 +187,7 @@ namespace Callista_Cafe
                 con = new SqlConnection(ConString);
                 con.Open();
                 cmd = new SqlCommand(
-                    "select COUNT(bill_id) as active_bills from bills where bill_status != 'CLOSED'", con);
+                    "select COUNT(bill_id) as active_bills from bills where bill_status = 'PENDING'", con);
                 SqlDataReader reader;
                 reader = cmd.ExecuteReader();
                 reader.Read();
@@ -219,8 +218,7 @@ namespace Callista_Cafe
                 con = new SqlConnection(ConString);
                 con.Open();
                 cmd = new SqlCommand(
-                    "select COUNT(bill_id) as total_bills_today from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" +
-                    date + "%' AND bill_status != 'PENDING'", con);
+                    "select COUNT(bill_id) as total_bills_today from bills where CONVERT(VARCHAR(10), bill_datetime, 120) Like '%" + date + "%' AND bill_status != 'PENDING'", con);
                 SqlDataReader reader;
                 reader = cmd.ExecuteReader();
                 reader.Read();
