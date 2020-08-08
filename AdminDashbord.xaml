@@ -9,7 +9,7 @@
         MinHeight="720"
         MinWidth="1280"
         WindowState="Maximized"
-        WindowStyle="ThreeDBorderWindow"
+        WindowStyle="None"
         Background="#072233">
 
 
