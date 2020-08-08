@@ -10,7 +10,7 @@
         MinHeight="768"
         MinWidth="1336"
         WindowState="Maximized"
-        WindowStyle="SingleBorderWindow"
+        WindowStyle="None"
         Background="#595959">
 
     <Window.Resources>
