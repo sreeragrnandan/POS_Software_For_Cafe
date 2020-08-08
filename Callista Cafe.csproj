@@ -103,6 +103,9 @@
     <Compile Include="MenuItemRequirement.xaml.cs">
       <DependentUpon>MenuItemRequirement.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SubWindows\AddBillItems.xaml.cs">
+      <DependentUpon>AddBillItems.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SubWindows\MenuItemDescription.xaml.cs">
       <DependentUpon>MenuItemDescription.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuItemRequirement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubWindows\AddBillItems.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

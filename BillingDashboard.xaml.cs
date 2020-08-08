@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Callista_Cafe.Classes;
+using Callista_Cafe.SubWindows;
 
 namespace Callista_Cafe
 {
@@ -201,13 +202,17 @@ namespace Callista_Cafe
 
         private void updateBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            
 
         }
 
         private void openBillBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            AddBillItems addBillItems = new AddBillItems();
+            addBillItems.bill_id = bill_id;
+            addBillItems.TableTextBox.Text = tableTxtBox.Text;
+            addBillItems.ShowInTaskbar = false;
+            addBillItems.ShowDialog();
         }
 
         private void closeBillBtn_Click(object sender, RoutedEventArgs e)
@@ -242,6 +247,11 @@ namespace Callista_Cafe
                 tableTxtBox.Text = row_selected[2].ToString();
                 CustomerComboBox.Text = row_selected[6].ToString();
                 PaymentComboBox.Text = row_selected[1].ToString();
+                openBillBtn.IsEnabled = true;
+                addBtn.IsEnabled = false;
+                updateBtn.IsEnabled = true;
+                deleteBillBtn.IsEnabled = true;
+                closeBillBtn.IsEnabled = true;
             }
         }
 
@@ -277,10 +287,9 @@ namespace Callista_Cafe
             CustomerComboBox.Text = "";
             addBtn.IsEnabled = true;
             updateBtn.IsEnabled = false;
-            deleteBillBtn.IsEnabled = true;
+            deleteBillBtn.IsEnabled = false;
             openBillBtn.IsEnabled = false;
             closeBillBtn.IsEnabled = false;
-            deleteBillBtn.IsEnabled = false;
             loadBillGrid();
         }
     }
