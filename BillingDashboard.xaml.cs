@@ -47,7 +47,6 @@ namespace Callista_Cafe
 
         private int bill_id;
 
-
         void timer_Tick(object sender, EventArgs e)
         {
             dateandtime.Content = DateTime.Now.ToString("dddd , MMM dd yyyy , hh:mm:ss tt");
@@ -217,6 +216,44 @@ namespace Callista_Cafe
 
         private void closeBillBtn_Click(object sender, RoutedEventArgs e)
         {
+            bool result = false;
+            if (DbFun.getbilltotalitems(bill_id) !=0)
+            {
+                MessageBoxResult messageBoxResult = MessageBox.Show("Do you want to print the bill?", "Close Bill", MessageBoxButton.YesNoCancel);
+                switch (messageBoxResult)
+                {
+                    case MessageBoxResult.Yes:
+                        result = bills.closeBill(bill_id);
+                        if (result)
+                        {
+                            MessageBox.Show("Print will start here", "Printing");
+                            reset();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something went wrong.", "Try again");
+                        }
+                        break;
+                    case MessageBoxResult.No:
+                        result = bills.closeBill(bill_id);
+                        if (result)
+                        {
+                            MessageBox.Show("Bill Closed", "closed");
+                            reset();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something went wrong.", "Try again");
+                        }
+                        break;
+                    case MessageBoxResult.Cancel:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("No items found on this bill. Please delete the bill", "Warning");
+            }
 
         }
 
@@ -291,6 +328,11 @@ namespace Callista_Cafe
             openBillBtn.IsEnabled = false;
             closeBillBtn.IsEnabled = false;
             loadBillGrid();
+        }
+
+        private void resetBtn_Click(object sender, RoutedEventArgs e)
+        {
+            reset();
         }
     }
 }
