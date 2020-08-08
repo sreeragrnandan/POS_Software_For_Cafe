@@ -82,11 +82,15 @@ namespace Callista_Cafe
                     }
                     else if (UserInfo.User_Type == 1)
                     {
-                        MessageBox.Show("Not Available");
+                        AdminDashbord adminDashbord = new AdminDashbord();
+                        adminDashbord.Show();
+                        this.Close();
                     }
-                    else
+                    else if (UserInfo.User_Type == 2)
                     {
-                        MessageBox.Show("Something went wrong please contact your Administrator.", "Error");
+                        BillingDashboard billingDashboard = new BillingDashboard();
+                        billingDashboard.Show();
+                        this.Close();
                     }
                 }
             }

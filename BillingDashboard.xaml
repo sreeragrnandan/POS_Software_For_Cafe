@@ -117,7 +117,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid Loaded="Grid_Loaded" >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="450" />
@@ -240,7 +240,7 @@
 
             <StackPanel Grid.Row="2" Orientation="Vertical" Margin="0 0 0 70">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button x:Name="HomeBtn" IsEnabled="False" Content="HOME"  Height="35" Width="180" Margin="0 0 15 7.5" Click="HomeBtn_Click"/>
+                    <Button x:Name="HomeBtn" IsEnabled="True" Content="HOME"  Height="35" Width="180" Margin="0 0 15 7.5" Click="HomeBtn_Click"/>
                     <Button x:Name="CustomerBtn" Content="CUSTOMER" Height="35" Width="180" Margin="15 0 0 7.5 " Click="CustomerBtn_Click"/>
                 </StackPanel>
 

@@ -29,7 +29,7 @@ namespace Callista_Cafe
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
-            usernameLabel.Content = "User";
+            usernameLabel.Content = UserInfo.User_Name;
         }
 
         Bills bills = new Bills();
@@ -54,23 +54,23 @@ namespace Callista_Cafe
 
         private void HomeBtn_Click(object sender, RoutedEventArgs e)
         {
-            AdminDashbord adminDashbord = new AdminDashbord();
-            adminDashbord.Show();
-            this.Close();
+            if (UserInfo.User_Type <= 1)
+            {
+                AdminDashbord adminDashbord = new AdminDashbord();
+                adminDashbord.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("You are not authorized to view this page !", "Warning");
+            }
         }
 
         private void CustomerBtn_Click(object sender, RoutedEventArgs e)
         {
             CustomerWindow customerWindow = new CustomerWindow();
-            if (UserInfo.User_Type>1)
-            {
-                customerWindow.homeBtn.IsEnabled = false;
-                //Enable Close Button
-            }
-            else
-            {
-                //Enable close button
-            }
+            customerWindow.homeBtn.IsEnabled = false;
+            customerWindow.closeBtn.IsEnabled = true;
             customerWindow.ShowDialog();
         }
 
@@ -103,15 +103,7 @@ namespace Callista_Cafe
 
         private void closeBtn_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (UserInfo.User_Type == 0 || UserInfo.User_Type == 1)
-            {
-                HomeBtn.IsEnabled = true;
-            }
+            Application.Current.Shutdown();
         }
     }
 }
