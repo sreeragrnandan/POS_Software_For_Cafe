@@ -129,10 +129,10 @@
         <StackPanel Grid.Column="0" Width="500" Orientation="Vertical" Margin="0 10 0 0">
             <StackPanel Orientation="Vertical" Margin="10,0,10,0" HorizontalAlignment="Center">
                 <Label x:Name="TitleLabel" Content="BILLED ITEMS" HorizontalContentAlignment="Center" FontSize="30"  Foreground="White" FontFamily="Times New Roman" />
-                <DataGrid x:Name="BilledItemsGrid" Width="480" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Margin="0 2 0 0">
+                <DataGrid x:Name="BilledItemsGrid"  Width="480" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Margin="0 2 0 0" Loaded="BilledItemsGrid_Loaded">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#000000"/>
+                            <Setter Property="Background" Value="Gray"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="BorderThickness" Value="2,2,2,2"/>
                             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
@@ -140,7 +140,7 @@
                             <Setter Property="Foreground" Value="White"/>
                         </Style>
                         <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="Background" Value="Black"/>
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="FontSize" Value="13"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -156,10 +156,10 @@
                         </Style>
                     </DataGrid.Resources>
                     <DataGrid.Columns >
-                        <DataGridTextColumn Header=" ITEM" Binding="{Binding }" Width="*" />
-                        <DataGridTextColumn Header=" QUANTITY" Binding="{Binding }" Width="100"/>
-                        <DataGridTextColumn Header=" PRICE" Binding="{Binding }" Width="90"/>
-                        <DataGridTextColumn Header=" TOTAL" Binding="{Binding }" Width="90"/>
+                        <DataGridTextColumn Header=" ITEM" Binding="{Binding item_name}" Width="*" />
+                        <DataGridTextColumn Header=" QUANTITY" Binding="{Binding item_quantity}" Width="100"/>
+                        <DataGridTextColumn Header=" PRICE" Binding="{Binding item_price}" Width="90"/>
+                        <DataGridTextColumn Header=" TOTAL" Binding="{Binding item_total}" Width="90"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
@@ -178,11 +178,11 @@
 
             <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Center">
                 <Label Content="QUANTITY :" Width="175" Margin="0 5 0 0"/>
-                <TextBox x:Name="QtyTextBox" Width="275" IsEnabled="True" Height="35" Text="" Margin="5 0 0 0" Loaded="QtyTextBox_Loaded"/>
+                <TextBox x:Name="QtyTextBox" Width="275" IsEnabled="True" Height="35" Text="0" Margin="5 0 0 0" Loaded="QtyTextBox_Loaded"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0 20 0 0" HorizontalAlignment="Center">
-                <Button x:Name="addBtn" Content="ADD" IsEnabled="False" Width="210" Height="35" Margin="0 0 20 0"  />
+                <Button x:Name="addBtn" Content="ADD" IsEnabled="False" Width="210" Height="35" Margin="0 0 20 0" Click="addBtn_Click"  />
                 <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" Width="210" Height="35" Margin="20 0 0 0"   />
             </StackPanel>
 
@@ -196,14 +196,14 @@
         <StackPanel Grid.Column="1" Orientation="Vertical" Width="500" Margin="0 10 0 0" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 00 10 0">
                 <Label Content="ITEMS" FontSize="30" Margin="0 0 50 0" Foreground="White" FontFamily="Times New Roman"/>
-                <Label Content="Search : " FontSize="20" Margin="0 13 0 0"></Label>
+                <Label Content="Search : " FontSize="20" Margin="0 13 0 0"/>
                 <TextBox x:Name="Search" Width="150" Height="27"  Margin="0 10 0 0"/>
             </StackPanel>
             <StackPanel Margin="10 0 10 0" Width="480">
-                <DataGrid x:Name="MenuItemsDatagrid" IsReadOnly="True" Height="580" AutoGenerateColumns="False" Width="480"  >
+                <DataGrid x:Name="MenuItemsDatagrid"  IsReadOnly="True" Height="580" AutoGenerateColumns="False" Width="480" SelectionChanged="MenuItemsDatagrid_SelectionChanged"  >
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="Background" Value="#000000"/>
+                            <Setter Property="Background" Value="Gray"/>
                             <Setter Property="FontWeight" Value="Bold"/>
                             <Setter Property="BorderThickness" Value="2,2,2,2"/>
                             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
@@ -211,7 +211,7 @@
                             <Setter Property="Foreground" Value="White"/>
                         </Style>
                         <Style TargetType="{x:Type DataGridRow}">
-                            <Setter Property="Background" Value="#595959"/>
+                            <Setter Property="Background" Value="#000000"/>
                             <Setter Property="Foreground" Value="White"/>
                             <Setter Property="FontSize" Value="13"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>

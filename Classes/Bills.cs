@@ -12,8 +12,12 @@ namespace Callista_Cafe.Classes
 {
     class Bills
     {
+        private SqlConnection conn;
         private SqlConnection con;
         private SqlCommand cmd;
+        private SqlDataReader reader;
+
+        private SqlTransaction transaction;
 
         public int bill_id { get; set; }
 
@@ -22,6 +26,14 @@ namespace Callista_Cafe.Classes
         public string bill_payment { get; set; }
 
         public string bill_customer { get; set; }
+
+        public  int item_id { get; set; }
+
+        public float item_qty { get; set; }
+
+        public float item_price { get; set; }
+
+        public float item_total { get; set; }
 
         public DataTable LoadBillTable()
         {
@@ -103,6 +115,121 @@ namespace Callista_Cafe.Classes
             }
 
             return itemDataTable;
+        }
+
+        public DataTable GetBilledItemDataTable(int billid)
+        {
+            DataTable billedItemDataTable = new DataTable();
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                cmd = new SqlCommand("SELECT DBILL.item_id,(SELECT D1.item_name FROM menu_items AS D1 WHERE D1.item_id=DBILL.item_id) AS item_name, DBill.item_quantity, DBill.item_price, DBill.item_total FROM detailed_bill AS DBill WHERE DBill.bill_id=@bill_id;", con);
+                cmd.Parameters.AddWithValue("@bill_id", billid);
+                SqlDataAdapter InvAdapter = new SqlDataAdapter(cmd);
+                con.Open();
+                InvAdapter.Fill(billedItemDataTable);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return billedItemDataTable;
+        }
+
+        public bool closeBill(int bill_id)
+        {
+            bool result = false;
+
+
+
+            return result;
+        }
+
+        public bool insertToBilled(Bills bills)
+        {
+            bool result = false;
+            bool updateinv = true;
+            conn = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+            try
+            {
+                conn.Open();
+                cmd = new SqlCommand("SELECT inv.id, ing.quantity AS needed, inv.quantity AS available FROM inventory AS inv, ingredient_list AS ing WHERE ing.menu_item_id=@itemId and inv.id=ing.ingredient_id;", conn);
+                cmd.Parameters.AddWithValue("@itemId", bills.item_id);
+                reader = cmd.ExecuteReader();
+                con.Open();
+                transaction = con.BeginTransaction();
+                while (reader.Read() && updateinv)
+                {
+                    float newQTY = float.Parse(reader["available"].ToString()) -
+                                   (float.Parse(reader["needed"].ToString()) * bills.item_qty);
+                    if (newQTY <= 0)
+                    {
+                        MessageBoxResult messageBoxResult = MessageBox.Show("Ingredient shortage. Do you want to continue?", "Ingredient shortage", MessageBoxButton.YesNo);
+                        switch (messageBoxResult)
+                        {
+                            case MessageBoxResult.Yes:
+                                newQTY = 0;
+                                break;
+                            case MessageBoxResult.No:
+                                updateinv = false;
+                                transaction.Rollback();
+                                goto WHILEEND;
+                        }
+                    }
+                    SqlCommand invCmd = new SqlCommand("UPDATE inventory SET quantity=@quantity WHERE id=@id", con, transaction);
+                    invCmd.Parameters.AddWithValue("@quantity", newQTY.ToString());
+                    invCmd.Parameters.AddWithValue("@id", reader["id"]);
+                    int rows = invCmd.ExecuteNonQuery();
+                    if (rows > 0){}
+                    else
+                    {
+                        MessageBox.Show("Something went wrong. Please try again !", "Error");
+                        updateinv = false;
+                        transaction.Rollback();
+                    }
+                    WHILEEND:{}
+                }
+
+                if (updateinv)
+                {
+                    SqlCommand addbill = new SqlCommand("INSERT INTO detailed_bill (bill_id, item_id, item_quantity, item_price, item_total) VALUES (@bill_id, @item_id, @item_quantity, @item_price, @item_total )", con, transaction);
+                    addbill.Parameters.AddWithValue("@bill_id", bills.bill_id);
+                    addbill.Parameters.AddWithValue("@item_id", bills.item_id);
+                    addbill.Parameters.AddWithValue("@item_quantity", bills.item_qty.ToString());
+                    addbill.Parameters.AddWithValue("@item_price", bills.item_price.ToString());
+                    addbill.Parameters.AddWithValue("@item_total", bills.item_total.ToString());
+                    int rows = addbill.ExecuteNonQuery();
+                    if (rows > 0)
+                    {
+                        transaction.Commit();
+                        result = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Something went wrong. Please try again !", "Error");
+                        result = false;
+                        transaction.Rollback();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+                transaction.Rollback();
+            }
+            finally
+            {
+                con.Close();
+                conn.Close();
+            }
+            return result;
         }
     }
 }
