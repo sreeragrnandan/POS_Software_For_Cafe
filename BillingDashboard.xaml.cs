@@ -193,6 +193,7 @@ namespace Callista_Cafe
                 if (result)
                 {
                     MessageBox.Show("New Item Inserted..!", "Success");
+                    loadBillGrid();
                     reset();
                 }
             }
@@ -205,14 +206,6 @@ namespace Callista_Cafe
 
         }
 
-        private void openBillBtn_Click(object sender, RoutedEventArgs e)
-        {
-            AddBillItems addBillItems = new AddBillItems();
-            addBillItems.bill_id = bill_id;
-            addBillItems.TableTextBox.Text = tableTxtBox.Text;
-            addBillItems.ShowInTaskbar = false;
-            addBillItems.ShowDialog();
-        }
 
         private void closeBillBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -284,9 +277,7 @@ namespace Callista_Cafe
                 tableTxtBox.Text = row_selected[2].ToString();
                 CustomerComboBox.Text = row_selected[6].ToString();
                 PaymentComboBox.Text = row_selected[1].ToString();
-                openBillBtn.IsEnabled = true;
                 addBtn.IsEnabled = false;
-                updateBtn.IsEnabled = true;
                 deleteBillBtn.IsEnabled = true;
                 closeBillBtn.IsEnabled = true;
             }
@@ -323,16 +314,27 @@ namespace Callista_Cafe
             tableTxtBox.Text = "";
             CustomerComboBox.Text = "";
             addBtn.IsEnabled = true;
-            updateBtn.IsEnabled = false;
             deleteBillBtn.IsEnabled = false;
-            openBillBtn.IsEnabled = false;
             closeBillBtn.IsEnabled = false;
-            loadBillGrid();
         }
 
         private void resetBtn_Click(object sender, RoutedEventArgs e)
         {
             reset();
+        }
+
+        private void ActiveBills_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            DataGrid gd = (DataGrid)sender;
+            DataRowView row_selected = gd.SelectedItem as DataRowView;
+            AddBillItems addBillItems = new AddBillItems();
+            if (row_selected != null)
+            {
+                addBillItems.bill_id = int.Parse(row_selected[0].ToString()); ;
+                addBillItems.TableTextBox.Text = row_selected[2].ToString();
+                addBillItems.ShowInTaskbar = false;
+                addBillItems.ShowDialog();
+            }
         }
     }
 }
