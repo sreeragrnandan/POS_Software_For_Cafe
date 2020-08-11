@@ -71,7 +71,10 @@ namespace Callista_Cafe.Classes
                     con);
                 cmd.Parameters.AddWithValue("@table", bills.bill_table);
                 cmd.Parameters.AddWithValue("@payment", bills.bill_payment);
-                cmd.Parameters.AddWithValue("@c_id", bills.bill_customer);
+                if(bills.bill_customer.Equals(""))
+                    cmd.Parameters.AddWithValue("@c_id", DBNull.Value);
+                else
+                    cmd.Parameters.AddWithValue("@c_id", bills.bill_customer);
                 cmd.Parameters.AddWithValue("@user_id", UserInfo.User_Id);
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
