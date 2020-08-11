@@ -122,6 +122,30 @@ namespace Callista_Cafe.Classes
             return itemDataTable;
         }
 
+        public DataTable GetSearchItemDataTable(string key)
+        {
+            DataTable itemDataTable = new DataTable();
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                cmd = new SqlCommand("SELECT item_id, item_name, item_price, item_category FROM menu_Items WHERE item_name LIKE '%"+ key +"%'", con);
+                SqlDataAdapter InvAdapter = new SqlDataAdapter(cmd);
+                con.Open();
+                InvAdapter.Fill(itemDataTable);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return itemDataTable;
+        }
+
         public DataTable GetBilledItemDataTable(int billid)
         {
             DataTable billedItemDataTable = new DataTable();

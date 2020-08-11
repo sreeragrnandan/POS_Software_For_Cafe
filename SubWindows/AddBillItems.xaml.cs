@@ -179,5 +179,11 @@ namespace Callista_Cafe.SubWindows
             QtyTextBox.Text = "0";
             LoadBilledItemGrid();
         }
+
+        private void SearchTxtBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            DataTable menuitemsDataTable = BillFunctions.GetSearchItemDataTable(SearchTxtBox.Text);
+            MenuItemsDatagrid.SetBinding(ItemsControl.ItemsSourceProperty, new Binding { Source = menuitemsDataTable });
+        }
     }
 }
