@@ -167,6 +167,7 @@ namespace Callista_Cafe.SubWindows
                 if (result)
                 {
                     reset();
+                    LoadItemsGrid();
                 }
             }
         }
