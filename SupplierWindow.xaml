@@ -168,7 +168,7 @@
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 20 0 15">
-                    <Button Content="HOME" Style="{StaticResource HomeBtn}" FontSize="25" Foreground="White" Width="370" Height="35" Margin="20 10 0 0" Click="HomeBtn_Click"/>
+                    <Button Content="HOME" Style="{StaticResource HomeBtn}" FontSize="26" Foreground="White" Width="370" Height="35" Margin="20 10 0 0" Click="HomeBtn_Click"/>
                 </StackPanel>
 
             </StackPanel>
