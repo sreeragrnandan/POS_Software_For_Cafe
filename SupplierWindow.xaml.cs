@@ -187,9 +187,9 @@ namespace Callista_Cafe
         {
             try
             {
-                AdminDashbord AdminWindow = new AdminDashbord();
+                AdminDashbord adminDashbord = new AdminDashbord();
+                adminDashbord.Show();
                 this.Close();
-                AdminWindow.Show();
             }
             catch (Exception ex)
             {

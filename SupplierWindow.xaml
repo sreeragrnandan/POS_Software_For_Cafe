@@ -134,7 +134,7 @@
             </Grid.RowDefinitions>
 
             <StackPanel Margin="30 20 0 0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Left">
-                <TextBlock Text="Suppliers" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="35" Foreground="BlanchedAlmond" FontFamily="Californian FB" Margin="0,30,0,0"/>
+                <TextBlock Text="SUPPLIERS" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="35" Foreground="BlanchedAlmond" FontFamily="Times New Roman" Margin="0,30,0,0"/>
             </StackPanel>
 
             <StackPanel Grid.Row="1" Orientation="Vertical" VerticalAlignment="Center">
@@ -167,14 +167,16 @@
                     <Button x:Name="DeleteSupplierBtn" Content="DELETE" IsEnabled="False" Height="35" Margin="20 0 0 0" Click="DeleteSupplierBtnClick" Width="165"/>
                 </StackPanel>
 
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0 20 0 15">
+                    <Button Content="HOME" Style="{StaticResource HomeBtn}" FontSize="26" Foreground="White" Width="370" Height="35" Margin="20 10 0 0" Click="HomeBtn_Click"/>
+                </StackPanel>
+
             </StackPanel>
 
         </Grid>
         <Grid Grid.Column="1">
             <StackPanel Orientation="Vertical">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0 20 40 0">
-                    <Button Content="HOME" Style="{StaticResource HomeBtn}" FontSize="25" Foreground="White" Width="170" Height="35" Margin="20 10 0 0" Click="HomeBtn_Click"/>
-                </StackPanel>
+                
                 
                 <StackPanel>
                     <DataGrid x:Name="Suppliers" IsReadOnly="True" ColumnWidth="*" AutoGenerateColumns="False" x:FieldModifier="public" Margin="20 10 20 0" Loaded="DataGrid_Loaded" SelectionChanged="Suppliers_OnSelectionChanged"  >
