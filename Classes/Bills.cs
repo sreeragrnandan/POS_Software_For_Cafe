@@ -122,6 +122,30 @@ namespace Callista_Cafe.Classes
             return itemDataTable;
         }
 
+        public DataTable GetSearchItemDataTable(string key)
+        {
+            DataTable itemDataTable = new DataTable();
+            try
+            {
+                con = new SqlConnection(ConfigurationManager.ConnectionStrings["conString"].ConnectionString);
+                cmd = new SqlCommand("SELECT item_id, item_name, item_price, item_category FROM menu_Items WHERE item_name LIKE '%"+ key + "%' OR item_category LIKE '%" + key + "%'", con);
+                SqlDataAdapter InvAdapter = new SqlDataAdapter(cmd);
+                con.Open();
+                InvAdapter.Fill(itemDataTable);
+
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString(), "Error");
+            }
+            finally
+            {
+                con.Close();
+            }
+
+            return itemDataTable;
+        }
+
         public DataTable GetBilledItemDataTable(int billid)
         {
             DataTable billedItemDataTable = new DataTable();
@@ -191,7 +215,7 @@ namespace Callista_Cafe.Classes
             try
             {
                 conn.Open();
-                cmd = new SqlCommand("SELECT inv.id, ing.quantity AS needed, inv.quantity AS available FROM inventory AS inv, ingredient_list AS ing WHERE ing.menu_item_id=@itemId and inv.id=ing.ingredient_id;", conn);
+                cmd = new SqlCommand("SELECT inv.id, inv.ingredient, ing.quantity AS needed, inv.quantity AS available FROM inventory AS inv, ingredient_list AS ing WHERE ing.menu_item_id=@itemId and inv.id=ing.ingredient_id;", conn);
                 cmd.Parameters.AddWithValue("@itemId", bills.item_id);
                 reader = cmd.ExecuteReader();
                 con.Open();
@@ -202,7 +226,7 @@ namespace Callista_Cafe.Classes
                                    (float.Parse(reader["needed"].ToString()) * bills.item_qty);
                     if (newQTY <= 0)
                     {
-                        MessageBoxResult messageBoxResult = MessageBox.Show("Ingredient shortage. Do you want to continue?", "Ingredient shortage", MessageBoxButton.YesNo);
+                        MessageBoxResult messageBoxResult = MessageBox.Show("Ingredient shortage. "+ reader["ingredient"] +"  available = "+reader["available"]+".\nDo you want to continue?", "Ingredient shortage", MessageBoxButton.YesNo);
                         switch (messageBoxResult)
                         {
                             case MessageBoxResult.Yes:
@@ -227,26 +251,77 @@ namespace Callista_Cafe.Classes
                     }
                     WHILEEND:{}
                 }
-
+                conn.Close();
                 if (updateinv)
                 {
-                    SqlCommand addbill = new SqlCommand("INSERT INTO detailed_bill (bill_id, item_id, item_quantity, item_price, item_total) VALUES (@bill_id, @item_id, @item_quantity, @item_price, @item_total )", con, transaction);
-                    addbill.Parameters.AddWithValue("@bill_id", bills.bill_id);
-                    addbill.Parameters.AddWithValue("@item_id", bills.item_id);
-                    addbill.Parameters.AddWithValue("@item_quantity", bills.item_qty.ToString());
-                    addbill.Parameters.AddWithValue("@item_price", bills.item_price.ToString());
-                    addbill.Parameters.AddWithValue("@item_total", bills.item_total.ToString());
-                    int rows = addbill.ExecuteNonQuery();
-                    if (rows > 0)
+                    try
                     {
-                        transaction.Commit();
-                        result = true;
+                        SqlCommand addbill = new SqlCommand("INSERT INTO detailed_bill (bill_id, item_id, item_quantity, item_price, item_total) VALUES (@bill_id, @item_id, @item_quantity, @item_price, @item_total )", con, transaction);
+                        addbill.Parameters.AddWithValue("@bill_id", bills.bill_id);
+                        addbill.Parameters.AddWithValue("@item_id", bills.item_id);
+                        addbill.Parameters.AddWithValue("@item_quantity", bills.item_qty.ToString());
+                        addbill.Parameters.AddWithValue("@item_price", bills.item_price.ToString());
+                        addbill.Parameters.AddWithValue("@item_total", bills.item_total.ToString());
+                        int rows = addbill.ExecuteNonQuery();
+                        if (rows > 0)
+                        {
+                            transaction.Commit();
+                            result = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something went wrong. Please try again !", "Error");
+                            result = false;
+                            transaction.Rollback();
+                        }
                     }
-                    else
+                    catch (Exception insert_e)
                     {
-                        MessageBox.Show("Something went wrong. Please try again !", "Error");
-                        result = false;
-                        transaction.Rollback();
+                        if (insert_e.ToString().Contains("Violation of PRIMARY KEY constraint"))
+                        {
+                            try
+                            {
+                                SqlCommand getqty = new SqlCommand("SELECT item_quantity, item_total FROM detailed_bill WHERE bill_id=@billId AND item_id=@itemId", conn);
+                                getqty.Parameters.AddWithValue("@billId",bills.bill_id);
+                                getqty.Parameters.AddWithValue("@itemId", bills.item_id);
+                                conn.Open();
+                                SqlDataReader detailedBillReader = getqty.ExecuteReader();
+                                if (detailedBillReader.Read())
+                                {
+                                    bills.item_qty = bills.item_qty + float.Parse(detailedBillReader["item_quantity"].ToString());
+                                    bills.item_total = bills.item_total + float.Parse(detailedBillReader["item_total"].ToString());
+
+                                    SqlCommand addbill = new SqlCommand("UPDATE detailed_bill SET item_quantity = @item_quantity, item_total = @item_total WHERE bill_id= @bill_id AND item_id= @item_id", con, transaction);
+                                    addbill.Parameters.AddWithValue("@bill_id", bills.bill_id);
+                                    addbill.Parameters.AddWithValue("@item_id", bills.item_id);
+                                    addbill.Parameters.AddWithValue("@item_quantity", bills.item_qty.ToString());
+                                    addbill.Parameters.AddWithValue("@item_total", bills.item_total.ToString());
+                                    int rows = addbill.ExecuteNonQuery();
+                                    if (rows > 0)
+                                    {
+                                        transaction.Commit();
+                                        result = true;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Something went wrong. Please try again !", "Error");
+                                        result = false;
+                                        transaction.Rollback();
+                                    }
+                                }
+                            }
+                            catch (Exception exception)
+                            {
+                                MessageBox.Show(exception.ToString(), "Error");
+                                transaction.Rollback();
+                            }
+
+                        }
+                        else
+                        {
+                            MessageBox.Show(insert_e.ToString(), "Error");
+                            transaction.Rollback();
+                        }
                     }
                 }
             }

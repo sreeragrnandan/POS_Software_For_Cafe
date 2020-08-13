@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Callista_Cafe.SubWindows"
         mc:Ignorable="d"
         Title="AddBillItems"
-        Height="700"
-        Width="1000"
+        Height="768
+        "
+        Width="1200"
         WindowStyle="None"
         Background="#000000"
         ResizeMode="NoResize"
@@ -122,14 +123,14 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="500"/>
-            <ColumnDefinition Width="500"/>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="600"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" BorderBrush="White" BorderThickness="2"></Border>
-        <StackPanel Grid.Column="0" Width="500" Orientation="Vertical" Margin="0 10 0 0">
+        <StackPanel Grid.Column="0" Width="600" Orientation="Vertical" Margin="0 10 0 0">
             <StackPanel Orientation="Vertical" Margin="10,0,10,0" HorizontalAlignment="Center">
                 <Label x:Name="TitleLabel" Content="BILLED ITEMS" HorizontalContentAlignment="Center" FontSize="30"  Foreground="White" FontFamily="Times New Roman" />
-                <DataGrid x:Name="BilledItemsGrid"  Width="480" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="300" Margin="0 2 0 0" Loaded="BilledItemsGrid_Loaded">
+                <DataGrid x:Name="BilledItemsGrid" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" AutoGenerateColumns="False"  ColumnWidth="*" IsReadOnly="True" Height="350" Margin="0 2 0 0" Loaded="BilledItemsGrid_Loaded">
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="Gray"/>
@@ -167,40 +168,39 @@
                 <Label x:Name="TotalLabel" FontSize="25" Content="Total :     " Margin="0 0 100 0"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="0 15 0 5" HorizontalAlignment="Center">
-                <Label Content="TABLE :" Width="175" Margin="0 5 0 0"/>
-                <TextBox x:Name="TableTextBox" Width="275" IsEnabled="False" Height="35" Text="" Margin="5 0 0 0"/>
+                <Label Content="TABLE :" Width="225" Margin="0 5 0 0"/>
+                <TextBox x:Name="TableTextBox" Width="325" IsEnabled="False" Height="35" Text="" Margin="5 0 0 0"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0 5 0 5" HorizontalAlignment="Center">
-                <Label Content="ITEM :" Width="175" Margin="0 5 0 0"/>
-                <TextBox x:Name="ItemTextBox" Width="275" IsEnabled="False" Height="35" Text="" Margin="5 0 0 0"/>
+                <Label Content="ITEM :" Width="225" Margin="0 5 0 0"/>
+                <TextBox x:Name="ItemTextBox" Width="325" IsEnabled="False" Height="35" Text="" Margin="5 0 0 0"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0 5 0 0" HorizontalAlignment="Center">
-                <Label Content="QUANTITY :" Width="175" Margin="0 5 0 0"/>
-                <TextBox x:Name="QtyTextBox" Width="275" IsEnabled="True" Height="35" Text="0" Margin="5 0 0 0" Loaded="QtyTextBox_Loaded"/>
+                <Label Content="QUANTITY :" Width="225" Margin="0 5 0 0"/>
+                <TextBox x:Name="QtyTextBox" Width="325" IsEnabled="True" Height="35" Text="0" Margin="5 0 0 0" Loaded="QtyTextBox_Loaded"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0 20 0 0" HorizontalAlignment="Center">
-                <Button x:Name="addBtn" Content="ADD" IsEnabled="False" Width="210" Height="35" Margin="0 0 20 0" Click="addBtn_Click"  />
-                <Button x:Name="deleteBtn" IsEnabled="False" Content="DETELE" Width="210" Height="35" Margin="20 0 0 0"   />
+                <Button x:Name="addBtn" Content="ADD" FontSize="22" IsEnabled="False" Width="260" Height="35" Margin="0 0 20 0" Click="addBtn_Click"  />
+                <Button x:Name="deleteBtn" IsEnabled="False" FontSize="22" Content="DETELE" Width="260" Height="35" Margin="20 0 0 0"   />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 20 0 0">
-                <TextBox x:Name="ComplementoryTextBox" Width="230" IsEnabled="false" Height="35" Text="" Margin="0 0 10 0"/>
-                <Button x:Name="complementoryBtn" Content="ADD COMPLEMENTARY" FontSize="15" Width="210" Height="35" IsEnabled="False"  Margin="10 0 0 0"/>
+                <Button x:Name="complementoryBtn" Content="ADD COMPLEMENTARY" FontSize="20" Width="560" Height="35" IsEnabled="False"  Margin="0 0 0 0"/>
             </StackPanel>
 
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Orientation="Vertical" Width="500" Margin="0 10 0 0" >
+        <StackPanel Grid.Column="1" Orientation="Vertical" Width="600" Margin="0 10 0 0" >
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 00 10 0">
                 <Label Content="ITEMS" FontSize="30" Margin="0 0 50 0" Foreground="White" FontFamily="Times New Roman"/>
-                <Label Content="Search : " FontSize="20" Margin="0 13 0 0"/>
-                <TextBox x:Name="Search" Width="150" Height="27"  Margin="0 10 0 0"/>
+                <Label  Content="Search : " FontSize="20" Margin="0 13 0 0" />
+                <TextBox x:Name="SearchTxtBox" Width="200" Height="35"  Margin="0 10 0 0" TextChanged="SearchTxtBox_OnTextChanged" />
             </StackPanel>
-            <StackPanel Margin="10 0 10 0" Width="480">
-                <DataGrid x:Name="MenuItemsDatagrid"  IsReadOnly="True" Height="580" AutoGenerateColumns="False" Width="480" SelectionChanged="MenuItemsDatagrid_SelectionChanged"  >
+            <StackPanel Margin="10 0 10 0">
+                <DataGrid x:Name="MenuItemsDatagrid"  IsReadOnly="True" Height="650" AutoGenerateColumns="False" SelectionChanged="MenuItemsDatagrid_SelectionChanged"  >
                     <DataGrid.Resources>
                         <Style TargetType="{x:Type DataGridColumnHeader}">
                             <Setter Property="Background" Value="Gray"/>
