@@ -182,7 +182,7 @@ namespace Callista_Cafe.Classes
                     con);
                 cmd.Parameters.AddWithValue("@bill_id", bill_id);
                 cmd.Parameters.AddWithValue("@amount", DbFun.getbilltotal(bill_id).ToString());
-                cmd.Parameters.AddWithValue("@time", DateTime.Now.ToString());
+                cmd.Parameters.AddWithValue("@time", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
                 con.Open();
                 int rows = cmd.ExecuteNonQuery();
 

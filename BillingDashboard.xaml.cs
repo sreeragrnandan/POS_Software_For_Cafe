@@ -220,6 +220,7 @@ namespace Callista_Cafe
                         if (result)
                         {
                             MessageBox.Show("Print will start here", "Printing");
+                            loadBillGrid();
                             reset();
                         }
                         else
@@ -232,6 +233,7 @@ namespace Callista_Cafe
                         if (result)
                         {
                             MessageBox.Show("Bill Closed", "closed");
+                            loadBillGrid();
                             reset();
                         }
                         else
